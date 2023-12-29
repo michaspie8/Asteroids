@@ -26,6 +26,9 @@ public:
 
     void clean();
 
+    void addGameObject(GameObject *gameObject);
+
+    void removeGameObject(GameObject *gameObject);
     //setters
     void setRunning(bool running) { m_Running = running; }
 
@@ -47,12 +50,14 @@ public:
     static Game *getInstance();
 
 
+
+
 private:
     Game();
 
     ~Game();
 
-    void antiAliasing(int samples, AntiAliasingType type );
+    //void bloom(float opacity, int blurRadius, float blurSensitivity);
 
     static Game *s_pInstance; //singleton
     SDL_Window *m_pWindow;

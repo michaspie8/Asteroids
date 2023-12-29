@@ -27,6 +27,13 @@ protected:
     float angleDampVelocity = 0;
     float angleDampTime = 0.1f;
     float rotationSpeed = 1;
+    GameObject *m_pBullet;
+    float bulletSpeed = 10;
+    float bulletLifeTime = 1;
+    float bulletSpawnTime = 0;
+    float bulletSpawnDelay = 0.1f;
+
+    GameObject *m_JetFlame;
 };
 
 

@@ -43,6 +43,8 @@ public:
 
     bool getIsMoving() { return m_IsMoving; };
 
+    bool isRenderable() { return m_renderable; };
+
     std::string getTextureId() { return m_TextureId; };
 
     void setPosition(Vector2 pos) { m_Position = pos; };
@@ -71,6 +73,10 @@ public:
 
     void setMarkedForDeletion(bool marked) { m_MarkedForDeletion = marked; };
 
+    void setRenderable(bool renderable) { m_renderable = renderable; };
+
+
+
     void printInfo();
 
 protected:
@@ -89,6 +95,8 @@ protected:
     bool m_CanMove;
     bool m_CanShoot;
     bool m_IsMoving;
+
+    bool m_renderable = true;
 
     std::string m_TextureId;
 

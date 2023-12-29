@@ -8,7 +8,8 @@
 #include "EventHandler.h"
 #include "Mathf.h"
 #include "TextureManager.h"
-#include "Colors.h"
+#include "ChildGameObject.h"
+#include "Vector.h"
 
 
 Player::Player(const LoaderParams *params, float angleDampTime, float rotationSpeed) : GameObject(params) {
@@ -19,14 +20,22 @@ Player::Player(const LoaderParams *params, float angleDampTime, float rotationSp
 Player::Player() : Player(
         new LoaderParams(Vector2(Game::getInstance()->getWindowWidth() / 2, 0), 64, 64, 0, "player"),
         0.1f, 3) {
+    TextureManager::getInstance()->loadVector("assets/player.svg", "player", true);
 
+    //init jet flame
+    TextureManager::getInstance()->loadVector("assets/jet-flame.svg", "jet-flame", true);
+    m_JetFlame = new ChildGameObject(
+            new LoaderParams(Vector2(m_Width/2, -m_Height/2 + 12 + 6), 6, 12, 180, "jet-flame"), this);
+    Game::getInstance()->addGameObject(m_JetFlame);
+    m_JetFlame->setRenderable(false);
 }
 
 Player::~Player() = default;
 
 void Player::draw() {
-    TextureManager::getInstance()->loadVector("assets/player.svg", "player", true);
+    if(m_renderable){
     TextureManager::getInstance()->drawVectorTexture("player", m_Position, m_Width, m_Height, m_Spin);
+    }
 }
 
 void Player::update() {
@@ -44,8 +53,14 @@ void Player::update() {
     }
     //acceleration
     if (EventHandler::getInstance()->isKeyboardKeyDown(SDL_SCANCODE_UP)) {
+
         m_Acceleration = degToVector(m_Angle) * 0.1f;
+
+//spawn jet flame -> position is applied in child game object automatically
+        m_JetFlame->setRenderable(true);
     } else {
+        m_JetFlame->setRenderable(false);
+
         m_Acceleration = Vector2(0, 0);
     }
     m_Velocity += m_Acceleration;
@@ -71,13 +86,13 @@ void Player::update() {
         m_Position.y = Game::getInstance()->getWindowHeight();
     }
 
-
     //update position
     m_Position += m_Velocity;
     m_Spin = m_Angle;
-    printInfo();
 }
 
 void Player::clean() {
     GameObject::clean();
 }
+
+

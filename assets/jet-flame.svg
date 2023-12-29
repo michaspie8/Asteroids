@@ -2,19 +2,19 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="64"
-   height="64"
-   viewBox="0 0 16.933333 16.933334"
+   width="6mm"
+   height="12mm"
+   viewBox="0 0 6 12"
    version="1.1"
-   id="svg10248"
+   id="svg33468"
    inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
-   sodipodi:docname="player-simple.svg"
+   sodipodi:docname="jet-flame.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
   <sodipodi:namedview
-     id="namedview10250"
+     id="namedview33470"
      pagecolor="#ffffff"
      bordercolor="#000000"
      borderopacity="0.25"
@@ -25,8 +25,8 @@
      inkscape:document-units="mm"
      showgrid="false"
      inkscape:zoom="5.8012346"
-     inkscape:cx="30.596936"
-     inkscape:cy="20.943818"
+     inkscape:cx="57.660141"
+     inkscape:cy="60.245797"
      inkscape:window-width="1920"
      inkscape:window-height="1001"
      inkscape:window-x="-9"
@@ -34,14 +34,14 @@
      inkscape:window-maximized="1"
      inkscape:current-layer="layer1" />
   <defs
-     id="defs10245" />
+     id="defs33465" />
   <g
      inkscape:label="Warstwa 1"
      inkscape:groupmode="layer"
      id="layer1">
     <path
-       style="fill:none;fill-rule:evenodd;stroke:#2eff62;stroke-width:1.5;stroke-linejoin:round;stroke-opacity:1"
-       d="M 1.0502999,8.2344694 3.0369499,15.64875 15.929221,8.2053934 3.4000289,0.97166089 Z"
-       id="path10799" />
+       style="fill:none;fill-rule:evenodd;stroke:#2eff62;stroke-width:0.899999;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       d="M 1.1499831,10.160224 2.504475,6.5804959 1.3112321,1.9042754 5.052209,6.5804959 Z"
+       id="path32728" />
   </g>
 </svg>

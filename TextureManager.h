@@ -22,6 +22,7 @@ public:
     drawFrameEx(std::string id, int row, int column, int frameW, int frameH, int x, int y, int w, int h, float angle);
 
     void drawVectorTexture(std::string id, Vector2 position, float w, float h, float angle);
+    void drawVectorTexture(std::string id, Vector2 position, float w, float h, float angle, PointF pivot);
 
 
     NSVGimage *getVectorTexture(std::string id) { return m_VectorTextureMap[id]; };

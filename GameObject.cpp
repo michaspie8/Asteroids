@@ -2,26 +2,26 @@
 #include "TextureManager.h"
 #include <iostream>
 
-GameObject::GameObject(const LoaderParams *params) {
+GameObject::GameObject(const LoaderParams *params){
     m_Position = params->m_Position;
     m_Width = params->m_Width;
     m_Height = params->m_Height;
     m_Spin = params->m_Spin;
-
     m_Angle = params->m_Angle;
     m_Speed = params->m_Speed;
     m_Velocity = params->m_Velocity;
     m_Acceleration = params->m_Acceleration;
-
     m_MarkedForDeletion = params->m_MarkedForDeletion;
-
     m_TextureId = params->m_TextureId;
+
 }
 
 void GameObject::draw() {
-    TextureManager::getInstance()->drawFrameEx(m_TextureId, 0, 0, 512, 512, (int) m_Position.x, (int) m_Position.y,
-                                               m_Width, m_Height, m_Spin);
-
+    if(m_renderable){
+    /*TextureManager::getInstance()->drawFrameEx(m_TextureId, 0, 0, 512, 512, (int) m_Position.x, (int) m_Position.y,
+                                               m_Width, m_Height, m_Angle);*/
+    TextureManager::getInstance()->drawVectorTexture(m_TextureId, m_Position, m_Width, m_Height, m_Angle);
+    }
 }
 
 void GameObject::update() {

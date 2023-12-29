@@ -21,6 +21,8 @@ add_executable(Asteroids main.cpp
         TextureManager.h
         Vector.cpp
         Vector.h
+        ChildGameObject.cpp
+        ChildGameObject.h
 )
 file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
 

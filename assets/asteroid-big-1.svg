@@ -2,19 +2,19 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="64"
-   height="64"
-   viewBox="0 0 16.933333 16.933334"
+   width="128"
+   height="128"
+   viewBox="0 0 33.866666 33.866666"
    version="1.1"
-   id="svg10248"
+   id="svg24488"
    inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
-   sodipodi:docname="player-simple.svg"
+   sodipodi:docname="asteroid-big-1.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
   <sodipodi:namedview
-     id="namedview10250"
+     id="namedview24490"
      pagecolor="#ffffff"
      bordercolor="#000000"
      borderopacity="0.25"
@@ -24,9 +24,9 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="5.8012346"
-     inkscape:cx="30.596936"
-     inkscape:cy="20.857629"
+     inkscape:zoom="4.1020923"
+     inkscape:cx="56.678393"
+     inkscape:cy="77.155748"
      inkscape:window-width="1920"
      inkscape:window-height="1001"
      inkscape:window-x="-9"
@@ -34,14 +34,14 @@
      inkscape:window-maximized="1"
      inkscape:current-layer="layer1" />
   <defs
-     id="defs10245" />
+     id="defs24485" />
   <g
      inkscape:label="Warstwa 1"
      inkscape:groupmode="layer"
      id="layer1">
     <path
-       style="fill:none;fill-rule:evenodd;stroke:#5aff3c;stroke-width:1.5;stroke-linejoin:round"
-       d="M 1.0502999,8.2344694 3.0369499,15.64875 15.929221,8.2053934 3.4000289,0.97166089 Z"
-       id="path10799" />
+       style="fill:none;fill-rule:evenodd;stroke:#2eff62;stroke-width:1.5;stroke-linejoin:round;stroke-dasharray:none"
+       d="m 14.834909,1.1609929 16.0604,1.8704886 1.805991,7.5464535 -2.837983,10.513436 2.579985,6.772458 L 27.218833,30.95981 8.2559495,32.7013 3.6764775,31.798305 1.6124901,24.187352 4.9664696,21.607368 1.7414893,16.511899 1.2899921,11.41643 2.7734831,7.5464538 5.9339637,2.9669818 7.5464538,1.7414893 Z"
+       id="path26124" />
   </g>
 </svg>

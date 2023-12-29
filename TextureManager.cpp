@@ -145,9 +145,48 @@ void TextureManager::drawVectorTexture(std::string id, Vector2 position, float w
         }
     }
     // Delete
-    nsvgDelete(image);
+    //nsvgDelete(image);
 
 }
+
+//Same as above bot with pivot point, pls edit the other one, after testing that one, update this
+
+void TextureManager::drawVectorTexture(std::string id, Vector2 position, float w, float h, float angle, PointF pivot) {
+    //get texture
+    NSVGimage *image = m_VectorTextureMap[id];
+
+    for (NSVGshape *shape = image->shapes; shape != nullptr; shape = shape->next) {
+
+        for (NSVGpath *path = shape->paths; path != nullptr; path = path->next) {
+            for (int i = 0; i < path->npts - 1; i += 3) {
+                float *p = &path->pts[i * 2];
+                // make copies of points
+                float *d = new float[8];
+                for (int j = 0; j < 8; j++) {
+                    d[j] = p[j];
+                }
+
+                //Apply position to points
+                for (int j = 0; j < 8; j += 2) {
+                    d[j] += position.x - w / 2;
+                    d[j + 1] += position.y - h / 2;
+                }
+                //Apply rotation to points
+                for (int j = 0; j < 8; j += 2) {
+                    PointF point = RotatePoint(PointF(d[j], d[j + 1]), pivot, angle);
+                    d[j] = point.x;
+                    d[j + 1] = point.y;
+                }
+                drawCubicBez(d[0], d[1], d[2], d[3], d[4], d[5], d[6], d[7], shape->strokeWidth, shape->stroke.color);
+            }
+        }
+    }
+    // Delete
+    //nsvgDelete(image);
+
+}
+
+
 
 void TextureManager::drawCubicBez(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4, int strokeWidth, Uint32 color) {
 

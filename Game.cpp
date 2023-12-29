@@ -8,6 +8,8 @@
 #include "Player.h"
 #include "TextureManager.h"
 #include "Colors.h"
+#include "Mathf.h"
+#include <SDL.h>
 
 Game *Game::s_pInstance = nullptr;
 
@@ -45,6 +47,10 @@ bool Game::init(const char *title, int xpos, int ypos, int width, int height, SD
                 m_WindowWidth = width;
                 m_WindowHeight = height;
                 m_Running = true;
+
+                //load textures
+                TextureManager::getInstance()->load("assets/background_gradient.svg", "background_gradient");
+
 
                 //init game objects
                 m_GameObjects.push_back(new Player());
@@ -85,19 +91,27 @@ void Game::update() {
     for (auto &gameObject: m_GameObjects) {
         gameObject->update();
     }
+    //delete game objects marked for deletion
+    for (auto &gameObject: m_GameObjects) {
+        if (gameObject->isMarkedForDeletion()) {
+            delete gameObject;
+            m_GameObjects.erase(std::remove(m_GameObjects.begin(), m_GameObjects.end(), gameObject),
+                                m_GameObjects.end());
+        }
+    }
 }
 
 void Game::render() {
-    //set color to asteroid black
-    SDL_Color b = colorFromHEX(ASTEROID_BLACK);
-    SDL_SetRenderDrawColor(m_pRenderer, b.r, b.g, b.b, b.a);
     //clear renderer
     SDL_RenderClear(m_pRenderer);
+    //draw background gradient
+    TextureManager::getInstance()->draw(TextureManager::getInstance()->getTexture("background_gradient"), 0, 0, m_WindowWidth, m_WindowHeight);
+
     //draw game objects
     for (auto &gameObject: m_GameObjects) {
         gameObject->draw();
     }
-
+    //bloom(0.5f, 5, 1);
     SDL_RenderPresent(m_pRenderer);
 }
 
@@ -106,3 +120,48 @@ void Game::clean() {
     SDL_DestroyRenderer(m_pRenderer);
     SDL_Quit();
 }
+
+void Game::addGameObject(GameObject *gameObject) {
+    m_GameObjects.push_back(gameObject);
+}
+
+/*
+//bloom effect using gaussian blur and additive blending
+void Game::bloom(float opacity, int blurRadius, float blurSensitivity) {
+    //create new texture for bloom
+    SDL_Texture *bloomTexture = SDL_CreateTexture(m_pRenderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET,
+                                                    m_WindowWidth, m_WindowHeight);
+    //get array of pixels from texture
+    auto *pixels = new Uint32[m_WindowWidth * m_WindowHeight];
+    SDL_RenderReadPixels(m_pRenderer, NULL, SDL_PIXELFORMAT_RGBA8888, pixels, m_WindowWidth * sizeof(Uint32));
+
+    //blur the pixels
+    pixels = Mathf::GaussianBlur(pixels, m_WindowWidth, m_WindowHeight, 5, 1);
+
+    //fill texture with pixels
+    SDL_UpdateTexture(bloomTexture, NULL, pixels, m_WindowWidth * sizeof(Uint32));
+
+    //set blend mode to additive
+    SDL_SetTextureBlendMode(bloomTexture, SDL_BLENDMODE_ADD);
+
+    SDL_RenderCopy(m_pRenderer, bloomTexture, NULL, NULL);
+
+    //free memory
+    delete[] pixels;
+    SDL_DestroyTexture(bloomTexture);
+
+    SDL_SetTextureBlendMode(bloomTexture, SDL_BLENDMODE_NONE);
+}*//*
+
+void Game::bloom(float opacity, int blurRadius, float blurSensitivity) {
+    //start opengl in curent window
+    SDL_GL_MakeCurrent(m_pWindow, SDL_GL_GetCurrentContext());
+
+    //use gl to
+    glfw
+
+
+
+}*/
+
+
