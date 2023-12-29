@@ -57,7 +57,13 @@ void Player::update() {
         m_Acceleration = degToVector(m_Angle) * 0.1f;
 
 //spawn jet flame -> position is applied in child game object automatically
-        m_JetFlame->setRenderable(true);
+
+        //todo animation of jet flame (two svg in teturemap and switch between them when in half of animation time or sth)
+        if(SDL_GetTicks64() - m_jetFlameAnimationTimer > m_jetFlameAnimationTime){
+            m_jetFlameAnimationTimer = SDL_GetTicks64();
+            m_JetFlame->setRenderable(!m_JetFlame->isRenderable());
+        }
+
     } else {
         m_JetFlame->setRenderable(false);
 
@@ -89,6 +95,7 @@ void Player::update() {
     //update position
     m_Position += m_Velocity;
     m_Spin = m_Angle;
+
 }
 
 void Player::clean() {
