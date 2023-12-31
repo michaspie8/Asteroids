@@ -24,8 +24,8 @@ enum class RenderType {
 class Renderer : public Component {
 
 public:
-    Renderer(GameObject *gameObject, std::string textureId, RenderType renderType = RenderType::VECTOR,
-             std::string name = "Renderer") : Component(gameObject, name) {
+    Renderer(std::string textureId, RenderType renderType = RenderType::VECTOR,
+             std::string name = "Renderer") : Component(name) {
         m_TextureID = textureId;
         m_RenderType = renderType;
     };

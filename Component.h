@@ -1,30 +1,26 @@
-//
-// Created by Michal on 30.12.2023.
-//
-
 #ifndef ASTEROIDS_COMPONENT_H
 #define ASTEROIDS_COMPONENT_H
 
-#include "GameObject.h"
-#include <string>
-#include "Game.h"
 
+#include <string>
+
+//Forward declaration
+class GameObject;
 
 class Component {
-
 public:
-
-    Component(GameObject *gameObject, std::string name) : name(name), gameObject(gameObject) {};
+    //Add component and remove component adds or removes gameobject from component
+    explicit Component(std::string name);
 
     //these method will be invoked by GameObject
     virtual void update() = 0;
 
     virtual void draw() = 0;
 
-    virtual void clean() { delete this; }
+    virtual void clean() = 0;
 
     //Game object that this component is attached to
-    GameObject *gameObject;
+    GameObject *gameObject = nullptr;
 
     std::string name;
 
@@ -33,6 +29,8 @@ public:
     void setEnabled(bool enabled) { Component::m_Enabled = enabled; }
 
     [[nodiscard]] bool isEnabled() const { return m_Enabled; }
+
+    friend class GameObject;
 
 protected:
     bool m_Enabled = true;

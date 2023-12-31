@@ -25,24 +25,23 @@ public:
     Vector2 normalised() const;
 
     static Vector2 Zero() {
-        return {0, 0};
+        return *new Vector2(0, 0);
     }
 
 
-    Vector2 operator+(Vector2 &v2) const;
+    Vector2 operator/(Vector2 v2) const;
 
-    Vector2 operator-(Vector2 &v2) const;
+    Vector2 operator+(Vector2 v2) const;
 
-    Vector2 operator*(Vector2 &v2) const;
+    Vector2 operator-(Vector2 v2) const;
 
-    Vector2 operator/(Vector2 &v2) const;
-
+    Vector2 operator*(Vector2 v2) const;
 
     Vector2 operator+(float value) const;
 
     Vector2 operator-(float value) const;
 
-    float operator*(float scalar) const;
+    Vector2 operator*(float scalar) const;
 
     Vector2 operator/(float scalar) const;
 

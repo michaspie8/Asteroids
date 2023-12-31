@@ -38,8 +38,8 @@ Vector2 Mathf::smoothDamp(Vector2 current, Vector2 target, Vector2 &currentVeloc
     float num4 = maxSpeed * smoothTime;
     vector = clampMagnitude(vector, num4);
     target = current - vector;
-    Vector2 vector3 = (currentVelocity + vector * num) * deltaTime;
-    currentVelocity = (currentVelocity - vector3 * num) * num3;
+    Vector2 vector3 = (currentVelocity + (vector * num)) * deltaTime;
+    currentVelocity = (currentVelocity - (vector3 * num)) * num3;
     Vector2 vector4 = target + (vector + vector3) * num3;
     if ((vector2 - current).length() > 0.0f == (vector4 - vector2).length() > 0.0f) {
         vector4 = vector2;

@@ -1,3 +1,4 @@
+/*
 //
 // Created by Michal on 30.12.2023.
 //
@@ -24,3 +25,4 @@ public:
 
 
 #endif //ASTEROIDS_ASTEROID_H
+*/

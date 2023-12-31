@@ -7,6 +7,17 @@
 #include "LoaderParams.h"
 #include "Component.h"
 
+Transform::Transform(GameObject *gameObject, LoaderParams *params) : Transform(params) {
+    this->gameObject = gameObject;
+}
+
+Transform::Transform(LoaderParams *params) : Component(params->m_Name) {
+    m_Position = params->m_Position;
+    m_Width = params->m_Width;
+    m_Height = params->m_Height;
+    m_Angle = params->m_Angle;
+}
+
 void Transform::draw() {
 
 }
@@ -45,7 +56,7 @@ float Transform::getWidth() {
 
 Vector2 Transform::getAbsolutePosition() {
     if (gameObject->getParent() != nullptr) {
-        return m_pParent->getTransform()->getPosition() + m_Position;
+        return gameObject->getParent()->getTransform()->getAbsolutePosition() + m_Position;
     }
     return m_Position;
 }
@@ -60,8 +71,10 @@ float Transform::getAngle() {
 
 float Transform::getAbsoluteAngle() {
     if (gameObject->getParent() != nullptr) {
-        return m_pParent->getTransform()->getAngle() + m_Angle;
+        return gameObject->getParent()->getTransform()->getAbsoluteAngle() + m_Angle;
     }
     return m_Angle;
 }
+
+
 

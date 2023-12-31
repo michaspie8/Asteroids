@@ -10,6 +10,7 @@
 #include "Colors.h"
 #include "Mathf.h"
 #include <SDL.h>
+#include "Renderer.h"
 
 Game *Game::s_pInstance = nullptr;
 
@@ -56,13 +57,17 @@ bool Game::init(const char *title, int xpos, int ypos, int width, int height, SD
                 //add
                 //load textures for every obj in texture manager
                 for (auto &gameObject: m_GameObjects) {
-                    TextureManager::getInstance()->load("assets/" + gameObject->getTextureId() + ".svg",
-                                                        gameObject->getTextureId());
-                }
-                //load vector textures for every obj in texture manager
-                for (auto &gameObject: m_GameObjects) {
-                    TextureManager::getInstance()->loadVector("assets/" + gameObject->getTextureId() + ".svg",
-                                                              gameObject->getTextureId());
+                    //if gameobject contains renderer component
+                    Renderer *renderer = (Renderer *) gameObject->getComponent("Renderer");
+                    if (renderer == nullptr) continue;
+                    if (renderer->getRenderType() == RenderType::VECTOR) {
+                        TextureManager::getInstance()->load("assets/" + renderer->getTextureId() + ".svg",
+                                                            renderer->getTextureId());
+                    } else if (renderer->getRenderType() == RenderType::SPRITE) {
+                        TextureManager::getInstance()->loadVector("assets/" + renderer->getTextureId() + ".svg",
+                                                                  renderer->getTextureId());
+
+                    }
                 }
 
                 //add anti aliasing

@@ -3,11 +3,13 @@
 //
 
 #include "Motion.h"
+#include "GameObject.h"
 
 void Motion::draw() {}
 
 void Motion::update() {
     if (!m_Enabled) return;
+
     //Here we can edit only these, because the rest will be calculated in overriden func or somewhere else in gameobject
 
     //Edit angle

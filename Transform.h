@@ -6,16 +6,16 @@
 #define ASTEROIDS_TRANSFORM_H
 
 #include "Component.h"
+#include "LoaderParams.h"
+
+
 
 class Transform : public Component {
 
 public:
-    Transform(GameObject *gameObject, LoaderParams *params) : Component(gameObject, params->m_Name) {
-        m_Position = params->m_Position;
-        m_Width = params->m_Width;
-        m_Height = params->m_Height;
-        m_Angle = params->m_Angle;
-    };
+    Transform(GameObject *gameObject, LoaderParams *params);
+
+    Transform(LoaderParams *params);
 
     ~Transform() override = default;
 

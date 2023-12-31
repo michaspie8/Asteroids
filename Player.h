@@ -2,11 +2,10 @@
 // Created by Michal on 27.12.2023.
 //
 
-#include "GameObject.h"
-
 #ifndef ASTEROIDS_PLAYER_H
 #define ASTEROIDS_PLAYER_H
 
+#include "GameObject.h"
 
 class Player : public GameObject {
 public:

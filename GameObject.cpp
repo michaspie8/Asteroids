@@ -5,7 +5,8 @@
 
 GameObject::GameObject(LoaderParams *params) {
     m_Components = std::vector<Component *>();
-    m_pTransform = new Transform(this, params);
+    m_pTransform = new Transform(params);
+    addComponent<Transform>(m_pTransform);
     m_MarkedForDeletion = params->m_MarkedForDeletion;
     m_Name = params->m_Name;
     m_Tag = params->m_Tag;
@@ -17,7 +18,6 @@ void GameObject::draw() {
     for (auto component: m_Components) {
         component->draw();
     }
-
 }
 
 void GameObject::update() {
@@ -44,6 +44,8 @@ Component *GameObject::getComponent(std::string name) {
     }
     return nullptr;
 }
+
+
 
 
 

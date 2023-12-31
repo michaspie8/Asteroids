@@ -5,9 +5,10 @@
 #include "Vector.h"
 #include <string>
 #include <vector>
+#include <stdexcept>
+#include <iostream>
 #include "Component.h"
 #include "Transform.h"
-#include <stdexcept>
 
 
 class GameObject {
@@ -39,7 +40,18 @@ public:
     template<typename T>
     T *getComponent() {
         for (auto component: m_Components) {
-            if (dynamic_cast<T *>(component)) {
+            if (dynamic_cast<T *>(component) != nullptr) {
+                return dynamic_cast<T *>(component);
+            }
+        }
+        return nullptr;
+    }
+
+    //type by name
+    template<typename T>
+    T *getComponent(std::string name) {
+        for (auto component: m_Components) {
+            if (dynamic_cast<T *>(component) != nullptr && component->name == name) {
                 return dynamic_cast<T *>(component);
             }
         }
@@ -58,8 +70,30 @@ public:
         Component *c = dynamic_cast<Component *>(t);
         if (c == nullptr) throw std::invalid_argument("T must derive from Component");
         m_Components.push_back(c);
-        setParent(this);
+        c->gameObject = this;
     }
+
+    void addComponent(Component *c) {
+        m_Components.push_back(c);
+        c->gameObject = this;
+    }
+
+    void removeComponent(Component *c) {
+        for (int i = 0; i < m_Components.size(); i++) {
+            if (m_Components[i] == c) {
+                m_Components.erase(m_Components.begin() + i);
+                return;
+            }
+        }
+    }
+
+    template<class T>
+    void removeComponent(T *component) {
+        Component *c = dynamic_cast<Component *>(component);
+        if (c == nullptr) return throw std::invalid_argument("T must derive from Component");
+        removeComponent(c);
+    }
+
 
     void setMarkedForDeletion(bool marked) { m_MarkedForDeletion = marked; };
 

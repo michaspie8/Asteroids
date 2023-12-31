@@ -16,12 +16,15 @@
 Player::Player(LoaderParams *params, float angleDampTime, float rotationSpeed) : GameObject(params) {
     this->angleDampTime = angleDampTime;
     this->rotationSpeed = rotationSpeed;
+    addComponent(new Motion());
+    addComponent(new Renderer("player", RenderType::VECTOR));
+    TextureManager::getInstance()->loadVector("assets/player.svg", "player", true);
 }
 
 Player::Player() : Player(
-        new LoaderParams(Vector2(Game::getInstance()->getWindowWidth() / 2, 0), 64, 64, 0, "player"),
+        new LoaderParams(Vector2(Game::getInstance()->getWindowWidth() / 2, Game::getInstance()->getWindowHeight()/2), 64, 64, 0, "player", "Player"),
         0.1f, 3) {
-    TextureManager::getInstance()->loadVector("assets/player.svg", "player", true);
+
 
     //init jet flame
     TextureManager::getInstance()->loadVector("assets/jet-flame.svg", "jet-flame", true);
@@ -29,8 +32,8 @@ Player::Player() : Player(
             new LoaderParams(Vector2(getTransform()->getWidth() / 2, -getTransform()->getHeight() / 2 + 12 + 6), 6, 12,
                              180, "jet-flame"));
     m_JetFlame->setParent(this);
-    m_JetFlame->addComponent(new Renderer(m_JetFlame, "jet-flame", RenderType::VECTOR));
-    m_JetFlame->addComponent(new Motion(m_JetFlame, 0, Vector2::Zero(), Vector2::Zero(), "jet-flame-motion"));
+    m_JetFlame->addComponent(new Renderer("jet-flame", RenderType::VECTOR));
+    m_JetFlame->addComponent(new Motion(0, Vector2::Zero(), Vector2::Zero(), "jet-flame-motion"));
 
 
     m_JetFlame->getComponent("Renderer")->setEnabled(false);
@@ -47,8 +50,8 @@ void Player::draw() {
 void Player::update() {
     if (!m_Enabled) return;
 
-    auto *motion = (Motion *) getComponent("Motion");
-    auto *jetRenderer = (Component *) m_JetFlame->getComponent("Renderer");
+    auto *motion = getComponent<Motion>("Motion");
+    auto *jetRenderer = m_JetFlame->getComponent<Component>("Renderer");
 
     auto angle = getTransform()->getAngle();
     auto acceleration = motion->getAcceleration();

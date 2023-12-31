@@ -33,20 +33,21 @@ void Vector2::operator*=(float scalar) {
     y *= scalar;
 }
 
-Vector2 Vector2::operator+(Vector2 &v2) const {
+
+Vector2 Vector2::operator/(Vector2 v2) const {
+    return {x / v2.x, y / v2.y};
+}
+
+Vector2 Vector2::operator+(Vector2 v2) const {
     return {x + v2.x, y + v2.y};
 }
 
-Vector2 Vector2::operator-(Vector2 &v2) const {
+Vector2 Vector2::operator-(Vector2 v2) const {
     return {x - v2.x, y - v2.y};
 }
 
-Vector2 Vector2::operator*(Vector2 &v2) const {
+Vector2 Vector2::operator*(Vector2 v2) const {
     return {x * v2.x, y * v2.y};
-}
-
-Vector2 Vector2::operator/(Vector2 &v2) const {
-    return {x / v2.x, y / v2.y};
 }
 
 Vector2 Vector2::operator+(float value) const {
@@ -57,7 +58,7 @@ Vector2 Vector2::operator-(float value) const {
     return {x - value, y - value};
 }
 
-float Vector2::operator*(float scalar) const {
+Vector2 Vector2::operator*(float scalar) const {
     return {x * scalar, y * scalar};
 }
 

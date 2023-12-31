@@ -6,11 +6,13 @@
 #define ASTEROIDS_MOTION_H
 
 #include "Component.h"
+#include "LoaderParams.h"
+#include "Vector.h"
 
 class Motion : public Component {
 public:
-    Motion(GameObject *gameObject, float speed = 0, Vector2 velocity = Vector2::Zero(),
-           Vector2 acceleration = Vector2::Zero(), std::string name = "Motion") : Component(gameObject, name) {
+    Motion(float speed = 0, Vector2 velocity = Vector2::Zero(),
+           Vector2 acceleration = Vector2::Zero(), std::string name = "Motion") : Component(name) {
         m_Velocity = velocity;
         m_Acceleration = acceleration;
         m_Speed = speed;
