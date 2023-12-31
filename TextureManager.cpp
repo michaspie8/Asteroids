@@ -9,14 +9,13 @@
 
 
 #include <string>
-#include "PointF.h"
+#include "Vector.h"
 #include "Mathf.h"
 
 #define NANOSVG_IMPLEMENTATION
 #define NANOSVG_ALL_COLOR_KEYWORDS
 
 #include <nanosvg/nanosvg.h>
-#include <nanosvg/nanosvgrast.h>
 
 // static
 TextureManager *TextureManager::s_pInstance = nullptr;
@@ -87,6 +86,11 @@ TextureManager::drawFrameEx(std::string id, int row, int column, int frameW, int
                      SDL_FLIP_NONE);
 }
 
+void TextureManager::drawFrameEx(std::string id, int row, int column, int frameW, int frameH, Vector2 pos, int w,
+                                 int h, float angle) {
+    drawFrameEx(id, row, column, frameW, frameH, pos.x, pos.y, w, h, angle);
+}
+
 
 void TextureManager::draw(SDL_Texture *texture, int x, int y, int w, int h) {
     SDL_Rect srcRect, destRect;
@@ -105,12 +109,12 @@ void TextureManager::draw(SDL_Texture *texture, int x, int y, int w, int h) {
     SDL_RenderCopy(Game::getInstance()->getRenderer(), texture, &srcRect, &destRect);
 }
 
-PointF TextureManager::RotatePoint(PointF pointToRotate, PointF centerPoint, float angle) {
+Vector2 TextureManager::RotatePoint(Vector2 pointToRotate, Vector2 centerPoint, float angle) {
     float x = pointToRotate.x - centerPoint.x;
     float y = pointToRotate.y - centerPoint.y;
     float rotatedX = x * cos(angle * M_PI / 180) - y * sin(angle * M_PI / 180);
     float rotatedY = x * sin(angle * M_PI / 180) + y * cos(angle * M_PI / 180);
-    return PointF(rotatedX + centerPoint.x, rotatedY + centerPoint.y);
+    return Vector2(rotatedX + centerPoint.x, rotatedY + centerPoint.y);
 }
 
 
@@ -136,7 +140,7 @@ void TextureManager::drawVectorTexture(std::string id, Vector2 position, float w
                 }
                 //Apply rotation to points
                 for (int j = 0; j < 8; j += 2) {
-                    PointF point = RotatePoint(PointF(d[j], d[j + 1]), PointF(position.x, position.y), angle);
+                    Vector2 point = RotatePoint(Vector2(d[j], d[j + 1]), Vector2(position.x, position.y), angle);
                     d[j] = point.x;
                     d[j + 1] = point.y;
                 }
@@ -151,7 +155,7 @@ void TextureManager::drawVectorTexture(std::string id, Vector2 position, float w
 
 //Same as above bot with pivot point, pls edit the other one, after testing that one, update this
 
-void TextureManager::drawVectorTexture(std::string id, Vector2 position, float w, float h, float angle, PointF pivot) {
+void TextureManager::drawVectorTexture(std::string id, Vector2 position, float w, float h, float angle, Vector2 pivot) {
     //get texture
     NSVGimage *image = m_VectorTextureMap[id];
 
@@ -173,7 +177,7 @@ void TextureManager::drawVectorTexture(std::string id, Vector2 position, float w
                 }
                 //Apply rotation to points
                 for (int j = 0; j < 8; j += 2) {
-                    PointF point = RotatePoint(PointF(d[j], d[j + 1]), pivot, angle);
+                    Vector2 point = RotatePoint(Vector2(d[j], d[j + 1]), pivot, angle);
                     d[j] = point.x;
                     d[j + 1] = point.y;
                 }
@@ -187,8 +191,8 @@ void TextureManager::drawVectorTexture(std::string id, Vector2 position, float w
 }
 
 
-
-void TextureManager::drawCubicBez(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4, int strokeWidth, Uint32 color) {
+void TextureManager::drawCubicBez(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4,
+                                  int strokeWidth, Uint32 color) {
 
     //draw bezier curve
     float t = 0;
@@ -200,7 +204,7 @@ void TextureManager::drawCubicBez(float x1, float y1, float x2, float y2, float 
                 Mathf::bezier(y1, y2, y3, y4, t)
         );
         thickLineColor(Game::getInstance()->getRenderer(), (Sint16) lastPoint.x, (Sint16) lastPoint.y, (Sint16) point.x,
-                       (Sint16) point.y, (Uint8)strokeWidth, color);
+                       (Sint16) point.y, (Uint8) strokeWidth, color);
         lastPoint = point;
         t += step;
     }

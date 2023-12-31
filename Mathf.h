@@ -32,7 +32,7 @@ public:
     //cubic bezier curve
     static float bezier(float p0, float p1, float p2, float p3, float t);
 
-   static Uint32* GaussianBlur(Uint32* pixels, int width, int height, int radius, float sigma);
+    static Uint32 *GaussianBlur(Uint32 *pixels, int width, int height, int radius, float sigma);
 };
 
 

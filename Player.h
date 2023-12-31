@@ -10,7 +10,7 @@
 
 class Player : public GameObject {
 public:
-    Player(const LoaderParams *params, float angleDampTime, float rotationSpeed);
+    Player(LoaderParams *params, float angleDampTime, float rotationSpeed);
 
     Player();
 

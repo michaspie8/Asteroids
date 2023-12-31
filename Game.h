@@ -8,11 +8,13 @@
 #include <SDL.h>
 #include "GameObject.h"
 #include <vector>
+
 enum AntiAliasingType {
     MSAA,
     FXAA,
     SSAA
 };
+
 class Game {
 public:
 
@@ -28,7 +30,6 @@ public:
 
     void addGameObject(GameObject *gameObject);
 
-    void removeGameObject(GameObject *gameObject);
     //setters
     void setRunning(bool running) { m_Running = running; }
 
@@ -47,9 +48,20 @@ public:
 
     [[nodiscard]] int getWindowHeight() const { return m_WindowHeight; }
 
+    [[nodiscard]] GameObject *findGameObjectByName(std::string name);
+
+    [[nodiscard]] std::vector<GameObject *> findGameObjectsByName(std::string name);
+
+    [[nodiscard]] GameObject *findGameObjectByTag(std::string tag);
+
+    [[nodiscard]] std::vector<GameObject *> findGameObjectsByTag(std::string tag);
+
+    [[nodiscard]] std::vector<GameObject *> getGameObjects() const { return m_GameObjects; }
+
+    [[nodiscard]] AntiAliasingType getAntiAliasingType() const { return m_AntiAliasingType; }
+
+
     static Game *getInstance();
-
-
 
 
 private:

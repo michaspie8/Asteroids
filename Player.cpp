@@ -8,11 +8,12 @@
 #include "EventHandler.h"
 #include "Mathf.h"
 #include "TextureManager.h"
-#include "ChildGameObject.h"
 #include "Vector.h"
+#include "Renderer.h"
+#include "Motion.h"
 
 
-Player::Player(const LoaderParams *params, float angleDampTime, float rotationSpeed) : GameObject(params) {
+Player::Player(LoaderParams *params, float angleDampTime, float rotationSpeed) : GameObject(params) {
     this->angleDampTime = angleDampTime;
     this->rotationSpeed = rotationSpeed;
 }
@@ -24,78 +25,91 @@ Player::Player() : Player(
 
     //init jet flame
     TextureManager::getInstance()->loadVector("assets/jet-flame.svg", "jet-flame", true);
-    m_JetFlame = new ChildGameObject(
-            new LoaderParams(Vector2(m_Width/2, -m_Height/2 + 12 + 6), 6, 12, 180, "jet-flame"), this);
+    m_JetFlame = new GameObject(
+            new LoaderParams(Vector2(getTransform()->getWidth() / 2, -getTransform()->getHeight() / 2 + 12 + 6), 6, 12,
+                             180, "jet-flame"));
+    m_JetFlame->setParent(this);
+    m_JetFlame->addComponent(new Renderer(m_JetFlame, "jet-flame", RenderType::VECTOR));
+    m_JetFlame->addComponent(new Motion(m_JetFlame, 0, Vector2::Zero(), Vector2::Zero(), "jet-flame-motion"));
+
+
+    m_JetFlame->getComponent("Renderer")->setEnabled(false);
     Game::getInstance()->addGameObject(m_JetFlame);
-    m_JetFlame->setRenderable(false);
+
 }
 
 Player::~Player() = default;
 
 void Player::draw() {
-    if(m_renderable){
-    TextureManager::getInstance()->drawVectorTexture("player", m_Position, m_Width, m_Height, m_Spin);
-    }
+
 }
 
 void Player::update() {
+    if (!m_Enabled) return;
+
+    auto *motion = (Motion *) getComponent("Motion");
+    auto *jetRenderer = (Component *) m_JetFlame->getComponent("Renderer");
+
+    auto angle = getTransform()->getAngle();
+    auto acceleration = motion->getAcceleration();
+    auto velocity = motion->getVelocity();
+    auto position = getTransform()->getPosition();
+
     //handle input
     int delta = EventHandler::getInstance()->isKeyboardKeyDown(SDL_SCANCODE_LEFT) -
                 EventHandler::getInstance()->isKeyboardKeyDown(SDL_SCANCODE_RIGHT);
 
-    //damping of angle
-    m_Angle = Mathf::smoothDampAngle(m_Angle, m_Angle - delta * rotationSpeed, angleDampVelocity, angleDampTime, 1000,
-                                     Game::getInstance()->getDeltaTime());
-    //tring to keep angle between 0 and 360
-    m_Angle = (int) m_Angle % 360 + (m_Angle - (int) m_Angle);
-    if (m_Angle < 0) {
-        m_Angle += 360;
-    }
+    //angle damping
+    angle = Mathf::smoothDampAngle(angle, angle - delta * rotationSpeed, angleDampVelocity, angleDampTime, 1000,
+                                   Game::getInstance()->getDeltaTime());
+
     //acceleration
     if (EventHandler::getInstance()->isKeyboardKeyDown(SDL_SCANCODE_UP)) {
 
-        m_Acceleration = degToVector(m_Angle) * 0.1f;
+        acceleration = degToVector(angle) * 0.1f;
 
 //spawn jet flame -> position is applied in child game object automatically
 
-        //todo animation of jet flame (two svg in teturemap and switch between them when in half of animation time or sth)
-        if(SDL_GetTicks64() - m_jetFlameAnimationTimer > m_jetFlameAnimationTime){
+        //todo animation of jet flame (two svg in texture map and switch between them when in half of animation time or sth)
+        if (SDL_GetTicks64() - m_jetFlameAnimationTimer > m_jetFlameAnimationTime) {
             m_jetFlameAnimationTimer = SDL_GetTicks64();
-            m_JetFlame->setRenderable(!m_JetFlame->isRenderable());
+            jetRenderer->setEnabled(!jetRenderer->isEnabled());
         }
 
     } else {
-        m_JetFlame->setRenderable(false);
+        jetRenderer->setEnabled(false);
 
-        m_Acceleration = Vector2(0, 0);
+        acceleration = Vector2(0, 0);
     }
-    m_Velocity += m_Acceleration;
-    if (m_Acceleration.length() < 00.1f) {
-        m_Velocity *= 0.99f;
+    velocity += acceleration;
+    if (acceleration.length() < 00.1f) {
+        velocity *= 0.99f;
     }
 
     //limit velocity
-    if (m_Velocity.length() > 10) {
-        m_Velocity.normalise();
-        m_Velocity *= 10;
+    if (velocity.length() > 10) {
+        velocity.normalise();
+        velocity *= 10;
     }
 
     //if player is gonna go out of screen, teleport him to the other side
-    if (m_Position.x > Game::getInstance()->getWindowWidth()) {
-        m_Position.x = 0;
-    } else if (m_Position.x < 0) {
-        m_Position.x = Game::getInstance()->getWindowWidth();
+    if (position.x > Game::getInstance()->getWindowWidth()) {
+        position.x = 0;
+    } else if (position.x < 0) {
+        position.x = Game::getInstance()->getWindowWidth();
     }
-    if (m_Position.y > Game::getInstance()->getWindowHeight()) {
-        m_Position.y = 0;
-    } else if (m_Position.y < 0) {
-        m_Position.y = Game::getInstance()->getWindowHeight();
+    if (position.y > Game::getInstance()->getWindowHeight()) {
+        position.y = 0;
+    } else if (position.y < 0) {
+        position.y = Game::getInstance()->getWindowHeight();
     }
 
-    //update position
-    m_Position += m_Velocity;
-    m_Spin = m_Angle;
-
+//apply changes
+    getTransform()->setPosition(position);
+    getTransform()->setAngle(angle);
+    motion->setAcceleration(acceleration);
+    motion->setVelocity(velocity);
+    GameObject::update();
 }
 
 void Player::clean() {

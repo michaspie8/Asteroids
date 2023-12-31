@@ -15,14 +15,19 @@ add_executable(Asteroids main.cpp
         Mathf.h
         Player.cpp
         Player.h
-        PointF.cpp
-        PointF.h
         TextureManager.cpp
         TextureManager.h
         Vector.cpp
         Vector.h
-        ChildGameObject.cpp
-        ChildGameObject.h
+        Component.h
+        Asteroid.cpp
+        Asteroid.h
+        Transform.cpp
+        Transform.h
+        Motion.cpp
+        Motion.h
+        Renderer.cpp
+        Renderer.h
 )
 file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
 

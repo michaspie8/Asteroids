@@ -6,7 +6,7 @@
 #include <string>
 #include <SDL_image.h>
 #include <nanosvg/nanosvg.h>
-#include "PointF.h"
+#include "Vector.h"
 
 class TextureManager {
 public:
@@ -22,7 +22,8 @@ public:
     drawFrameEx(std::string id, int row, int column, int frameW, int frameH, int x, int y, int w, int h, float angle);
 
     void drawVectorTexture(std::string id, Vector2 position, float w, float h, float angle);
-    void drawVectorTexture(std::string id, Vector2 position, float w, float h, float angle, PointF pivot);
+
+    void drawVectorTexture(std::string id, Vector2 position, float w, float h, float angle, Vector2 pivot);
 
 
     NSVGimage *getVectorTexture(std::string id) { return m_VectorTextureMap[id]; };
@@ -33,17 +34,20 @@ public:
 private:
     static TextureManager *s_pInstance;     // Singleton.
 
-    static PointF RotatePoint(PointF pointToRotate, PointF centerPoint, float angle);
+    static Vector2 RotatePoint(Vector2 pointToRotate, Vector2 centerPoint, float angle);
 
-    void TextureManager::drawCubicBez(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4, int strokeWidth, Uint32 color);
+    void drawCubicBez(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4, int strokeWidth,
+                      Uint32 color);
 
 
-        std::map<std::string, SDL_Texture *> m_TextureMap;   // Texturekeeping
+    std::map<std::string, SDL_Texture *> m_TextureMap;   // Texturekeeping
     std::map<std::string, NSVGimage *> m_VectorTextureMap;   // Texturekeeping
 
 
 
 
+    void
+    drawFrameEx(std::string id, int row, int column, int frameW, int frameH, Vector2 pos, int w, int h, float angle);
 };
 
 #endif //ASTEROIDS_TEXTUREMANAGER_H

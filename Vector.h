@@ -16,9 +16,17 @@ public:
 
     Vector2(float x, float y);
 
-    float length() const;
+    [[nodiscard]] float length() const;
+
+    float lengthSquared() const;
 
     void normalise();
+
+    Vector2 normalised() const;
+
+    static Vector2 Zero() {
+        return {0, 0};
+    }
 
 
     Vector2 operator+(Vector2 &v2) const;
@@ -34,7 +42,7 @@ public:
 
     Vector2 operator-(float value) const;
 
-    Vector2 operator*(float scalar) const;
+    float operator*(float scalar) const;
 
     Vector2 operator/(float scalar) const;
 
@@ -44,10 +52,13 @@ public:
 
     void operator*=(float scalar);
 
-    void operator=(int value);
+    Vector2 &operator=(float value);
 
+    [[nodiscard]] float VectorToRad() const {
+        return atan2(y, x);
+    }
 
-    double VectorToDeg() const {
+    [[nodiscard]] double VectorToDeg() const {
         return atan2(y, x) * 180 / M_PI;
     }
 

@@ -57,7 +57,7 @@ Vector2 Vector2::operator-(float value) const {
     return {x - value, y - value};
 }
 
-Vector2 Vector2::operator*(float scalar) const {
+float Vector2::operator*(float scalar) const {
     return {x * scalar, y * scalar};
 }
 
@@ -72,8 +72,10 @@ void Vector2::operator+=(Vector2 &v2) {
 }
 
 
-void Vector2::operator=(int value) {
-    x = y = value;
+Vector2 &Vector2::operator=(float value) {
+    x = value;
+    y = value;
+    return *this;
 }
 
 
@@ -87,3 +89,15 @@ Vector2 degToVector(float deg) {
     vec.normalise();
     return vec;
 }
+
+float Vector2::lengthSquared() const {
+    return x * x + y * y;
+}
+
+Vector2 Vector2::normalised() const {
+    Vector2 vec(x, y);
+    vec.normalise();
+    return vec;
+}
+
+

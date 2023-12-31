@@ -51,7 +51,6 @@ bool Game::init(const char *title, int xpos, int ypos, int width, int height, SD
                 //load textures
                 TextureManager::getInstance()->load("assets/background_gradient.svg", "background_gradient");
 
-
                 //init game objects
                 m_GameObjects.push_back(new Player());
                 //add
@@ -105,7 +104,8 @@ void Game::render() {
     //clear renderer
     SDL_RenderClear(m_pRenderer);
     //draw background gradient
-    TextureManager::getInstance()->draw(TextureManager::getInstance()->getTexture("background_gradient"), 0, 0, m_WindowWidth, m_WindowHeight);
+    TextureManager::getInstance()->draw(TextureManager::getInstance()->getTexture("background_gradient"), 0, 0,
+                                        m_WindowWidth, m_WindowHeight);
 
     //draw game objects
     for (auto &gameObject: m_GameObjects) {
@@ -124,6 +124,47 @@ void Game::clean() {
 void Game::addGameObject(GameObject *gameObject) {
     m_GameObjects.push_back(gameObject);
 }
+
+GameObject *Game::findGameObjectByName(std::string name) {
+    for (auto &gameObject: m_GameObjects) {
+        if (gameObject->getName() == name) {
+            return gameObject;
+        }
+    }
+    return nullptr;
+}
+
+std::vector<GameObject *> Game::findGameObjectsByName(std::string name) {
+    std::vector<GameObject *> gameObjects;
+    for (auto &gameObject: m_GameObjects) {
+        if (gameObject->getName() == name) {
+            gameObjects.push_back(gameObject);
+        }
+    }
+    return gameObjects;
+}
+
+GameObject *Game::findGameObjectByTag(std::string tag) {
+    for (auto &gameObject: m_GameObjects) {
+        if (gameObject->getTag() == tag) {
+            return gameObject;
+        }
+    }
+    return nullptr;
+}
+
+std::vector<GameObject *> Game::findGameObjectsByTag(std::string tag) {
+    std::vector<GameObject *> gameObjects;
+    for (auto &gameObject: m_GameObjects) {
+        if (gameObject->getTag() == tag) {
+            gameObjects.push_back(gameObject);
+        }
+    }
+    return gameObjects;
+}
+
+
+
 
 /*
 //bloom effect using gaussian blur and additive blending

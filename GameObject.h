@@ -1,14 +1,20 @@
 #ifndef ASTEROIDS_GAMEOBJECT_H
 #define ASTEROIDS_GAMEOBJECT_H
 
-#include "GameObject.h"
 #include "LoaderParams.h"
 #include "Vector.h"
 #include <string>
+#include <vector>
+#include "Component.h"
+#include "Transform.h"
+#include <stdexcept>
 
 
 class GameObject {
 public:
+    GameObject(LoaderParams *params);
+
+
     virtual void draw();
 
     virtual void update();
@@ -17,89 +23,77 @@ public:
 
     [[nodiscard]] bool isMarkedForDeletion() { return m_MarkedForDeletion; };
 
-    GameObject(const LoaderParams *params);
-
     virtual ~GameObject() {};
 
-    Vector2 getPosition() { return m_Position; };
+    std::string getName() { return m_Name; };
 
-    float getWidth() { return m_Width; };
+    std::string getTag() { return m_Tag; };
 
-    float getHeight() { return m_Height; };
+    bool isEnabled() { return m_Enabled; };
 
-    float getSpin() { return m_Spin; };
+    Component *getComponent(std::string name);
 
-    float getAngle() { return m_Angle; };
+    Transform *getTransform() { return m_pTransform; };
 
-    float getSpeed() { return m_Speed; };
+    //by type
+    template<typename T>
+    T *getComponent() {
+        for (auto component: m_Components) {
+            if (dynamic_cast<T *>(component)) {
+                return dynamic_cast<T *>(component);
+            }
+        }
+        return nullptr;
+    }
 
-    Vector2 getVelocity() { return m_Velocity; };
 
-    Vector2 getAcceleration() { return m_Acceleration; };
+    GameObject *getParent() { return m_pParent; };
 
-    bool getCanMove() { return m_CanMove; };
+    //setters
 
-    bool getCanShoot() { return m_CanShoot; };
-
-    bool getIsMoving() { return m_IsMoving; };
-
-    bool isRenderable() { return m_renderable; };
-
-    std::string getTextureId() { return m_TextureId; };
-
-    void setPosition(Vector2 pos) { m_Position = pos; };
-
-    void setWidth(float w) { m_Width = w; };
-
-    void setHeight(float h) { m_Height = h; };
-
-    void setSpin(float spin) { m_Spin = spin; };
-
-    void setAngle(float angle) { m_Angle = angle; };
-
-    void setSpeed(float speed) { m_Speed = speed; };
-
-    void setVelocity(Vector2 velocity) { m_Velocity = velocity; };
-
-    void setAcceleration(Vector2 acceleration) { m_Acceleration = acceleration; };
-
-    void setCanMove(bool canMove) { m_CanMove = canMove; };
-
-    void setCanShoot(bool canShoot) { m_CanShoot = canShoot; };
-
-    void setIsMoving(bool isMoving) { m_IsMoving = isMoving; };
-
-    void setTextureId(std::string textureId) { m_TextureId = textureId; };
+    //add component adds any class deriving from component to this game object and sets its parent to this game object
+    //use casting to cast t to Component*
+    template<typename T>
+    void addComponent(T *t) {
+        Component *c = dynamic_cast<Component *>(t);
+        if (c == nullptr) throw std::invalid_argument("T must derive from Component");
+        m_Components.push_back(c);
+        setParent(this);
+    }
 
     void setMarkedForDeletion(bool marked) { m_MarkedForDeletion = marked; };
 
-    void setRenderable(bool renderable) { m_renderable = renderable; };
 
+    void setName(std::string name) { m_Name = name; };
 
+    void setTag(std::string tag) { m_Tag = tag; };
 
-    void printInfo();
+    void setEnabled(bool enabled) { m_Enabled = enabled; };
+
+    //change parent of this game object
+    void setParent(GameObject *parent) { m_pParent = parent; };
+
 
 protected:
+    //Game class uses this to safely delete game objects
     bool m_MarkedForDeletion;
+    //if false, this game object (so all of its components) will not be updated or drawn
+    bool m_Enabled;
+    //name of this object, it's not texture id
+    std::string m_Name;
+    //tag is used to identify game objects
+    //for example, all asteroids have tag "asteroid"
+    //or player has tag "player"
+    //it doen't have to be unique,
+    // beacause of the getComponentS method
+    std::string m_Tag;
 
-    Vector2 m_Position;
-    float m_Width;
-    float m_Height;
-    float m_Spin;
-
-    float m_Angle;          // Heading
-    float m_Speed;
-    Vector2 m_Velocity;
-    Vector2 m_Acceleration;
-
-    bool m_CanMove;
-    bool m_CanShoot;
-    bool m_IsMoving;
-
-    bool m_renderable = true;
-
-    std::string m_TextureId;
-
+    //all components of this game object
+    std::vector<Component *> m_Components;
+    //parent of this game object, nullptr if none
+    GameObject *m_pParent = nullptr;
+    //its just a shortcut to transform component, beacuse its in every game object
+    Transform *m_pTransform = nullptr;
 
 };
 

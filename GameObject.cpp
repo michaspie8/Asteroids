@@ -1,48 +1,49 @@
 #include "GameObject.h"
 #include "TextureManager.h"
 #include <iostream>
+#include "Transform.h"
 
-GameObject::GameObject(const LoaderParams *params){
-    m_Position = params->m_Position;
-    m_Width = params->m_Width;
-    m_Height = params->m_Height;
-    m_Spin = params->m_Spin;
-    m_Angle = params->m_Angle;
-    m_Speed = params->m_Speed;
-    m_Velocity = params->m_Velocity;
-    m_Acceleration = params->m_Acceleration;
+GameObject::GameObject(LoaderParams *params) {
+    m_Components = std::vector<Component *>();
+    m_pTransform = new Transform(this, params);
     m_MarkedForDeletion = params->m_MarkedForDeletion;
-    m_TextureId = params->m_TextureId;
-
+    m_Name = params->m_Name;
+    m_Tag = params->m_Tag;
+    m_Enabled = params->m_Enabled;
 }
 
 void GameObject::draw() {
-    if(m_renderable){
-    /*TextureManager::getInstance()->drawFrameEx(m_TextureId, 0, 0, 512, 512, (int) m_Position.x, (int) m_Position.y,
-                                               m_Width, m_Height, m_Angle);*/
-    TextureManager::getInstance()->drawVectorTexture(m_TextureId, m_Position, m_Width, m_Height, m_Angle);
+    //call draw on all components
+    for (auto component: m_Components) {
+        component->draw();
     }
+
 }
 
 void GameObject::update() {
-    m_Velocity = degToVector(m_Angle) * m_Speed;
-    m_Position += m_Velocity;
-//    std::cout << m_Position.x<<", "<<m_Position.y<<"\n";
+    //call update on all components
+    for (auto component: m_Components) {
+        component->update();
+    }
 }
 
 void GameObject::clean() {
     m_MarkedForDeletion = true;
+    //call clean on all components
+    for (auto component: m_Components) {
+        component->clean();
+    }
+
 }
 
-void GameObject::printInfo() {
-    std::cout << "Position: " << m_Position.x << ", " << m_Position.y << "\n";
-    std::cout << "Width: " << m_Width << "\n";
-    std::cout << "Height: " << m_Height << "\n";
-    std::cout << "Spin: " << m_Spin << "\n";
-    std::cout << "Angle: " << m_Angle << "\n";
-    std::cout << "Speed: " << m_Speed << "\n";
-    std::cout << "Velocity: " << m_Velocity.x << ", " << m_Velocity.y << "\n";
-    std::cout << "Acceleration: " << m_Acceleration.x << ", " << m_Acceleration.y << "\n";
-    std::cout << "Marked for deletion: " << m_MarkedForDeletion << "\n";
-    std::cout << "Texture ID: " << m_TextureId << "\n";
+Component *GameObject::getComponent(std::string name) {
+    for (auto component: m_Components) {
+        if (component->name == name) {
+            return component;
+        }
+    }
+    return nullptr;
 }
+
+
+
