@@ -8,19 +8,20 @@
 
 void Renderer::draw() {
     if (!m_Enabled) return;
+    auto angle = gameObject->getTransform()->getAbsoluteAngle();
+    auto pos = gameObject->getTransform()->getAbsolutePosition();
+
     if (m_RenderType == RenderType::SPRITE) {
         //TODO decide how large the frame should be, and maybe use draw() when angle is 0
         TextureManager::getInstance()->drawFrameEx(m_TextureID, 0, 0, 512, 512,
-                                                   gameObject->getTransform()->getPosition().x,
-                                                   gameObject->getTransform()->getPosition().y,
+                                                   pos.x,
+                                                   pos.y,
                                                    gameObject->getTransform()->getWidth(),
                                                    gameObject->getTransform()->getHeight(),
-                                                   gameObject->getTransform()->getAngle());
+                                                   angle);
     } else {
-        TextureManager::getInstance()->drawVectorTexture(m_TextureID, gameObject->getTransform()->getPosition(),
-                                                         gameObject->getTransform()->getWidth(),
-                                                         gameObject->getTransform()->getHeight(),
-                                                         gameObject->getTransform()->getAngle());
+        TextureManager::getInstance()->drawVectorTexture(m_TextureID, getRenderPositionVector(), angle, gameObject->getTransform()->getWidth(),
+                                                         gameObject->getTransform()->getHeight(), getRenderRotationVector());
     }
 }
 
@@ -38,6 +39,62 @@ void Renderer::setTextureId(std::string textureId) {
 void Renderer::setRenderType(RenderType renderType) {
     m_RenderType = renderType;
 }
+
+void Renderer::setRenderRotation(RenderRotation renderRotation) {
+    m_RenderRotation = renderRotation;
+}
+
+void Renderer::setRenderPosition(RenderPosition renderPosition) {
+    m_RenderPosition = renderPosition;
+}
+
+RenderRotation Renderer::getRenderRotation() {
+    return m_RenderRotation;
+}
+
+RenderPosition Renderer::getRenderPosition() {
+    return m_RenderPosition;
+}
+
+Vector2 Renderer::getRenderPositionVector() {
+    auto pos = gameObject->getTransform()->getAbsolutePosition();
+    auto width = gameObject->getTransform()->getWidth();
+    auto height = gameObject->getTransform()->getHeight();
+    switch (m_RenderPosition) {
+        case RenderPosition::CENTER:
+            return Vector2(pos.x - width / 2, pos.y - height / 2);
+        case RenderPosition::TOP_LEFT:
+            return Vector2(pos.x, pos.y);
+        case RenderPosition::TOP_RIGHT:
+            return Vector2(pos.x - width, pos.y);
+        case RenderPosition::BOTTOM_LEFT:
+            return Vector2(pos.x, pos.y - height);
+        case RenderPosition::BOTTOM_RIGHT:
+            return Vector2(pos.x - width, pos.y - height);
+    }
+}
+
+Vector2 Renderer::getRenderRotationVector(){
+
+    if(gameObject->getParent() != nullptr){
+        switch (m_RenderRotation) {
+            case RenderRotation::PARENT:
+                return gameObject->getParent()->getTransform()->getAbsolutePosition();
+            case RenderRotation::OBJECT:
+                return gameObject->getTransform()->getPosition();
+            case RenderRotation::OBJECT_ABSOLUTE:
+                return gameObject->getTransform()->getAbsolutePosition();
+        }
+    } else {
+        switch (m_RenderRotation) {
+            case RenderRotation::OBJECT:
+                return gameObject->getTransform()->getPosition();
+            default:
+                return gameObject->getTransform()->getAbsolutePosition();
+        }
+    }
+}
+
 
 std::string Renderer::getTextureId() {
     return m_TextureID;

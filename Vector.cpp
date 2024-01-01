@@ -11,6 +11,8 @@ Vector2::Vector2(float x, float y) {
     this->y = y;
 }
 
+
+
 float Vector2::length() const {
     return sqrt(x * x + y * y);
 }
@@ -18,6 +20,10 @@ float Vector2::length() const {
 void Vector2::normalise() {
     if (length() > 0)
         *this *= 1 / length();
+}
+
+float Vector2::distance(Vector2 v2) const {
+    return (*this - v2).length();
 }
 
 Vector2 clampMagnitude(Vector2 vector, float maxLength) {
@@ -99,6 +105,10 @@ Vector2 Vector2::normalised() const {
     Vector2 vec(x, y);
     vec.normalise();
     return vec;
+}
+
+float distance(Vector2 v1, Vector2 v2) {
+    return (v1 - v2).length();
 }
 
 

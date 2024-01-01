@@ -6,7 +6,7 @@
 #include <SDL_render.h>
 #include <SDL2_gfxPrimitives.h>
 #include <SDL2_gfxPrimitives_font.h>
-
+#include <cmath>
 
 #include <string>
 #include "Vector.h"
@@ -132,18 +132,24 @@ void TextureManager::drawVectorTexture(std::string id, Vector2 position, float w
                 for (int j = 0; j < 8; j++) {
                     d[j] = p[j];
                 }
-
+                //Apply scale to points
+                for (int j = 0; j < 8; j += 2) {
+                    d[j] *= w / image->width;
+                    d[j + 1] *= h / image->height;
+                }
                 //Apply position to points
                 for (int j = 0; j < 8; j += 2) {
                     d[j] += position.x - w / 2;
                     d[j + 1] += position.y - h / 2;
                 }
+
                 //Apply rotation to points
                 for (int j = 0; j < 8; j += 2) {
                     Vector2 point = RotatePoint(Vector2(d[j], d[j + 1]), Vector2(position.x, position.y), angle);
                     d[j] = point.x;
                     d[j + 1] = point.y;
                 }
+
                 drawCubicBez(d[0], d[1], d[2], d[3], d[4], d[5], d[6], d[7], shape->strokeWidth, shape->stroke.color);
             }
         }
@@ -153,9 +159,8 @@ void TextureManager::drawVectorTexture(std::string id, Vector2 position, float w
 
 }
 
-//Same as above bot with pivot point, pls edit the other one, after testing that one, update this
-
-void TextureManager::drawVectorTexture(std::string id, Vector2 position, float w, float h, float angle, Vector2 pivot) {
+//Same as above bot with pivot point, and position needs to be calculeted pls edit the other one, after testing that one, update this
+void TextureManager::drawVectorTexture(std::string id, Vector2 position, float angle, float w, float h,Vector2 pivot) {
     //get texture
     NSVGimage *image = m_VectorTextureMap[id];
 
@@ -169,11 +174,15 @@ void TextureManager::drawVectorTexture(std::string id, Vector2 position, float w
                 for (int j = 0; j < 8; j++) {
                     d[j] = p[j];
                 }
-
+                //Apply scale to points
+                for (int j = 0; j < 8; j += 2) {
+                    d[j] *= w / image->width;
+                    d[j + 1] *= h / image->height;
+                }
                 //Apply position to points
                 for (int j = 0; j < 8; j += 2) {
-                    d[j] += position.x - w / 2;
-                    d[j + 1] += position.y - h / 2;
+                    d[j] += position.x;
+                    d[j + 1] += position.y;
                 }
                 //Apply rotation to points
                 for (int j = 0; j < 8; j += 2) {
@@ -181,7 +190,8 @@ void TextureManager::drawVectorTexture(std::string id, Vector2 position, float w
                     d[j] = point.x;
                     d[j + 1] = point.y;
                 }
-                drawCubicBez(d[0], d[1], d[2], d[3], d[4], d[5], d[6], d[7], shape->strokeWidth, shape->stroke.color);
+
+                drawCubicBez(d[0], d[1], d[2], d[3], d[4], d[5], d[6], d[7], shape->strokeWidth * (w+h/2) / (image->width + image->height) /2, shape->stroke.color);
             }
         }
     }

@@ -23,7 +23,7 @@ public:
 
     void drawVectorTexture(std::string id, Vector2 position, float w, float h, float angle);
 
-    void drawVectorTexture(std::string id, Vector2 position, float w, float h, float angle, Vector2 pivot);
+    void drawVectorTexture(std::string id, Vector2 position, float angle, float w, float h, Vector2 pivot);
 
 
     NSVGimage *getVectorTexture(std::string id) { return m_VectorTextureMap[id]; };

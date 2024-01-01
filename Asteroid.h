@@ -1,4 +1,3 @@
-/*
 //
 // Created by Michal on 30.12.2023.
 //
@@ -8,12 +7,10 @@
 
 #include "GameObject.h"
 
-class Asteroid : public GameObject {
+class Asteroid : public Component {
 
 public:
-    Asteroid(const LoaderParams *params) : GameObject(params) {};
-
-    ~Asteroid() : ~GameObject() {};
+    Asteroid(Vector2 pos) : Component("Asteroid"){};
 
     void draw() override;
 
@@ -21,8 +18,16 @@ public:
 
     void clean() override;
 
+    //Destorys asteroid and creates 2-5 smaller ones, if asteroid is small, it just destroys it
+    void Destroy();
+protected:
+
+    float m_Speed;
+    //Asteroids appear in 3 sizes
+    int m_Size;
+
+
 };
 
 
 #endif //ASTEROIDS_ASTEROID_H
-*/

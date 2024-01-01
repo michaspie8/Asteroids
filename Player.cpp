@@ -22,9 +22,8 @@ Player::Player(LoaderParams *params, float angleDampTime, float rotationSpeed) :
 }
 
 Player::Player() : Player(
-        new LoaderParams(Vector2(Game::getInstance()->getWindowWidth() / 2, Game::getInstance()->getWindowHeight()/2), 64, 64, 0, "player", "Player"),
+        new LoaderParams(Vector2(Game::getInstance()->getWindowWidth() / 2, Game::getInstance()->getWindowHeight()/2), 32, 32, 0, "player", "Player"),
         0.1f, 3) {
-
 
     //init jet flame
     TextureManager::getInstance()->loadVector("assets/jet-flame.svg", "jet-flame", true);
@@ -33,8 +32,7 @@ Player::Player() : Player(
                              180, "jet-flame"));
     m_JetFlame->setParent(this);
     m_JetFlame->addComponent(new Renderer("jet-flame", RenderType::VECTOR));
-    m_JetFlame->addComponent(new Motion(0, Vector2::Zero(), Vector2::Zero(), "jet-flame-motion"));
-
+    m_JetFlame->addComponent(new Motion());
 
     m_JetFlame->getComponent("Renderer")->setEnabled(false);
     Game::getInstance()->addGameObject(m_JetFlame);
@@ -44,7 +42,7 @@ Player::Player() : Player(
 Player::~Player() = default;
 
 void Player::draw() {
-
+GameObject::draw();
 }
 
 void Player::update() {

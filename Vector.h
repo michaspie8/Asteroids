@@ -22,6 +22,8 @@ public:
 
     void normalise();
 
+    float distance(Vector2 v2) const;
+
     Vector2 normalised() const;
 
     static Vector2 Zero() {
@@ -67,7 +69,11 @@ public:
 
     friend Vector2 clampMagnitude(Vector2 vector, float maxLength);
 
+    friend float distance(Vector2 v1, Vector2 v2);
+
 };
+
+float distance(Vector2 v1, Vector2 v2);
 
 Vector2 degToVector(float deg);
 

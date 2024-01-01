@@ -29,6 +29,8 @@ add_executable(Asteroids main.cpp
         Transform.h
         Vector.cpp
         Vector.h
+        Asteroid.h
+        Asteroid.cpp
 )
 file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
 
