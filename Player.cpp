@@ -63,6 +63,10 @@ void Player::update() {
     int delta = EventHandler::getInstance()->isKeyboardKeyDown(SDL_SCANCODE_LEFT) -
                 EventHandler::getInstance()->isKeyboardKeyDown(SDL_SCANCODE_RIGHT);
 
+    if(EventHandler::getInstance()->isKeyboardKeyDown(SDL_SCANCODE_SPACE) ){
+        getComponent<Shooter>("Shooter")->shoot();
+    }
+
     //angle damping
     angle = Mathf::smoothDampAngle(angle, angle - delta * rotationSpeed, angleDampVelocity, angleDampTime, 1000,
                                    Game::getInstance()->getDeltaTime());
