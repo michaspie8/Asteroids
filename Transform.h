@@ -9,7 +9,6 @@
 #include "LoaderParams.h"
 
 
-
 class Transform : public Component {
 
 public:

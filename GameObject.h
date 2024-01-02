@@ -66,16 +66,18 @@ public:
     //add component adds any class deriving from component to this game object and sets its parent to this game object
     //use casting to cast t to Component*
     template<typename T>
-    void addComponent(T *t) {
+    T *addComponent(T *t) {
         Component *c = dynamic_cast<Component *>(t);
         if (c == nullptr) throw std::invalid_argument("T must derive from Component");
         m_Components.push_back(c);
         c->gameObject = this;
+        return t;
     }
 
-    void addComponent(Component *c) {
+    Component* addComponent(Component *c) {
         m_Components.push_back(c);
         c->gameObject = this;
+        return c;
     }
 
     void removeComponent(Component *c) {
@@ -107,8 +109,8 @@ public:
     //change parent of this game object
     void setParent(GameObject *parent) { m_pParent = parent; };
 
-
 protected:
+
     //Game class uses this to safely delete game objects
     bool m_MarkedForDeletion;
     //if false, this game object (so all of its components) will not be updated or drawn

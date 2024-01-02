@@ -54,7 +54,9 @@ bool Game::init(const char *title, int xpos, int ypos, int width, int height, SD
 
                 //init game objects
                 m_GameObjects.push_back(new Player());
-                //add
+                //m_GameObjects.push_back(new Asteroid(3));
+
+
                 //load textures for every obj in texture manager
                 for (auto &gameObject: m_GameObjects) {
                     //if gameobject contains renderer component
@@ -130,6 +132,14 @@ void Game::addGameObject(GameObject *gameObject) {
     m_GameObjects.push_back(gameObject);
 }
 
+void Game::addCollider(Collider *collider) {
+    m_Colliders.push_back(collider);
+}
+
+void Game::removeCollider(Collider *collider) {
+    m_Colliders.erase(std::remove(m_Colliders.begin(), m_Colliders.end(), collider), m_Colliders.end());
+}
+
 GameObject *Game::findGameObjectByName(std::string name) {
     for (auto &gameObject: m_GameObjects) {
         if (gameObject->getName() == name) {
@@ -138,6 +148,7 @@ GameObject *Game::findGameObjectByName(std::string name) {
     }
     return nullptr;
 }
+
 
 std::vector<GameObject *> Game::findGameObjectsByName(std::string name) {
     std::vector<GameObject *> gameObjects;

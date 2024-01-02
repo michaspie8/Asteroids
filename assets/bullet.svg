@@ -5,16 +5,16 @@
         xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
         xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
         xmlns:svg="http://www.w3.org/2000/svg"
-        width="6mm"
-        height="12mm"
-        viewBox="0 0 6 12"
+        width="4"
+        height="4"
+        viewBox="0 0 1.0583333 1.0583333"
         version="1.1"
-        id="svg33468"
+        id="svg185"
         inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
-        sodipodi:docname="jet-flame.svg"
+        sodipodi:docname="bullet.svg"
         xmlns="http://www.w3.org/2000/svg">
     <sodipodi:namedview
-            id="namedview33470"
+            id="namedview187"
             pagecolor="#ffffff"
             bordercolor="#000000"
             borderopacity="0.25"
@@ -24,9 +24,9 @@
             inkscape:deskcolor="#d1d1d1"
             inkscape:document-units="mm"
             showgrid="false"
-            inkscape:zoom="5.8012346"
-            inkscape:cx="57.660141"
-            inkscape:cy="60.245797"
+            inkscape:zoom="64"
+            inkscape:cx="3.8046875"
+            inkscape:cy="1.8046875"
             inkscape:window-width="1920"
             inkscape:window-height="1001"
             inkscape:window-x="-9"
@@ -34,14 +34,16 @@
             inkscape:window-maximized="1"
             inkscape:current-layer="layer1"/>
     <defs
-            id="defs33465"/>
+            id="defs182"/>
     <g
             inkscape:label="Warstwa 1"
             inkscape:groupmode="layer"
             id="layer1">
-        <path
-                style="fill:none;fill-rule:evenodd;stroke:#2eff62;stroke-width:0.899999;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
-                d="M 1.1499831,10.160224 2.504475,6.5804959 1.3112321,1.9042754 5.052209,6.5804959 Z"
-                id="path32728"/>
+        <circle
+                style="fill:none;stroke:#ffffff;stroke-width:0.211666;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+                id="path364"
+                cx="0.52916682"
+                cy="0.52916664"
+                r="0.42333344"/>
     </g>
 </svg>

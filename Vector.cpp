@@ -12,7 +12,6 @@ Vector2::Vector2(float x, float y) {
 }
 
 
-
 float Vector2::length() const {
     return sqrt(x * x + y * y);
 }
@@ -34,9 +33,19 @@ Vector2 clampMagnitude(Vector2 vector, float maxLength) {
     return vector;
 }
 
+Vector2 direction(Vector2 v1, Vector2 v2) {
+    return (v1 - v2).normalised();
+}
+
+
 void Vector2::operator*=(float scalar) {
     x *= scalar;
     y *= scalar;
+}
+
+void Vector2::operator/=(float scalar) {
+    x /= scalar;
+    y /= scalar;
 }
 
 
@@ -73,9 +82,34 @@ Vector2 Vector2::operator/(float scalar) const {
 }
 
 
-void Vector2::operator+=(Vector2 &v2) {
+void Vector2::operator+=(Vector2 v2) {
     x += v2.x;
     y += v2.y;
+}
+
+void Vector2::operator-=(Vector2 v2) {
+    x -= v2.x;
+    y -= v2.y;
+}
+
+void Vector2::operator*=(Vector2 v2) {
+    x *= v2.x;
+    y *= v2.y;
+}
+
+void Vector2::operator/=(Vector2 v2) {
+    x /= v2.x;
+    y /= v2.y;
+}
+
+void Vector2::operator+=(float value) {
+    x += value;
+    y += value;
+}
+
+void Vector2::operator-=(float value) {
+    x -= value;
+    y -= value;
 }
 
 

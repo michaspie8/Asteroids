@@ -8,6 +8,7 @@
 #include <SDL.h>
 #include "GameObject.h"
 #include <vector>
+#include "Collider.h"
 
 enum AntiAliasingType {
     MSAA,
@@ -29,6 +30,10 @@ public:
     void clean();
 
     void addGameObject(GameObject *gameObject);
+
+    void addCollider(Collider *collider);
+
+    void removeCollider(Collider *collider);
 
     //setters
     void setRunning(bool running) { m_Running = running; }
@@ -60,6 +65,7 @@ public:
 
     [[nodiscard]] AntiAliasingType getAntiAliasingType() const { return m_AntiAliasingType; }
 
+    [[nodiscard]] std::vector<Collider *> getColliders() const { return m_Colliders; }
 
     static Game *getInstance();
 
@@ -82,6 +88,7 @@ private:
     AntiAliasingType m_AntiAliasingType;
 
     std::vector<GameObject *> m_GameObjects;
+    std::vector<Collider *> m_Colliders;
 };
 
 #endif //ASTEROIDS_GAME_H

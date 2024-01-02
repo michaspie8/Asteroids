@@ -20,7 +20,7 @@ enum class RenderType {
 //Place were texture will be rendered.
 // If its corner, the corner of texture will be the position point
 // If center, the center will be pos point
-enum RenderPosition{
+enum RenderPosition {
 
     CENTER,
     TOP_LEFT,
@@ -34,7 +34,7 @@ enum RenderPosition{
 //if object pivot is object position
 //if combine pivot is object absolute position
 //if there is no parent pivot will be object position
-enum RenderRotation{
+enum RenderRotation {
     PARENT,
     OBJECT,
     OBJECT_ABSOLUTE
@@ -48,7 +48,8 @@ class Renderer : public Component {
 
 public:
     Renderer(std::string textureId, RenderType renderType = RenderType::VECTOR,
-             std::string name = "Renderer", RenderRotation renderRotation = RenderRotation::PARENT, RenderPosition renderPosition = RenderPosition::CENTER) : Component(name) {
+             std::string name = "Renderer", RenderRotation renderRotation = RenderRotation::PARENT,
+             RenderPosition renderPosition = RenderPosition::CENTER) : Component(name) {
         m_TextureID = textureId;
         m_RenderType = renderType;
         m_RenderRotation = renderRotation;

@@ -48,10 +48,21 @@ public:
     Vector2 operator/(float scalar) const;
 
 
-    void operator+=(Vector2 &v2);
+    void operator+=(Vector2 v2);
 
+    void operator-=(Vector2 v2);
+
+    void operator*=(Vector2 v2);
+
+    void operator/=(Vector2 v2);
+
+    void operator+=(float value);
+
+    void operator-=(float value);
 
     void operator*=(float scalar);
+
+    void operator/=(float scalar);
 
     Vector2 &operator=(float value);
 
@@ -71,6 +82,8 @@ public:
 
     friend float distance(Vector2 v1, Vector2 v2);
 
+    friend Vector2 direction(Vector2 from, Vector2 to);
+
 };
 
 float distance(Vector2 v1, Vector2 v2);
@@ -80,6 +93,8 @@ Vector2 degToVector(float deg);
 float degToRadian(float deg);
 
 Vector2 clampMagnitude(Vector2 vector, float maxLength);
+
+Vector2 direction(Vector2 from, Vector2 to);
 
 typedef Vector2 Vector2D;
 

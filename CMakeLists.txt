@@ -13,7 +13,6 @@ add_executable(Asteroids main.cpp
         EventHandler.h
         Game.cpp
         Game.h
-
         LoaderParams.h
         Mathf.cpp
         Mathf.h
@@ -31,6 +30,12 @@ add_executable(Asteroids main.cpp
         Vector.h
         Asteroid.h
         Asteroid.cpp
+        Shooter.cpp
+        Shooter.h
+        Bullet.cpp
+        Bullet.h
+        Collider.cpp
+        Collider.h
 )
 file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
 

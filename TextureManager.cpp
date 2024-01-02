@@ -160,7 +160,7 @@ void TextureManager::drawVectorTexture(std::string id, Vector2 position, float w
 }
 
 //Same as above bot with pivot point, and position needs to be calculeted pls edit the other one, after testing that one, update this
-void TextureManager::drawVectorTexture(std::string id, Vector2 position, float angle, float w, float h,Vector2 pivot) {
+void TextureManager::drawVectorTexture(std::string id, Vector2 position, float angle, float w, float h, Vector2 pivot) {
     //get texture
     NSVGimage *image = m_VectorTextureMap[id];
 
@@ -191,7 +191,9 @@ void TextureManager::drawVectorTexture(std::string id, Vector2 position, float a
                     d[j + 1] = point.y;
                 }
 
-                drawCubicBez(d[0], d[1], d[2], d[3], d[4], d[5], d[6], d[7], shape->strokeWidth * (w+h/2) / (image->width + image->height) /2, shape->stroke.color);
+                drawCubicBez(d[0], d[1], d[2], d[3], d[4], d[5], d[6], d[7],
+                             shape->strokeWidth * (w + h / 2) / (image->width + image->height) / 2,
+                             shape->stroke.color);
             }
         }
     }

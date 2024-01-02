@@ -20,8 +20,10 @@ void Renderer::draw() {
                                                    gameObject->getTransform()->getHeight(),
                                                    angle);
     } else {
-        TextureManager::getInstance()->drawVectorTexture(m_TextureID, getRenderPositionVector(), angle, gameObject->getTransform()->getWidth(),
-                                                         gameObject->getTransform()->getHeight(), getRenderRotationVector());
+        TextureManager::getInstance()->drawVectorTexture(m_TextureID, getRenderPositionVector(), angle,
+                                                         gameObject->getTransform()->getWidth(),
+                                                         gameObject->getTransform()->getHeight(),
+                                                         getRenderRotationVector());
     }
 }
 
@@ -71,12 +73,15 @@ Vector2 Renderer::getRenderPositionVector() {
             return Vector2(pos.x, pos.y - height);
         case RenderPosition::BOTTOM_RIGHT:
             return Vector2(pos.x - width, pos.y - height);
+        default:
+            //circle is default
+            return Vector2(pos.x - width / 2, pos.y - height / 2);
     }
 }
 
-Vector2 Renderer::getRenderRotationVector(){
+Vector2 Renderer::getRenderRotationVector() {
 
-    if(gameObject->getParent() != nullptr){
+    if (gameObject->getParent() != nullptr) {
         switch (m_RenderRotation) {
             case RenderRotation::PARENT:
                 return gameObject->getParent()->getTransform()->getAbsolutePosition();
@@ -85,14 +90,16 @@ Vector2 Renderer::getRenderRotationVector(){
             case RenderRotation::OBJECT_ABSOLUTE:
                 return gameObject->getTransform()->getAbsolutePosition();
         }
-    } else {
+    }
+
+
         switch (m_RenderRotation) {
             case RenderRotation::OBJECT:
                 return gameObject->getTransform()->getPosition();
             default:
                 return gameObject->getTransform()->getAbsolutePosition();
         }
-    }
+
 }
 
 

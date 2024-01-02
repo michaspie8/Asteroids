@@ -10,7 +10,7 @@
 class Asteroid : public Component {
 
 public:
-    Asteroid(Vector2 pos) : Component("Asteroid"){};
+    Asteroid(int size);
 
     void draw() override;
 
@@ -18,8 +18,16 @@ public:
 
     void clean() override;
 
+    static GameObject *MakeNew(int size, Vector2 pos, float angle);
+
     //Destorys asteroid and creates 2-5 smaller ones, if asteroid is small, it just destroys it
-    void Destroy();
+    void Destroy(Vector2 contactPoint);
+
+    void setSize(int size);
+
+    int getSize();
+
+
 protected:
 
     float m_Speed;
