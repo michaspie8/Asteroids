@@ -8,7 +8,6 @@
 #include "Component.h"
 #include "Vector.h"
 #include "Bullet.h"
-#include "Asteroid.h"
 #include "GameObject.h"
 #include <vector>
 
@@ -28,7 +27,7 @@ public:
 
     void update() override;
 
-    void draw() override { Component::draw(); };
+    void draw() override { };
 
     //you can add your own collision functions to this class
     virtual void onCollisionEnter(GameObject *other) {};

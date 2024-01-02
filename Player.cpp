@@ -11,6 +11,7 @@
 #include "Vector.h"
 #include "Renderer.h"
 #include "Motion.h"
+#include "Shooter.h"
 
 
 Player::Player(LoaderParams *params, float angleDampTime, float rotationSpeed) : GameObject(params) {
@@ -18,6 +19,7 @@ Player::Player(LoaderParams *params, float angleDampTime, float rotationSpeed) :
     this->rotationSpeed = rotationSpeed;
     addComponent(new Motion());
     addComponent(new Renderer("player", RenderType::VECTOR));
+    addComponent(new Shooter());
     TextureManager::getInstance()->loadVector("assets/player.svg", "player", true);
 }
 
