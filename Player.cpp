@@ -9,9 +9,9 @@
 #include "Mathf.h"
 #include "TextureManager.h"
 #include "Vector.h"
-#include "Renderer.h"
-#include "Motion.h"
-#include "Shooter.h"
+#include "Components/Renderer.h"
+#include "Components/Motion.h"
+#include "Components/Shooter.h"
 
 
 Player::Player(LoaderParams *params, float angleDampTime, float rotationSpeed) : GameObject(params) {
@@ -20,24 +20,28 @@ Player::Player(LoaderParams *params, float angleDampTime, float rotationSpeed) :
     addComponent(new Motion());
     addComponent(new Renderer("player", RenderType::VECTOR));
     addComponent(new Shooter());
+    TextureManager::getInstance()->loadVector("assets/bullet.svg", "bullet", true);
     TextureManager::getInstance()->loadVector("assets/player.svg", "player", true);
 }
 
 Player::Player() : Player(
         new LoaderParams(Vector2(Game::getInstance()->getWindowWidth() / 2, Game::getInstance()->getWindowHeight() / 2),
                          32, 32, 0, "player", "Player"),
-        0.1f, 3) {
+        0.15f, 5) {
 
     //init jet flame
     TextureManager::getInstance()->loadVector("assets/jet-flame.svg", "jet-flame", true);
+    auto pos =getTransform()->getAbsolutePosition();
+    Vector2 jetflamesize = {getTransform()->getWidth()*8*0.09375f, getTransform()->getHeight()*8*0.1875f};
+    Vector2 jetflamePos = {(getTransform()->getWidth() / 2 + jetflamesize.x /2), (getTransform()->getHeight() / 2 - jetflamesize.y /6)};
     m_JetFlame = new GameObject(
-            new LoaderParams(Vector2(getTransform()->getWidth() / 2, -getTransform()->getHeight() / 2 + 12 + 6), 6, 12,
+            new LoaderParams(jetflamePos, jetflamesize.x, jetflamesize.y,
                              180, "jet-flame"));
+    //beacuse he has a parent position is relative to parent, the pos above is just a shift to a right position
     m_JetFlame->setParent(this);
-    m_JetFlame->addComponent(new Renderer("jet-flame", RenderType::VECTOR));
     m_JetFlame->addComponent(new Motion());
-
-    m_JetFlame->getComponent("Renderer")->setEnabled(false);
+    m_JetFlame->addComponent(new Renderer("jet-flame", RenderType::VECTOR));
+    //m_JetFlame->getComponent("Renderer")->setEnabled(false);
     Game::getInstance()->addGameObject(m_JetFlame);
 
 }
@@ -79,9 +83,11 @@ void Player::update() {
 //spawn jet flame -> position is applied in child game object automatically
 
         //todo animation of jet flame (two svg in texture map and switch between them when in half of animation time or sth)
-        if (SDL_GetTicks64() - m_jetFlameAnimationTimer > m_jetFlameAnimationTime) {
-            m_jetFlameAnimationTimer = SDL_GetTicks64();
+        if (m_jetFlameAnimationTimer > m_jetFlameAnimationTime) {
+            m_jetFlameAnimationTimer = 0;
             jetRenderer->setEnabled(!jetRenderer->isEnabled());
+        }else{
+            m_jetFlameAnimationTimer += Game::getInstance()->getDeltaTime();
         }
 
     } else {
@@ -90,7 +96,7 @@ void Player::update() {
         acceleration = Vector2(0, 0);
     }
     velocity += acceleration;
-    if (acceleration.length() < 00.1f) {
+    if (acceleration.length() < 0.1f) {
         velocity *= 0.99f;
     }
 

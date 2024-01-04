@@ -6,7 +6,7 @@
 #define ASTEROIDS_TRANSFORM_H
 
 #include "Component.h"
-#include "LoaderParams.h"
+#include "../LoaderParams.h"
 
 
 class Transform : public Component {

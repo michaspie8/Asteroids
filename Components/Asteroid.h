@@ -5,7 +5,8 @@
 #ifndef ASTEROIDS_ASTEROID_H
 #define ASTEROIDS_ASTEROID_H
 
-#include "GameObject.h"
+#include "../GameObject.h"
+#include "Component.h"
 
 class Asteroid : public Component {
 
@@ -16,7 +17,7 @@ public:
 
     void update() override;
 
-    void clean() override;
+    void clean()  override {Component::clean();};
 
     static GameObject *MakeNew(int size, Vector2 pos, float angle);
 

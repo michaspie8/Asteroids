@@ -6,15 +6,15 @@
 #define ASTEROIDS_SHOOTER_H
 
 #include "Component.h"
-#include "LoaderParams.h"
-#include "Vector.h"
-#include "GameObject.h"
+#include "../LoaderParams.h"
+#include "../Vector.h"
+#include "../GameObject.h"
 
 
 class Shooter : public Component {
 
 public:
-    Shooter(float fireRate = 0.1, int bulletSpeed = 1, int bulletDamage = 1, float reloadTime = 500,
+    Shooter(unsigned int fireRate = 150, int bulletSpeed = 5, int bulletDamage = 1, unsigned int reloadTime = 500,
             unsigned int maxBullets = 3, std::string name = "Shooter") : Component(name) {
         m_FireRate = fireRate;
         m_BulletSpeed = bulletSpeed;
@@ -58,15 +58,15 @@ public:
     GameObject *bullet();
 
 protected:
-    float m_FireRate;
+   unsigned int m_FireRate;
     int m_BulletSpeed;
     int m_BulletDamage;
     bool m_CanShoot = true;
     //timer for reload
-    float m_ReloadTime = 0.3;
+    unsigned int m_ReloadTime = 300;
     unsigned int m_MaxBullets = 10;
     unsigned int m_Bullets;
-    float m_Timer = 0;
+    unsigned int m_Timer = 0;
 
 //    std::vector<GameObject *> m_BulletsObjects;
 };

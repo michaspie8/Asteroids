@@ -9,7 +9,7 @@
 #include "Bullet.h"
 #include "Collider.h"
 #include "Asteroid.h"
-#include "Game.h"
+#include "../Game.h"
 
 void Shooter::draw() {
 
@@ -23,7 +23,8 @@ void Shooter::update() {
         m_Timer += Game::getInstance()->getDeltaTime();
         //if there are bullets and the time since last shot is greater than fire rate, you can shoot
         if (m_Bullets > 0) {
-            if (m_Timer >= m_FireRate) {
+            std::cout << m_Timer << std::endl;
+            if (m_Timer >= m_FireRate ) {
                 //if there are bullets and the time since last shot is greater than fire rate, you can shoot
                 m_CanShoot = true;
             }
@@ -42,7 +43,7 @@ void Shooter::update() {
 }
 
 void Shooter::clean() {
-    delete this;
+    Component::clean();
 }
 
 void Shooter::setFireRate(int fireRate) {
@@ -102,12 +103,14 @@ void Shooter::shoot() {
 GameObject *Shooter::bullet() {
     auto pos = gameObject->getTransform()->getAbsolutePosition();
     auto angle = gameObject->getTransform()->getAbsoluteAngle();
-    pos += degToVector(angle) * (gameObject->getTransform()->getHeight() / 2);
-    float s = 2;
+    pos += (gameObject->getTransform()->getHeight() / 2);
+    float s = 8;
     auto bullet = new GameObject(new LoaderParams(pos, s, s, 0, "bullet", "Bullet"));
+    bullet->getTransform()->setAngle(angle);
     bullet->addComponent(new Motion());
     bullet->addComponent(new Renderer("bullet", RenderType::VECTOR));
-    bullet->addComponent(new Bullet(m_BulletSpeed, m_BulletDamage));
+    auto bullet_c = bullet->addComponent(new Bullet(m_BulletSpeed, m_BulletDamage));
+    bullet_c->setSpeed(m_BulletSpeed*(std::ceil(gameObject->getComponent<Motion>()->getVelocity().length()/2)));
     bullet->addComponent(new BulletCollider({s, s}, {0, 0}, "Bullet", ColliderType::CIRCLE));
     return bullet;
 }

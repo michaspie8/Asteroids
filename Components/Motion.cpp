@@ -3,7 +3,7 @@
 //
 
 #include "Motion.h"
-#include "GameObject.h"
+#include "../GameObject.h"
 
 void Motion::draw() {}
 
@@ -24,7 +24,7 @@ void Motion::update() {
 }
 
 void Motion::clean() {
-    delete this;
+    Component::clean();
 }
 
 void Motion::setSpeed(float speed) {

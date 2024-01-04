@@ -6,7 +6,7 @@
 #define ASTEROIDS_RENDERER_H
 
 #include "Component.h"
-#include "TextureManager.h"
+#include "../TextureManager.h"
 
 //Fr sprite can be vector too,
 //but the vector image is converted to sprite on load

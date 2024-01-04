@@ -6,9 +6,9 @@
 #define ASTEROIDS_COLLIDER_H
 
 #include "Component.h"
-#include "Vector.h"
+#include "../Vector.h"
 #include "Bullet.h"
-#include "GameObject.h"
+#include "../GameObject.h"
 #include <vector>
 
 enum ColliderType {

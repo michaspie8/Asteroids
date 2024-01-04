@@ -7,8 +7,8 @@
 #include <vector>
 #include <stdexcept>
 #include <iostream>
-#include "Component.h"
-#include "Transform.h"
+#include "Components/Component.h"
+#include "Components/Transform.h"
 
 
 class GameObject {

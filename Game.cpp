@@ -10,7 +10,7 @@
 #include "Colors.h"
 #include "Mathf.h"
 #include <SDL.h>
-#include "Renderer.h"
+#include "Components/Renderer.h"
 
 Game *Game::s_pInstance = nullptr;
 
@@ -93,10 +93,17 @@ void Game::handleEvents() {
 }
 
 
-void Game::update() {
-    for (auto &gameObject: m_GameObjects) {
-        gameObject->update();
+void Game::update() {/*
+    for (GameObject* gameObject: m_GameObjects) {
+        if(gameObject!=nullptr)   gameObject->update();
+    }*/
+    //We cannot use range-based for loop here because we are adding elements during update, and it makes
+    //error "access violation reading location" because of vector reallocation
+    for(int i=0;i<m_GameObjects.size();i++){
+        if(m_GameObjects[i]!=nullptr)   m_GameObjects[i]->update();
     }
+
+
     //delete game objects marked for deletion
     for (auto &gameObject: m_GameObjects) {
         if (gameObject->isMarkedForDeletion()) {

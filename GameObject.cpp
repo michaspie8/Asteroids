@@ -1,7 +1,7 @@
 #include "GameObject.h"
 #include "TextureManager.h"
 #include <iostream>
-#include "Transform.h"
+#include "Components/Transform.h"
 
 GameObject::GameObject(LoaderParams *params) {
     m_Components = std::vector<Component *>();
@@ -22,7 +22,8 @@ void GameObject::draw() {
 
 void GameObject::update() {
     //call update on all components
-    for (auto component: m_Components) {
+    for (int i = 0; i < m_Components.size(); i++ ){
+        auto component = m_Components[i];
         component->update();
     }
 }
@@ -30,14 +31,16 @@ void GameObject::update() {
 void GameObject::clean() {
     m_MarkedForDeletion = true;
     //call clean on all components
-    for (auto component: m_Components) {
+    auto temp = m_Components;
+    for (auto component: temp) {
         component->clean();
     }
 
 }
 
 Component *GameObject::getComponent(std::string name) {
-    for (auto component: m_Components) {
+    for (int i = 0; i < m_Components.size(); i++ ){
+        auto component = m_Components[i];
         if (component->name == name) {
             return component;
         }

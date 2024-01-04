@@ -16,6 +16,7 @@ int main(int argc, char *argv[]) {
                                   SDL_WINDOW_SHOWN)) {
         while (Game::getInstance()->isRunning()) {
             frameStart = SDL_GetTicks64();
+
             Game::getInstance()->handleEvents();
             Game::getInstance()->update();
             Game::getInstance()->render();
@@ -26,7 +27,7 @@ int main(int argc, char *argv[]) {
 
             }
             //delta time will measure how much time has passed since last frame
-            Game::getInstance()->setDeltaTime((float) SDL_GetTicks64() - frameStart / 1000);
+            Game::getInstance()->setDeltaTime(SDL_GetTicks64() - frameStart);
 
 
         }

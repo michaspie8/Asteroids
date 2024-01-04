@@ -8,7 +8,7 @@
 #include <SDL.h>
 #include "GameObject.h"
 #include <vector>
-#include "Collider.h"
+#include "Components/Collider.h"
 
 enum AntiAliasingType {
     MSAA,
@@ -41,7 +41,7 @@ public:
     void setDeltaTime(float deltaTime) { m_DeltaTime = deltaTime; }
 
     //getters
-    [[nodiscard]] float getDeltaTime() const { return m_DeltaTime; }
+    [[nodiscard]] unsigned int getDeltaTime() const { return m_DeltaTime; }
 
     [[nodiscard]] bool isRunning() const { return m_Running; }
 
@@ -84,7 +84,7 @@ private:
     bool m_Running;
     int m_WindowWidth;
     int m_WindowHeight;
-    float m_DeltaTime;
+    unsigned int m_DeltaTime;
     AntiAliasingType m_AntiAliasingType;
 
     std::vector<GameObject *> m_GameObjects;

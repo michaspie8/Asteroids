@@ -5,7 +5,7 @@
 #include "Asteroid.h"
 #include "Renderer.h"
 #include "Motion.h"
-#include "Game.h"
+#include "../Game.h"
 
 
 Asteroid::Asteroid(int size) : Component("Asteroid") {
@@ -26,13 +26,10 @@ void Asteroid::update() {
     motion->setVelocity(degToVector(angle) * motion->getSpeed());
 }
 
-void Asteroid::clean() {
-    delete this;
-}
 
 void Asteroid::Destroy(Vector2 contactPoint) {
     if (m_Size == 1) {
-        gameObject->setMarkedForDeletion(true);
+        gameObject->clean();
     } else {
         auto pos = gameObject->getTransform()->getAbsolutePosition();
         auto angle = direction(pos, contactPoint).VectorToDeg();
@@ -43,7 +40,7 @@ void Asteroid::Destroy(Vector2 contactPoint) {
             auto asteroid = MakeNew(m_Size - 1, pos, angle + angleStep * i);
             Game::getInstance()->addGameObject(asteroid);
         }
-        gameObject->setMarkedForDeletion(true);
+        gameObject->clean();
     }
 }
 

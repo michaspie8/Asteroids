@@ -3,9 +3,10 @@
 //
 
 #include "Bullet.h"
-#include "Game.h"
+#include "../Game.h"
 #include "Asteroid.h"
-#include "Vector.h"
+#include "../Vector.h"
+#include "Motion.h"
 
 void Bullet::draw() {
 
@@ -13,23 +14,26 @@ void Bullet::draw() {
 
 void Bullet::update() {
     if (!m_Enabled) return;
-    lifeTimer += Game::getInstance()->getDeltaTime();
-    if (lifeTime >= 2) {
-        gameObject->setMarkedForDeletion(true);
+    m_LifeTimer += Game::getInstance()->getDeltaTime();
+    auto motion = gameObject->getComponent<Motion>();
+    auto transform = gameObject->getTransform();
+    motion->setVelocity(degToVector(transform->getAngle()) * m_Speed);
+    if (m_LifeTimer >= m_LifeTime) {
+        gameObject->clean();
         m_Enabled = false;
-        lifeTime = 0;
+        m_LifeTime = 0;
     }
 }
 
 void Bullet::clean() {
-    delete this;
+    Component::clean();
 }
 
 void Bullet::OnCollisionEnter(GameObject *other) {
     if (other->getName() == "Asteroid") {
         auto asteroid = other->getComponent<Asteroid>();
         asteroid->Destroy(gameObject->getTransform()->getAbsolutePosition());
-        gameObject->setMarkedForDeletion(true);
+        gameObject->clean();
     }
 }
 

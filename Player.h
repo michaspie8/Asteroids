@@ -33,8 +33,8 @@ protected:
     float m_bulletSpawnDelay = 0.1f;
 
     GameObject *m_JetFlame;
-    float m_jetFlameAnimationTime = 0.2f;
-    float m_jetFlameAnimationTimer = 0;
+    unsigned int m_jetFlameAnimationTime = 100;
+    unsigned int m_jetFlameAnimationTimer = 0;
 };
 
 

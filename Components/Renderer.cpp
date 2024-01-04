@@ -3,7 +3,7 @@
 //
 
 #include "Renderer.h"
-#include "Game.h"
+#include "../Game.h"
 
 
 void Renderer::draw() {
@@ -31,7 +31,7 @@ void Renderer::update() {
 }
 
 void Renderer::clean() {
-    delete this;
+    Component::clean();
 }
 
 void Renderer::setTextureId(std::string textureId) {
@@ -79,6 +79,7 @@ Vector2 Renderer::getRenderPositionVector() {
     }
 }
 
+//Rotation pivot:
 Vector2 Renderer::getRenderRotationVector() {
 
     if (gameObject->getParent() != nullptr) {
@@ -99,9 +100,7 @@ Vector2 Renderer::getRenderRotationVector() {
             default:
                 return gameObject->getTransform()->getAbsolutePosition();
         }
-
 }
-
 
 std::string Renderer::getTextureId() {
     return m_TextureID;

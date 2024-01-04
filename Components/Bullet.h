@@ -6,19 +6,20 @@
 #define ASTEROIDS_BULLET_H
 
 #include "Component.h"
-#include "LoaderParams.h"
-#include "Vector.h"
-#include "GameObject.h"
+#include "../LoaderParams.h"
+#include "../Vector.h"
+#include "../GameObject.h"
 #include "SDL.h"
 
 
 class Bullet : public Component {
 
 public:
-    Bullet(int speed, int damage, std::string name = "Bullet") : Component(name) {
+    Bullet(int speed, int damage, int lifeTime = 500, std::string name = "Bullet") : Component(name) {
         m_Speed = speed;
         m_Damage = damage;
-        lifeTimer = SDL_GetTicks();
+        m_LifeTime = lifeTime;
+        m_LifeTimer = 0;
     };
 
     ~Bullet() override = default;
@@ -41,9 +42,9 @@ public:
 
 protected:
     int m_Speed;
-    float lifeTime = 0;
+    unsigned  int m_LifeTime = 0;
     int m_Damage;
-    unsigned int lifeTimer;
+    unsigned int m_LifeTimer;
 
 };
 

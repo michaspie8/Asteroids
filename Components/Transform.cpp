@@ -3,8 +3,8 @@
 //
 
 #include "Transform.h"
-#include "GameObject.h"
-#include "LoaderParams.h"
+#include "../GameObject.h"
+#include "../LoaderParams.h"
 #include "Component.h"
 
 Transform::Transform(GameObject *gameObject, LoaderParams *params) : Transform(params) {
@@ -27,7 +27,7 @@ void Transform::update() {
 }
 
 void Transform::clean() {
-
+    Component::clean();
 }
 
 void Transform::setPosition(Vector2 position) {

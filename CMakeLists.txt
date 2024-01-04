@@ -3,39 +3,42 @@ project(Asteroids)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(Asteroids main.cpp
-        GameObject.cpp
-        GameObject.h
-        Colors.h
-        Component.cpp
-        Component.h
-        EventHandler.cpp
-        EventHandler.h
-        Game.cpp
-        Game.h
-        LoaderParams.h
-        Mathf.cpp
-        Mathf.h
-        Motion.cpp
-        Motion.h
-        Player.cpp
-        Player.h
-        Renderer.cpp
-        Renderer.h
-        TextureManager.cpp
-        TextureManager.h
-        Transform.cpp
-        Transform.h
-        Vector.cpp
-        Vector.h
-        Asteroid.h
-        Asteroid.cpp
-        Shooter.cpp
-        Shooter.h
-        Bullet.cpp
-        Bullet.h
-        Collider.cpp
-        Collider.h
+add_executable(Asteroids
+        ./Colors.h
+        ./Components/Asteroid.h
+        ./Components/Bullet.h
+        ./Components/Collider.h
+        ./Components/Component.h
+        ./Components/Motion.h
+        ./Components/Renderer.h
+        ./Components/Shooter.h
+        ./Components/Transform.h
+        ./EventHandler.h
+        ./Game.h
+        ./GameObject.h
+        ./LoaderParams.h
+        ./Mathf.h
+        ./Player.h
+        ./SceneManager.h
+        ./TextureManager.h
+        ./Vector.h
+        ./Components/Asteroid.cpp
+        ./Components/Bullet.cpp
+        ./Components/Collider.cpp
+        ./Components/Component.cpp
+        ./Components/Motion.cpp
+        ./Components/Renderer.cpp
+        ./Components/Shooter.cpp
+        ./Components/Transform.cpp
+        ./EventHandler.cpp
+        ./Game.cpp
+        ./GameObject.cpp
+        ./main.cpp
+        ./Mathf.cpp
+        ./Player.cpp
+        ./SceneManager.cpp
+        ./TextureManager.cpp
+        ./Vector.cpp
 )
 file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
 

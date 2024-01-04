@@ -3,7 +3,7 @@
 //
 
 #include "Collider.h"
-#include "Game.h"
+#include "../Game.h"
 
 Collider::Collider(Vector2 size, Vector2 pos, std::string name, ColliderType type) : Component(name) {
     m_Size = size;
@@ -13,13 +13,15 @@ Collider::Collider(Vector2 size, Vector2 pos, std::string name, ColliderType typ
 }
 
 void Collider::clean() {
+    Component::clean();
     Game::getInstance()->removeCollider(this);
-    delete this;
 }
 
 void Collider::update() {
     //foreach collider
-    for (auto &collider: Game::getInstance()->getColliders()) {
+    auto colliders = Game::getInstance()->getColliders();
+    for (int i = 0; i < colliders.size(); i++) {
+        Collider* collider = colliders[i];
         if (collider == this) continue;
         //check if colliding
         bool colliding = false;

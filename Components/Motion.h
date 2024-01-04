@@ -6,8 +6,8 @@
 #define ASTEROIDS_MOTION_H
 
 #include "Component.h"
-#include "LoaderParams.h"
-#include "Vector.h"
+#include "../LoaderParams.h"
+#include "../Vector.h"
 
 class Motion : public Component {
 public:
