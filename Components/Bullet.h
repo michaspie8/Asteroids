@@ -42,7 +42,7 @@ public:
 
 protected:
     int m_Speed;
-    unsigned  int m_LifeTime = 0;
+    unsigned int m_LifeTime = 0;
     int m_Damage;
     unsigned int m_LifeTimer;
 

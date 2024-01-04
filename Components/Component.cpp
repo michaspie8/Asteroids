@@ -5,5 +5,8 @@
 #include "Component.h"
 #include "../GameObject.h"
 
-void Component::clean() {getGameObject()->removeComponent(this); delete this;}
+void Component::clean() {
+    getGameObject()->removeComponent(this);
+    delete this;
+}
 

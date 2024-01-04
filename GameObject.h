@@ -74,7 +74,7 @@ public:
         return t;
     }
 
-    Component* addComponent(Component *c) {
+    Component *addComponent(Component *c) {
         m_Components.push_back(c);
         c->gameObject = this;
         return c;

@@ -24,18 +24,18 @@ void Shooter::update() {
         //if there are bullets and the time since last shot is greater than fire rate, you can shoot
         if (m_Bullets > 0) {
             std::cout << m_Timer << std::endl;
-            if (m_Timer >= m_FireRate ) {
+            if (m_Timer >= m_FireRate) {
                 //if there are bullets and the time since last shot is greater than fire rate, you can shoot
                 m_CanShoot = true;
             }
         }
 
-            //if the time since last shot is greater than reload time, you can reload and have max bullets
-            //aka if you hadn't shot in time of reload time, you can shoot
-            if (m_Timer >= m_ReloadTime) {
-                m_Bullets = m_MaxBullets;
-                m_CanShoot = true;
-            }
+        //if the time since last shot is greater than reload time, you can reload and have max bullets
+        //aka if you hadn't shot in time of reload time, you can shoot
+        if (m_Timer >= m_ReloadTime) {
+            m_Bullets = m_MaxBullets;
+            m_CanShoot = true;
+        }
 
     }
 
@@ -110,7 +110,7 @@ GameObject *Shooter::bullet() {
     bullet->addComponent(new Motion());
     bullet->addComponent(new Renderer("bullet", RenderType::VECTOR));
     auto bullet_c = bullet->addComponent(new Bullet(m_BulletSpeed, m_BulletDamage));
-    bullet_c->setSpeed(m_BulletSpeed*(std::ceil(gameObject->getComponent<Motion>()->getVelocity().length()/2)));
+    bullet_c->setSpeed(m_BulletSpeed + (std::ceil(gameObject->getComponent<Motion>()->getVelocity().length())));
     bullet->addComponent(new BulletCollider({s, s}, {0, 0}, "Bullet", ColliderType::CIRCLE));
     return bullet;
 }

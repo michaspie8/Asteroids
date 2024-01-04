@@ -17,7 +17,7 @@ public:
 
     void update() override;
 
-    void clean()  override {Component::clean();};
+    void clean() override { Component::clean(); };
 
     static GameObject *MakeNew(int size, Vector2 pos, float angle);
 

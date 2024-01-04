@@ -21,7 +21,7 @@ void Collider::update() {
     //foreach collider
     auto colliders = Game::getInstance()->getColliders();
     for (int i = 0; i < colliders.size(); i++) {
-        Collider* collider = colliders[i];
+        Collider *collider = colliders[i];
         if (collider == this) continue;
         //check if colliding
         bool colliding = false;

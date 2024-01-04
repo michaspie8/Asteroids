@@ -58,7 +58,7 @@ public:
     GameObject *bullet();
 
 protected:
-   unsigned int m_FireRate;
+    unsigned int m_FireRate;
     int m_BulletSpeed;
     int m_BulletDamage;
     bool m_CanShoot = true;

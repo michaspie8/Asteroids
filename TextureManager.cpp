@@ -191,7 +191,8 @@ void TextureManager::drawVectorTexture(std::string id, Vector2 position, float a
                     d[j] = point.x;
                     d[j + 1] = point.y;
                 }
-                if(id == "jet-flame") std::cout<<shape->strokeWidth * (w + h / 2) / (image->width + image->height) / 2<<std::endl;
+                if (id == "jet-flame")
+                    std::cout << shape->strokeWidth * (w + h / 2) / (image->width + image->height) / 2 << std::endl;
                 drawCubicBez(d[0], d[1], d[2], d[3], d[4], d[5], d[6], d[7],
                              std::ceil(shape->strokeWidth * (w + h / 2) / (image->width + image->height) / 2),
                              shape->stroke.color);

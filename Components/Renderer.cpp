@@ -94,12 +94,12 @@ Vector2 Renderer::getRenderRotationVector() {
     }
 
 
-        switch (m_RenderRotation) {
-            case RenderRotation::OBJECT:
-                return gameObject->getTransform()->getPosition();
-            default:
-                return gameObject->getTransform()->getAbsolutePosition();
-        }
+    switch (m_RenderRotation) {
+        case RenderRotation::OBJECT:
+            return gameObject->getTransform()->getPosition();
+        default:
+            return gameObject->getTransform()->getAbsolutePosition();
+    }
 }
 
 std::string Renderer::getTextureId() {

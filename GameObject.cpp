@@ -22,7 +22,7 @@ void GameObject::draw() {
 
 void GameObject::update() {
     //call update on all components
-    for (int i = 0; i < m_Components.size(); i++ ){
+    for (int i = 0; i < m_Components.size(); i++) {
         auto component = m_Components[i];
         component->update();
     }
@@ -39,7 +39,7 @@ void GameObject::clean() {
 }
 
 Component *GameObject::getComponent(std::string name) {
-    for (int i = 0; i < m_Components.size(); i++ ){
+    for (int i = 0; i < m_Components.size(); i++) {
         auto component = m_Components[i];
         if (component->name == name) {
             return component;

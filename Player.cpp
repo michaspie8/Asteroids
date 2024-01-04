@@ -31,9 +31,10 @@ Player::Player() : Player(
 
     //init jet flame
     TextureManager::getInstance()->loadVector("assets/jet-flame.svg", "jet-flame", true);
-    auto pos =getTransform()->getAbsolutePosition();
-    Vector2 jetflamesize = {getTransform()->getWidth()*8*0.09375f, getTransform()->getHeight()*8*0.1875f};
-    Vector2 jetflamePos = {(getTransform()->getWidth() / 2 + jetflamesize.x /2), (getTransform()->getHeight() / 2 - jetflamesize.y /6)};
+    auto pos = getTransform()->getAbsolutePosition();
+    Vector2 jetflamesize = {getTransform()->getWidth() * 8 * 0.09375f, getTransform()->getHeight() * 8 * 0.1875f};
+    Vector2 jetflamePos = {(getTransform()->getWidth() / 2 + jetflamesize.x / 2),
+                           (getTransform()->getHeight() / 2 - jetflamesize.y / 6)};
     m_JetFlame = new GameObject(
             new LoaderParams(jetflamePos, jetflamesize.x, jetflamesize.y,
                              180, "jet-flame"));
@@ -67,7 +68,7 @@ void Player::update() {
     int delta = EventHandler::getInstance()->isKeyboardKeyDown(SDL_SCANCODE_LEFT) -
                 EventHandler::getInstance()->isKeyboardKeyDown(SDL_SCANCODE_RIGHT);
 
-    if(EventHandler::getInstance()->isKeyboardKeyDown(SDL_SCANCODE_SPACE) ){
+    if (EventHandler::getInstance()->isKeyboardKeyDown(SDL_SCANCODE_SPACE)) {
         getComponent<Shooter>("Shooter")->shoot();
     }
 
@@ -86,7 +87,7 @@ void Player::update() {
         if (m_jetFlameAnimationTimer > m_jetFlameAnimationTime) {
             m_jetFlameAnimationTimer = 0;
             jetRenderer->setEnabled(!jetRenderer->isEnabled());
-        }else{
+        } else {
             m_jetFlameAnimationTimer += Game::getInstance()->getDeltaTime();
         }
 

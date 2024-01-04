@@ -28,7 +28,7 @@ public:
 
     void setEnabled(bool enabled) { Component::m_Enabled = enabled; }
 
-    [[nodiscard]] GameObject* getGameObject() const { return gameObject; }
+    [[nodiscard]] GameObject *getGameObject() const { return gameObject; }
 
     [[nodiscard]] bool isEnabled() const { return m_Enabled; }
 

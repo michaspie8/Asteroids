@@ -99,8 +99,8 @@ void Game::update() {/*
     }*/
     //We cannot use range-based for loop here because we are adding elements during update, and it makes
     //error "access violation reading location" because of vector reallocation
-    for(int i=0;i<m_GameObjects.size();i++){
-        if(m_GameObjects[i]!=nullptr)   m_GameObjects[i]->update();
+    for (int i = 0; i < m_GameObjects.size(); i++) {
+        if (m_GameObjects[i] != nullptr) m_GameObjects[i]->update();
     }
 
 

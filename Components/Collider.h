@@ -27,7 +27,7 @@ public:
 
     void update() override;
 
-    void draw() override { };
+    void draw() override {};
 
     //you can add your own collision functions to this class
     virtual void onCollisionEnter(GameObject *other) {};
@@ -62,7 +62,9 @@ public:
     };
 
     void draw() override { Collider::draw(); };
+
     void update() override { Collider::update(); };
+
     void clean() override { Collider::clean(); };
 };
 
