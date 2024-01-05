@@ -2,6 +2,17 @@
 // Created by Michal on 27.12.2023.
 //
 
+#include <nanosvg/nanosvg.h>
+#include "Vector.h"
+#include <string>
+#include <SDL2_gfxPrimitives_font.h>
+#include <SDL2_gfxPrimitives.h>
+#include <SDL_render.h>
+#include <SDL_opengl.h>
+#include <SDL.h>
+#include <SDL_image.h>
+#include "TextureManager.h"
+#include "Game.h"
 #include "Mathf.h"
 
 #include <cmath>
@@ -140,3 +151,10 @@ Uint32 *Mathf::GaussianBlur(Uint32 *pixels, int width, int height, int radius, f
     delete[] temp;
     return pixels;
 }*/
+Vector2 Mathf::RotatePoint(Vector2 pointToRotate, Vector2 centerPoint, float angle) {
+    float x = pointToRotate.x - centerPoint.x;
+    float y = pointToRotate.y - centerPoint.y;
+    float rotatedX = x * cos(angle * M_PI / 180) - y * sin(angle * M_PI / 180);
+    float rotatedY = x * sin(angle * M_PI / 180) + y * cos(angle * M_PI / 180);
+    return Vector2(rotatedX + centerPoint.x, rotatedY + centerPoint.y);
+}

@@ -110,14 +110,6 @@ void TextureManager::draw(SDL_Texture *texture, int x, int y, int w, int h) {
     SDL_RenderCopy(Game::getInstance()->getRenderer(), texture, &srcRect, &destRect);
 }
 
-Vector2 TextureManager::RotatePoint(Vector2 pointToRotate, Vector2 centerPoint, float angle) {
-    float x = pointToRotate.x - centerPoint.x;
-    float y = pointToRotate.y - centerPoint.y;
-    float rotatedX = x * cos(angle * M_PI / 180) - y * sin(angle * M_PI / 180);
-    float rotatedY = x * sin(angle * M_PI / 180) + y * cos(angle * M_PI / 180);
-    return Vector2(rotatedX + centerPoint.x, rotatedY + centerPoint.y);
-}
-
 
 void TextureManager::drawVectorTexture(std::string id, Vector2 position, float w, float h, float angle) {
     //get texture
@@ -146,7 +138,7 @@ void TextureManager::drawVectorTexture(std::string id, Vector2 position, float w
 
                 //Apply rotation to points
                 for (int j = 0; j < 8; j += 2) {
-                    Vector2 point = RotatePoint(Vector2(d[j], d[j + 1]), Vector2(position.x, position.y), angle);
+                    Vector2 point = Mathf::RotatePoint(Vector2(d[j], d[j + 1]), Vector2(position.x, position.y), angle);
                     d[j] = point.x;
                     d[j + 1] = point.y;
                 }
@@ -187,7 +179,7 @@ void TextureManager::drawVectorTexture(std::string id, Vector2 position, float a
                 }
                 //Apply rotation to points
                 for (int j = 0; j < 8; j += 2) {
-                    Vector2 point = RotatePoint(Vector2(d[j], d[j + 1]), pivot, angle);
+                    Vector2 point = Mathf::RotatePoint(Vector2(d[j], d[j + 1]), pivot, angle);
                     d[j] = point.x;
                     d[j + 1] = point.y;
                 }

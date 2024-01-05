@@ -10,6 +10,7 @@
 #include "Collider.h"
 #include "Asteroid.h"
 #include "../Game.h"
+#include "../Mathf.h"
 
 void Shooter::draw() {
 
@@ -103,7 +104,8 @@ void Shooter::shoot() {
 GameObject *Shooter::bullet() {
     auto pos = gameObject->getTransform()->getAbsolutePosition();
     auto angle = gameObject->getTransform()->getAbsoluteAngle();
-    pos += (gameObject->getTransform()->getHeight() / 2);
+    pos += { gameObject->getTransform()->getWidth()/2, 0};
+    pos = Mathf::RotatePoint(pos, gameObject->getTransform()->getAbsolutePosition(), angle);
     float s = 8;
     auto bullet = new GameObject(new LoaderParams(pos, s, s, 0, "bullet", "Bullet"));
     bullet->getTransform()->setAngle(angle);

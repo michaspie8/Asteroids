@@ -5,12 +5,17 @@
 #ifndef ASTEROIDS_MATHF_H
 #define ASTEROIDS_MATHF_H
 
+#include <nanosvg/nanosvg.h>
+#include <SDL_image.h>
+#include <string>
+#include <map>
 #include <algorithm>
 #include "Vector.h"
 #include <SDL.h>
 
 
 class Mathf {
+
 public:
     //Unity SmoothDamp implementation
     static float smoothDamp(float current, float target, float &currentVelocity, float smoothTime, float maxSpeed,
@@ -33,6 +38,8 @@ public:
     static float bezier(float p0, float p1, float p2, float p3, float t);
 
     static Uint32 *GaussianBlur(Uint32 *pixels, int width, int height, int radius, float sigma);
+
+    static Vector2 RotatePoint(Vector2 pointToRotate, Vector2 centerPoint, float angle);
 };
 
 

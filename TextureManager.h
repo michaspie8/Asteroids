@@ -34,8 +34,6 @@ public:
 private:
     static TextureManager *s_pInstance;     // Singleton.
 
-    static Vector2 RotatePoint(Vector2 pointToRotate, Vector2 centerPoint, float angle);
-
     void drawCubicBez(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4, int strokeWidth,
                       Uint32 color);
 
