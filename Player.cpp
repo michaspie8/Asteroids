@@ -26,7 +26,7 @@ Player::Player(LoaderParams *params, float angleDampTime, float rotationSpeed) :
 
 Player::Player() : Player(
         new LoaderParams(Vector2(Game::getInstance()->getWindowWidth() / 2, Game::getInstance()->getWindowHeight() / 2),
-                         32, 32, 0, "player", "Player"),
+                         48, 48, 0, "player", "Player"),
         0.15f, 5) {
 
     //init jet flame

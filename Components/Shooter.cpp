@@ -29,13 +29,13 @@ void Shooter::update() {
                 //if there are bullets and the time since last shot is greater than fire rate, you can shoot
                 m_CanShoot = true;
             }
-        }
-
+        }else{
         //if the time since last shot is greater than reload time, you can reload and have max bullets
         //aka if you hadn't shot in time of reload time, you can shoot
         if (m_Timer >= m_ReloadTime) {
             m_Bullets = m_MaxBullets;
             m_CanShoot = true;
+        }
         }
 
     }
@@ -106,7 +106,7 @@ GameObject *Shooter::bullet() {
     auto angle = gameObject->getTransform()->getAbsoluteAngle();
     pos += { gameObject->getTransform()->getWidth()/2, 0};
     pos = Mathf::RotatePoint(pos, gameObject->getTransform()->getAbsolutePosition(), angle);
-    float s = 8;
+    float s = std::ceil(gameObject->getTransform()->getWidth() / 4);
     auto bullet = new GameObject(new LoaderParams(pos, s, s, 0, "bullet", "Bullet"));
     bullet->getTransform()->setAngle(angle);
     bullet->addComponent(new Motion());
