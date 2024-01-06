@@ -5,6 +5,7 @@
 #include "Collider.h"
 #include "../Game.h"
 
+//if circle, size.x is radius, and size.y can be 0
 Collider::Collider(Vector2 size, Vector2 pos, std::string name, ColliderType type) : Component(name) {
     m_Size = size;
     m_Pos = pos;
@@ -13,39 +14,51 @@ Collider::Collider(Vector2 size, Vector2 pos, std::string name, ColliderType typ
 }
 
 void Collider::clean() {
-    Component::clean();
     Game::getInstance()->removeCollider(this);
+    Component::clean();
 }
 
 void Collider::update() {
+    //update position, beacaouse position var is relative to transform
+    auto pos = getPosition();
     //foreach collider
     auto colliders = Game::getInstance()->getColliders();
     for (int i = 0; i < colliders.size(); i++) {
         Collider *collider = colliders[i];
         if (collider == this) continue;
+
+        auto otherPos = collider->getPosition();
+
         //check if colliding
         bool colliding = false;
         switch (m_Type) {
             case BOX:
-                colliding = m_Pos.x + m_Size.x > collider->m_Pos.x &&
-                            m_Pos.x < collider->m_Pos.x + collider->m_Size.x &&
-                            m_Pos.y + m_Size.y > collider->m_Pos.y &&
-                            m_Pos.y < collider->m_Pos.y + collider->m_Size.y;
+                colliding = pos.x + m_Size.x > otherPos.x &&
+                            pos.x < otherPos.x + collider->m_Size.x &&
+                            pos.y + m_Size.y > otherPos.y &&
+                            pos.y < otherPos.y + collider->m_Size.y;
                 break;
             case CIRCLE:
-                colliding = (m_Pos - collider->m_Pos).length() < m_Size.x + collider->m_Size.x;
+                colliding = (pos - otherPos).length() < m_Size.x + collider->m_Size.x;
                 break;
         }
 
         if (colliding) {
             onCollisionEnter(collider->gameObject);
             m_Colliding = true;
-        } else {
+        }else{
+            if(collider->m_Colliding){
+                collider->onCollisionExit(gameObject);
+                collider->m_Colliding = false;
+            }
+        }
+
+        /*else {
             if (m_Colliding) {
                 m_Colliding = false;
                 onCollisionExit(collider->gameObject);
             }
-        }
+        }*/
     }
 }
 

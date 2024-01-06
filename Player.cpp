@@ -106,19 +106,6 @@ void Player::update() {
         velocity.normalise();
         velocity *= 10;
     }
-
-    //if player is gonna go out of screen, teleport him to the other side
-    if (position.x > Game::getInstance()->getWindowWidth()) {
-        position.x = 0;
-    } else if (position.x < 0) {
-        position.x = Game::getInstance()->getWindowWidth();
-    }
-    if (position.y > Game::getInstance()->getWindowHeight()) {
-        position.y = 0;
-    } else if (position.y < 0) {
-        position.y = Game::getInstance()->getWindowHeight();
-    }
-
 //apply changes
     getTransform()->setPosition(position);
     getTransform()->setAngle(angle);

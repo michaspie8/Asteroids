@@ -21,7 +21,6 @@ enum class RenderType {
 // If its corner, the corner of texture will be the position point
 // If center, the center will be pos point
 enum RenderPosition {
-
     CENTER,
     TOP_LEFT,
     TOP_RIGHT,

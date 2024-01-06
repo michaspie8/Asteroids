@@ -11,6 +11,7 @@
 #include "Mathf.h"
 #include <SDL.h>
 #include "Components/Renderer.h"
+#include "Components/Asteroid.h"
 
 Game *Game::s_pInstance = nullptr;
 
@@ -51,11 +52,15 @@ bool Game::init(const char *title, int xpos, int ypos, int width, int height, SD
 
                 //load textures
                 TextureManager::getInstance()->load("assets/background_gradient.svg", "background_gradient");
+                TextureManager::getInstance()->loadVector("assets/asteroid-1.svg", "asteroid-1");
+                TextureManager::getInstance()->loadVector("assets/asteroid-2.svg", "asteroid-2");
+                TextureManager::getInstance()->loadVector("assets/asteroid-3.svg", "asteroid-3");
 
                 //init game objects
                 m_GameObjects.push_back(new Player());
-                //m_GameObjects.push_back(new Asteroid(3));
-
+                m_GameObjects.push_back(Asteroid::MakeNew(3, {400, 200}, 0));
+                m_GameObjects.push_back(Asteroid::MakeNew(3, {100, 500}, 0));
+                m_GameObjects.push_back(Asteroid::MakeNew(3, {800, 0}, 0));
 
                 //load textures for every obj in texture manager
                 for (auto &gameObject: m_GameObjects) {
@@ -105,7 +110,8 @@ void Game::update() {/*
 
 
     //delete game objects marked for deletion
-    for (auto &gameObject: m_GameObjects) {
+    for (int i = 0; i < m_GameObjects.size(); i++) {
+        auto gameObject =  m_GameObjects[i];
         if (gameObject->isMarkedForDeletion()) {
             delete gameObject;
             m_GameObjects.erase(std::remove(m_GameObjects.begin(), m_GameObjects.end(), gameObject),

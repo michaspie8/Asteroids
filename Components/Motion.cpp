@@ -4,6 +4,7 @@
 
 #include "Motion.h"
 #include "../GameObject.h"
+#include "../Game.h"
 
 void Motion::draw() {}
 
@@ -18,6 +19,21 @@ void Motion::update() {
     angle = (int) angle % 360 + (angle - (int) angle);
     if (angle < 0) {
         angle += 360;
+    }
+    if(m_StayInScreen){
+        auto transform = gameObject->getTransform();
+        auto position = transform->getPosition();
+        if (position.x > Game::getInstance()->getWindowWidth()) {
+            position.x = 0;
+        } else if (position.x < 0) {
+            position.x = Game::getInstance()->getWindowWidth();
+        }
+        if (position.y > Game::getInstance()->getWindowHeight()) {
+            position.y = 0;
+        } else if (position.y < 0) {
+            position.y = Game::getInstance()->getWindowHeight();
+        }
+        transform->setPosition(position);
     }
     gameObject->getTransform()->setAngle(angle);
     gameObject->getTransform()->setPosition(gameObject->getTransform()->getPosition() + m_Velocity);

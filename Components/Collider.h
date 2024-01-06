@@ -28,7 +28,9 @@ public:
     void update() override;
 
     void draw() override {};
-
+    Vector2 getPosition() {
+        return gameObject->getTransform()->getAbsolutePosition() + m_Pos;
+    }
     //you can add your own collision functions to this class
     virtual void onCollisionEnter(GameObject *other) {};
 
@@ -56,10 +58,10 @@ public:
             size, pos, name, type) {};
 
     void onCollisionEnter(GameObject *other) override {
-
         gameObject->getComponent<Bullet>()->OnCollisionEnter(other);
-
     };
+
+
 
     void draw() override { Collider::draw(); };
 

@@ -28,8 +28,10 @@ void Asteroid::update() {
 
 
 void Asteroid::Destroy(Vector2 contactPoint) {
-    if (m_Size == 1) {
+    auto size = m_Size;
+    if (size == 1) {
         gameObject->clean();
+        return;
     } else {
         auto pos = gameObject->getTransform()->getAbsolutePosition();
         auto angle = direction(pos, contactPoint).VectorToDeg();
@@ -37,7 +39,7 @@ void Asteroid::Destroy(Vector2 contactPoint) {
         float angleStep = 360 / num;
 
         for (int i = 1; i < num + 1; ++i) {
-            auto asteroid = MakeNew(m_Size - 1, pos, angle + angleStep * i);
+            auto asteroid = MakeNew(size - 1, pos, angle + angleStep * i);
             Game::getInstance()->addGameObject(asteroid);
         }
         gameObject->clean();
@@ -55,25 +57,29 @@ int Asteroid::getSize() {
 
 
 GameObject *Asteroid::MakeNew(int size, Vector2 pos, float angle = 0) {
+    int w, h;
     switch (size) {
         case 1:
-            size = 2;
+            h = 2;
+            w = 2;
             break;
         case 2:
-            size = 12;
+            w = 12;
+            h = 12;
             break;
         case 3:
-            size = 32;
+            w=24;
+            h=24;
             break;
         default:
             return nullptr;
     }
-    auto asteroid = new GameObject(new LoaderParams(pos, size, size, angle == 0 ? std::rand() % 360 : angle,
+    auto asteroid = new GameObject(new LoaderParams(pos, w, h, angle == 0 ? std::rand() % 360 : angle,
                                                     "asteroid-" + std::to_string(size), "Asteroid", "Asteroid"));
-    asteroid->addComponent(new Motion());
+    asteroid->addComponent(new Motion(1));
     asteroid->addComponent(new Renderer("asteroid-" + std::to_string(size), RenderType::VECTOR));
+    asteroid->addComponent(new Collider(Vector2(w, h), Vector2(0, 0), "Asteroid", ColliderType::CIRCLE));
     asteroid->addComponent(new Asteroid(size));
-    asteroid->addComponent(new Collider(Vector2(size, size), Vector2(0, 0), "Asteroid", ColliderType::CIRCLE));
     return asteroid;
 }
 

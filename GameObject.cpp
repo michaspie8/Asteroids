@@ -1,6 +1,5 @@
 #include "GameObject.h"
 #include "TextureManager.h"
-#include <iostream>
 #include "Components/Transform.h"
 
 GameObject::GameObject(LoaderParams *params) {
