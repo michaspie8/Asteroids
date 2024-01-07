@@ -15,7 +15,7 @@
 class Bullet : public Component {
 
 public:
-    Bullet(int speed, int damage, int lifeTime = 500, std::string name = "Bullet") : Component(name) {
+    Bullet(float speed, int damage, int lifeTime = 700, std::string name = "Bullet") : Component(name) {
         m_Speed = speed;
         m_Damage = damage;
         m_LifeTime = lifeTime;
@@ -32,16 +32,16 @@ public:
 
     void OnCollisionEnter(GameObject *other);
 
-    void setSpeed(int speed);
+    void setSpeed(float speed);
 
     void setDamage(int damage);
 
-    int getSpeed();
+    float getSpeed();
 
     int getDamage();
 
 protected:
-    int m_Speed;
+    float m_Speed;
     unsigned int m_LifeTime = 0;
     int m_Damage;
     unsigned int m_LifeTimer;

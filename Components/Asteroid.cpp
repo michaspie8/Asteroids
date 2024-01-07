@@ -60,16 +60,16 @@ GameObject *Asteroid::MakeNew(int size, Vector2 pos, float angle = 0) {
     int w, h;
     switch (size) {
         case 1:
-            h = 2;
-            w = 2;
+            h = 6;
+            w = 6;
             break;
         case 2:
-            w = 12;
-            h = 12;
+            w = 16;
+            h = 16;
             break;
         case 3:
-            w=24;
-            h=24;
+            w=32;
+            h=32;
             break;
         default:
             return nullptr;

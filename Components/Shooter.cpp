@@ -112,7 +112,8 @@ GameObject *Shooter::bullet() {
     bullet->addComponent(new Motion());
     bullet->addComponent(new Renderer("bullet", RenderType::VECTOR));
     auto bullet_c = bullet->addComponent(new Bullet(m_BulletSpeed, m_BulletDamage));
-    bullet_c->setSpeed(m_BulletSpeed + (std::ceil(gameObject->getComponent<Motion>()->getVelocity().length())));
+    auto shooterVel = std::ceil(gameObject->getComponent<Motion>()->getVelocity().length());
+    bullet_c->setSpeed(m_BulletSpeed + shooterVel);
     bullet->addComponent(new BulletCollider({s, s}, {0, 0}, "Bullet", ColliderType::CIRCLE));
     return bullet;
 }

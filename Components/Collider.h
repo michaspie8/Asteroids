@@ -5,10 +5,11 @@
 #ifndef ASTEROIDS_COLLIDER_H
 #define ASTEROIDS_COLLIDER_H
 
-#include "Component.h"
+#include "../GameObject.h"
+#include "../Player.h"
 #include "../Vector.h"
 #include "Bullet.h"
-#include "../GameObject.h"
+#include "Component.h"
 #include <vector>
 
 enum ColliderType {
@@ -62,6 +63,24 @@ public:
     };
 
 
+
+    void draw() override { Collider::draw(); };
+
+    void update() override { Collider::update(); };
+
+    void clean() override { Collider::clean(); };
+};
+
+class PlayerCollider : public Collider {
+public:
+    PlayerCollider(Vector2 size, Vector2 pos, std::string name = "PlayerCollider", ColliderType type = BOX) : Collider(
+            size, pos, name, type) {};
+
+    void onCollisionEnter(GameObject *other) override {
+        if (other->getTag() == "Asteroid") {
+            gameObject->getComponent<Player>()->OnCollisionEnter(other);
+        }
+    };
 
     void draw() override { Collider::draw(); };
 

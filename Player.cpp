@@ -20,6 +20,8 @@ Player::Player(LoaderParams *params, float angleDampTime, float rotationSpeed) :
     addComponent(new Motion());
     addComponent(new Renderer("player", RenderType::VECTOR));
     addComponent(new Shooter());
+    addComponent(new PlayerCollider(Vector2(params->m_Width, params->m_Height), Vector2(0, 0), "Player",
+                              ColliderType::CIRCLE));
     TextureManager::getInstance()->loadVector("assets/bullet.svg", "bullet", true);
     TextureManager::getInstance()->loadVector("assets/player.svg", "player", true);
 }
@@ -116,6 +118,13 @@ void Player::update() {
 
 void Player::clean() {
     GameObject::clean();
+}
+
+void Player::OnCollisionEnter(GameObject *other) {
+    if (other->getName() == "Asteroid") {
+        //todo player death
+        std::cout<< "Player death" << std::endl;
+    }
 }
 
 

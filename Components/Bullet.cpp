@@ -37,7 +37,7 @@ void Bullet::OnCollisionEnter(GameObject *other) {
     }
 }
 
-void Bullet::setSpeed(int speed) {
+void Bullet::setSpeed(float speed) {
     m_Speed = speed;
 }
 
@@ -45,7 +45,7 @@ void Bullet::setDamage(int damage) {
     m_Damage = damage;
 }
 
-int Bullet::getSpeed() {
+float Bullet::getSpeed() {
     return m_Speed;
 }
 

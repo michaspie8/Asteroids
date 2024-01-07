@@ -21,6 +21,8 @@ public:
 
     void clean() override;
 
+    void OnCollisionEnter(GameObject *other);
+
 
 protected:
     float angleDampVelocity = 0;
