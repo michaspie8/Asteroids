@@ -13,7 +13,7 @@
 
 class GameObject {
 public:
-    GameObject(const LoaderParams &params);
+    explicit GameObject(const LoaderParams &params);
 
 
     virtual void draw();
@@ -39,7 +39,7 @@ public:
     //by type
     template<typename T>
     T *getComponent() {
-        for (auto component: m_Components) {
+        for (auto &component: m_Components) {
             if (dynamic_cast<T *>(component) != nullptr) {
                 return dynamic_cast<T *>(component);
             }
@@ -50,7 +50,7 @@ public:
     //type by name
     template<typename T>
     T *getComponent(std::string name) {
-        for (auto component: m_Components) {
+        for (auto &component: m_Components) {
             if (dynamic_cast<T *>(component) != nullptr && component->name == name) {
                 return dynamic_cast<T *>(component);
             }

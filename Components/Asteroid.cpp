@@ -39,8 +39,7 @@ void Asteroid::Destroy(Vector2 contactPoint, float speed) {
         float angleStep = (float)360 / (float)num;
 
         for (int i = 1; i < num + 1; ++i) {
-            auto asteroid = MakeNew(size - 1, pos, (float)angle + angleStep * (float)i);
-            asteroid->getComponent<Motion>()->setSpeed((std::ceil(speed) / (size * 2)) );
+            auto asteroid = MakeNew(size - 1, pos, (float)angle + angleStep * (float)i, (std::ceil(speed) / (size * 2)));
             Game::getInstance()->addGameObject(asteroid);
         }
         gameObject->clean();
@@ -57,7 +56,7 @@ int Asteroid::getSize() const{
 }
 
 
-GameObject *Asteroid::MakeNew(int size, Vector2 pos, float angle = 0) {
+GameObject *Asteroid::MakeNew(int size, Vector2 pos, float angle, float speed) {
     int w, h;
     switch (size) {
         case 1:
@@ -77,7 +76,8 @@ GameObject *Asteroid::MakeNew(int size, Vector2 pos, float angle = 0) {
     }
     auto asteroid = new GameObject(LoaderParams(pos, w, h, angle == 0 ? std::rand() % 360 : angle,
                                                     "asteroid-" + std::to_string(size), "Asteroid", "Asteroid"));
-    asteroid->addComponent(new Motion(1));
+    auto motion = asteroid->addComponent(new Motion(1));
+    motion->setSpeed(speed);
     asteroid->addComponent(new Renderer("asteroid-" + std::to_string(size), RenderType::VECTOR));
     asteroid->addComponent(new Collider(Vector2(w, h), Vector2(0, 0), "Asteroid", ColliderType::CIRCLE));
     asteroid->addComponent(new Asteroid(size));

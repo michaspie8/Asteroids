@@ -33,7 +33,7 @@ Player::Player() : Player(
 
     //init jet flame
     TextureManager::getInstance()->loadVector("assets/jet-flame.svg", "jet-flame", true);
-    auto pos = getTransform()->getAbsolutePosition();
+    //auto pos = getTransform()->getAbsolutePosition();
     Vector2 jetflamesize = {getTransform()->getWidth() * 8 * 0.09375f, getTransform()->getHeight() * 8 * 0.1875f};
     Vector2 jetflamePos = {(getTransform()->getWidth() / 2 + jetflamesize.x / 2),
                            (getTransform()->getHeight() / 2 - jetflamesize.y / 6)};

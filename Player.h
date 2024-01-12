@@ -28,7 +28,6 @@ protected:
     float angleDampVelocity = 0;
     float angleDampTime = 0.1f;
     float rotationSpeed = 1;
-    GameObject *m_pBullet;
     float m_bulletSpeed = 10;
     float m_bulletLifeTime = 1;
     float m_bulletSpawnTime = 0;

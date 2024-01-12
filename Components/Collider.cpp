@@ -25,7 +25,7 @@ void Collider::update() {
     auto pos = getPosition();
     //foreach collider
     auto colliders = Game::getInstance()->getColliders();
-    for (auto collider : colliders) {
+    for (auto &collider : colliders) {
         if (collider == this) continue;
 
         auto otherPos = collider->getPosition();

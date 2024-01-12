@@ -68,11 +68,13 @@ bool Game::init(const char *title, int xpos, int ypos, int width, int height, SD
                 TextureManager::getInstance()->loadVector("assets/asteroid-2.svg", "asteroid-2");
                 TextureManager::getInstance()->loadVector("assets/asteroid-3.svg", "asteroid-3");
 
+
+                m_Colliders = std::vector<Collider *>();
                 //init game objects
                 m_GameObjects.push_back(new Player());
-                m_GameObjects.push_back(Asteroid::MakeNew(3, {400, 200}, 0));
-                m_GameObjects.push_back(Asteroid::MakeNew(3, {100, 500}, 0));
-                m_GameObjects.push_back(Asteroid::MakeNew(3, {800, 0}, 0));
+                m_GameObjects.push_back(Asteroid::MakeNew(3, {400, 200} ));
+                m_GameObjects.push_back(Asteroid::MakeNew(3, {100, 500}));
+                m_GameObjects.push_back(Asteroid::MakeNew(3, {800, 0}));
 
                 //load textures for every obj in texture manager
                 for (auto &gameObject: m_GameObjects) {

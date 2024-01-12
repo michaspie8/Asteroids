@@ -19,7 +19,7 @@ public:
 
     void clean() override { Component::clean(); };
 
-    static GameObject *MakeNew(int size, Vector2 pos, float angle);
+    static GameObject *MakeNew(int size, Vector2 pos,float angle = 0, float speed = 1 );
 
     //Destorys asteroid and creates 2-5 smaller ones, if asteroid is small, it just destroys it
     void Destroy(Vector2 contactPoint , float speed);
@@ -30,8 +30,6 @@ public:
 
 
 protected:
-
-    float m_Speed;
     //Asteroids appear in 3 sizes
     int m_Size;
 

@@ -34,7 +34,7 @@ void TextureManager::load(std::string path, std::string id, bool loadAnyway) {
     SDL_Surface *surface = IMG_LoadSVG_RW(rw);
     SDL_Texture *texture = SDL_CreateTextureFromSurface(Game::getInstance()->getRenderer(), surface);
     SDL_FreeSurface(surface);
-    //SDL_RWclose(rw);
+    SDL_RWclose(rw);
 
     m_TextureMap[id] = texture;
 }
@@ -144,6 +144,8 @@ void TextureManager::drawVectorTexture(std::string id, Vector2 position, float w
                 }
 
                 drawCubicBez(d[0], d[1], d[2], d[3], d[4], d[5], d[6], d[7], shape->strokeWidth, shape->stroke.color);
+                //free memory
+                delete[] d;
             }
         }
     }
@@ -191,11 +193,11 @@ void TextureManager::drawVectorTexture(std::string id, Vector2 position, float a
                 /*CubicBezGlow(d[0], d[1], d[2], d[3], d[4], d[5], d[6], d[7],
                              std::ceil(shape->strokeWidth * (w + h / 2) / (image->width + image->height) / 2),
                              shape->stroke.color, 0.5f, shape->stroke.color);*/
+                //free memory
+                delete[] d;
             }
         }
     }
-    // Delete
-    //nsvgDelete(image);
 
 }
 
