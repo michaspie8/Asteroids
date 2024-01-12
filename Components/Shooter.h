@@ -14,13 +14,14 @@
 class Shooter : public Component {
 
 public:
-    Shooter(unsigned int fireRate = 150, int bulletSpeed = 5, int bulletDamage = 1, unsigned int reloadTime = 1500,
+    Shooter(unsigned int fireRate = 150, int bulletSpeed = 5, int bulletDamage = 1, unsigned int reloadTime = 700,
             unsigned int maxBullets = 3, std::string name = "Shooter") : Component(name) {
         m_FireRate = fireRate;
         m_BulletSpeed = bulletSpeed;
         m_BulletDamage = bulletDamage;
         m_ReloadTime = reloadTime;
         m_MaxBullets = maxBullets;
+        m_Bullets = maxBullets;
     };
 
     ~Shooter() override = default;

@@ -183,12 +183,14 @@ void TextureManager::drawVectorTexture(std::string id, Vector2 position, float a
                     d[j] = point.x;
                     d[j + 1] = point.y;
                 }
-                if (id == "asteroid-3")
-                    std::cout << shape->strokeWidth * (w + h / 2) / (image->width + image->height) / 2 << std::endl;
-
+                /*if (id == "asteroid-3")
+                    std::cout << shape->strokeWidth * (w + h / 2) / (image->width + image->height) / 2 << std::endl;*/
                 drawCubicBez(d[0], d[1], d[2], d[3], d[4], d[5], d[6], d[7],
                              std::ceil(shape->strokeWidth * (w + h / 2) / (image->width + image->height) / 2),
                              shape->stroke.color);
+                /*CubicBezGlow(d[0], d[1], d[2], d[3], d[4], d[5], d[6], d[7],
+                             std::ceil(shape->strokeWidth * (w + h / 2) / (image->width + image->height) / 2),
+                             shape->stroke.color, 0.5f, shape->stroke.color);*/
             }
         }
     }
@@ -215,5 +217,36 @@ void TextureManager::drawCubicBez(float x1, float y1, float x2, float y2, float 
         lastPoint = point;
         t += step;
     }
+}
 
+void TextureManager::CubicBezGlow(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4,
+                                  int strokeWidth,
+                                  Uint32 color,
+                                  float glowWidth, Uint32 glowColor) {
+    //draw bezier curve
+    float t = 0;
+    float step = 0.01f;
+    Vector2 lastPoint = Vector2(x1, y1);
+    auto ren = SDL_CreateRenderer(Game::getInstance()->getWindow(), -1, SDL_RENDERER_ACCELERATED);
+    SDL_RenderClear(ren);
+    while (t < 1) {
+        Vector2 point = Vector2(
+                Mathf::bezier(x1, x2, x3, x4, t),
+                Mathf::bezier(y1, y2, y3, y4, t)
+        );
+
+        thickLineColor(ren, (Sint16) lastPoint.x, (Sint16) lastPoint.y, (Sint16) point.x,
+                       (Sint16) point.y, (Uint8) strokeWidth, color);
+        thickLineColor(Game::getInstance()->getRenderer(), (Sint16) lastPoint.x, (Sint16) lastPoint.y, (Sint16) point.x,
+                       (Sint16) point.y, (Uint8) strokeWidth, color);
+
+        lastPoint = point;
+        t += step;
+    }
+    auto pixels = new Uint32[Game::getInstance()->getWindowWidth() * Game::getInstance()->getWindowHeight()];
+    SDL_RenderReadPixels(ren, NULL, SDL_PIXELFORMAT_RGBA8888, pixels,
+                         Game::getInstance()->getWindowWidth() * sizeof(Uint32));
+    Game::getInstance()->bloom(pixels, Game::getInstance()->getWindowWidth(), Game::getInstance()->getWindowHeight(), 0,
+                               0, 0.5f, 2, 0.5f);
+    SDL_DestroyRenderer(ren);
 }

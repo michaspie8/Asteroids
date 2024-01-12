@@ -97,13 +97,13 @@ float Mathf::bezier(float p0, float p1, float p2, float p3, float t) {
 
 
 
-/*
+
 //Gaussian blur implementation, get pixels from texture, blur them and return them back
 
 Uint32 *Mathf::GaussianBlur(Uint32 *pixels, int width, int height, int radius, float sigma) {
     //create kernel
     int kernelSize = radius * 2 + 1;
-    float* kernel = new float[kernelSize];
+    float *kernel = new float[kernelSize];
     float sum = 0;
     for (int i = 0; i < kernelSize; i++) {
         kernel[i] = exp(-0.5f * (i - radius) * (i - radius) / (sigma * sigma));
@@ -114,7 +114,7 @@ Uint32 *Mathf::GaussianBlur(Uint32 *pixels, int width, int height, int radius, f
     }
 
     //create temp array
-    Uint32* temp = new Uint32[width * height];
+    Uint32 *temp = new Uint32[width * height];
     for (int i = 0; i < width * height; i++) {
         temp[i] = pixels[i];
     }
@@ -150,7 +150,8 @@ Uint32 *Mathf::GaussianBlur(Uint32 *pixels, int width, int height, int radius, f
     delete[] kernel;
     delete[] temp;
     return pixels;
-}*/
+}
+
 Vector2 Mathf::RotatePoint(Vector2 pointToRotate, Vector2 centerPoint, float angle) {
     float x = pointToRotate.x - centerPoint.x;
     float y = pointToRotate.y - centerPoint.y;

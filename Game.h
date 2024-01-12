@@ -70,12 +70,12 @@ public:
     static Game *getInstance();
 
 
+    void bloom(Uint32 *pixels, int w, int h, int x, int y, float opacity, int blurRadius, float blurSensitivity);
+
 private:
     Game();
 
     ~Game();
-
-    //void bloom(float opacity, int blurRadius, float blurSensitivity);
 
     static Game *s_pInstance; //singleton
     SDL_Window *m_pWindow;

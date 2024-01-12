@@ -32,7 +32,7 @@ void Bullet::clean() {
 void Bullet::OnCollisionEnter(GameObject *other) {
     if (other->getName() == "Asteroid") {
         auto asteroid = other->getComponent<Asteroid>();
-        asteroid->Destroy(gameObject->getTransform()->getAbsolutePosition());
+        asteroid->Destroy(gameObject->getTransform()->getAbsolutePosition(), m_Speed);
         gameObject->clean();
     }
 }

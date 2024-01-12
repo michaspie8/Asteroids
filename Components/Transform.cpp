@@ -7,15 +7,15 @@
 #include "../LoaderParams.h"
 #include "Component.h"
 
-Transform::Transform(GameObject *gameObject, LoaderParams *params) : Transform(params) {
+Transform::Transform(GameObject *gameObject, const LoaderParams &params) : Transform(params) {
     this->gameObject = gameObject;
 }
 
-Transform::Transform(LoaderParams *params) : Component(params->m_Name) {
-    m_Position = params->m_Position;
-    m_Width = params->m_Width;
-    m_Height = params->m_Height;
-    m_Angle = params->m_Angle;
+Transform::Transform(const LoaderParams &params) : Component(params.m_Name) {
+    m_Position = params.m_Position;
+    m_Width = params.m_Width;
+    m_Height = params.m_Height;
+    m_Angle = params.m_Angle;
 }
 
 void Transform::draw() {

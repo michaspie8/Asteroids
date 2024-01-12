@@ -10,8 +10,13 @@
 #include "Colors.h"
 #include "Mathf.h"
 #include <SDL.h>
+#include <SDL_opengl.h>
 #include "Components/Renderer.h"
 #include "Components/Asteroid.h"
+#include <memory>
+
+// gl window
+#include <GLFW/glfw3.h>
 
 Game *Game::s_pInstance = nullptr;
 
@@ -38,7 +43,14 @@ Game::~Game() = default;
 bool Game::init(const char *title, int xpos, int ypos, int width, int height, SDL_WindowFlags flags) {
     if (SDL_Init(SDL_INIT_EVERYTHING) == 0) {
         //init window
+        /*auto window = glfwCreateWindow(width, height, title, nullptr, nullptr);
+        glfwMakeContextCurrent(window);
+        m_pWindow = SDL_CreateWindowFrom(window);*/
+
         m_pWindow = SDL_CreateWindow(title, xpos, ypos, width, height, flags);
+        //init gl context
+        //SDL_GLContext glContext = SDL_GL_CreateContext(m_pWindow);
+        //SDL_GL_CreateContext(m_pWindow);
         if (m_pWindow != nullptr) {
             //init renderer
             m_pRenderer = SDL_CreateRenderer(m_pWindow, -1, 0);
@@ -51,7 +63,7 @@ bool Game::init(const char *title, int xpos, int ypos, int width, int height, SD
                 m_Running = true;
 
                 //load textures
-                TextureManager::getInstance()->load("assets/background_gradient.svg", "background_gradient");
+                TextureManager::getInstance()->load("assets/background-new.svg", "background_gradient");
                 TextureManager::getInstance()->loadVector("assets/asteroid-1.svg", "asteroid-1");
                 TextureManager::getInstance()->loadVector("assets/asteroid-2.svg", "asteroid-2");
                 TextureManager::getInstance()->loadVector("assets/asteroid-3.svg", "asteroid-3");
@@ -98,12 +110,7 @@ void Game::handleEvents() {
 }
 
 
-void Game::update() {/*
-    for (GameObject* gameObject: m_GameObjects) {
-        if(gameObject!=nullptr)   gameObject->update();
-    }*/
-    //We cannot use range-based for loop here because we are adding elements during update, and it makes
-    //error "access violation reading location" because of vector reallocation
+void Game::update() {
     for (int i = 0; i < m_GameObjects.size(); i++) {
         if (m_GameObjects[i] != nullptr) m_GameObjects[i]->update();
     }
@@ -111,7 +118,7 @@ void Game::update() {/*
 
     //delete game objects marked for deletion
     for (int i = 0; i < m_GameObjects.size(); i++) {
-        auto gameObject =  m_GameObjects[i];
+        auto gameObject = m_GameObjects[i];
         if (gameObject->isMarkedForDeletion()) {
             delete gameObject;
             m_GameObjects.erase(std::remove(m_GameObjects.begin(), m_GameObjects.end(), gameObject),
@@ -131,7 +138,7 @@ void Game::render() {
     for (auto &gameObject: m_GameObjects) {
         gameObject->draw();
     }
-    //bloom(0.5f, 5, 1);
+
     SDL_RenderPresent(m_pRenderer);
 }
 
@@ -193,22 +200,17 @@ std::vector<GameObject *> Game::findGameObjectsByTag(std::string tag) {
 }
 
 
-
-
-/*
 //bloom effect using gaussian blur and additive blending
-void Game::bloom(float opacity, int blurRadius, float blurSensitivity) {
-    //create new texture for bloom
-    SDL_Texture *bloomTexture = SDL_CreateTexture(m_pRenderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET,
-                                                    m_WindowWidth, m_WindowHeight);
-    //get array of pixels from texture
-    auto *pixels = new Uint32[m_WindowWidth * m_WindowHeight];
-    SDL_RenderReadPixels(m_pRenderer, NULL, SDL_PIXELFORMAT_RGBA8888, pixels, m_WindowWidth * sizeof(Uint32));
-
+void Game::bloom(Uint32 *pixels, int w, int h, int x, int y, float opacity, int blurRadius, float blurSensitivity) {
+    //if(w*4>getWindowWidth())
+    w = getWindowWidth();
+    //if(h*4>getWindowHeight())
+    h = getWindowHeight();
     //blur the pixels
     pixels = Mathf::GaussianBlur(pixels, m_WindowWidth, m_WindowHeight, 5, 1);
 
     //fill texture with pixels
+    auto bloomTexture = SDL_CreateTexture(m_pRenderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, w, h);
     SDL_UpdateTexture(bloomTexture, NULL, pixels, m_WindowWidth * sizeof(Uint32));
 
     //set blend mode to additive
@@ -219,19 +221,6 @@ void Game::bloom(float opacity, int blurRadius, float blurSensitivity) {
     //free memory
     delete[] pixels;
     SDL_DestroyTexture(bloomTexture);
-
-    SDL_SetTextureBlendMode(bloomTexture, SDL_BLENDMODE_NONE);
-}*//*
-
-void Game::bloom(float opacity, int blurRadius, float blurSensitivity) {
-    //start opengl in curent window
-    SDL_GL_MakeCurrent(m_pWindow, SDL_GL_GetCurrentContext());
-
-    //use gl to
-    glfw
-
-
-
-}*/
+}
 
 

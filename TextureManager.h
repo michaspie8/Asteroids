@@ -18,6 +18,7 @@ public:
 
     void draw(SDL_Texture *texture, int x, int y, int w = 0, int h = 0);
 
+
     void
     drawFrameEx(std::string id, int row, int column, int frameW, int frameH, int x, int y, int w, int h, float angle);
 
@@ -37,6 +38,9 @@ private:
     void drawCubicBez(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4, int strokeWidth,
                       Uint32 color);
 
+//make a glowing line
+    void CubicBezGlow(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4, int strokeWidth,
+                      Uint32 color, float glowWidth, Uint32 glowColor);
 
     std::map<std::string, SDL_Texture *> m_TextureMap;   // Texturekeeping
     std::map<std::string, NSVGimage *> m_VectorTextureMap;   // Texturekeeping

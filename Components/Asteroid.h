@@ -22,7 +22,7 @@ public:
     static GameObject *MakeNew(int size, Vector2 pos, float angle);
 
     //Destorys asteroid and creates 2-5 smaller ones, if asteroid is small, it just destroys it
-    void Destroy(Vector2 contactPoint);
+    void Destroy(Vector2 contactPoint , float speed);
 
     void setSize(int size);
 

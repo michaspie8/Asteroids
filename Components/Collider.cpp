@@ -47,8 +47,8 @@ void Collider::update() {
         if (colliding) {
             onCollisionEnter(collider->gameObject);
             m_Colliding = true;
-        }else{
-            if(collider->m_Colliding){
+        } else {
+            if (collider->m_Colliding) {
                 collider->onCollisionExit(gameObject);
                 collider->m_Colliding = false;
             }

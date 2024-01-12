@@ -14,7 +14,7 @@
 #define ASTEROID_RED 0xFF2E3A
 #define ASTEROID_BLUE 0x2E47FF
 #define ASTEROID_BLUE2 0x586BFF
-#define ASTEROID_YELLOW FFD02E
+#define ASTEROID_YELLOW 0xFFD02E
 
 static SDL_Color colorFromHEX(uint32_t hex) {
     SDL_Color color;

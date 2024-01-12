@@ -23,19 +23,20 @@ void Shooter::update() {
 
         m_Timer += Game::getInstance()->getDeltaTime();
         //if there are bullets and the time since last shot is greater than fire rate, you can shoot
+        std::cout << m_Bullets << std::endl;
         if (m_Bullets > 0) {
-            std::cout << m_Timer << std::endl;
+            //std::cout << m_Timer ;
             if (m_Timer >= m_FireRate) {
                 //if there are bullets and the time since last shot is greater than fire rate, you can shoot
                 m_CanShoot = true;
             }
-        }else{
-        //if the time since last shot is greater than reload time, you can reload and have max bullets
-        //aka if you hadn't shot in time of reload time, you can shoot
-        if (m_Timer >= m_ReloadTime) {
-            m_Bullets = m_MaxBullets;
-            m_CanShoot = true;
-        }
+        } else {
+            //if the time since last shot is greater than reload time, you can reload and have max bullets
+            //aka if you hadn't shot in time of reload time, you can shoot
+            if (m_Timer >= m_ReloadTime) {
+                m_Bullets = m_MaxBullets;
+                m_CanShoot = true;
+            }
         }
 
     }
@@ -104,15 +105,18 @@ void Shooter::shoot() {
 GameObject *Shooter::bullet() {
     auto pos = gameObject->getTransform()->getAbsolutePosition();
     auto angle = gameObject->getTransform()->getAbsoluteAngle();
-    pos += { gameObject->getTransform()->getWidth()/2, 0};
+    pos += {gameObject->getTransform()->getWidth() / 2, 0};
     pos = Mathf::RotatePoint(pos, gameObject->getTransform()->getAbsolutePosition(), angle);
     float s = std::ceil(gameObject->getTransform()->getWidth() / 4);
-    auto bullet = new GameObject(new LoaderParams(pos, s, s, 0, "bullet", "Bullet"));
+    auto bullet = new GameObject(LoaderParams(pos, s, s, 0, "bullet", "Bullet"));
     bullet->getTransform()->setAngle(angle);
     bullet->addComponent(new Motion());
     bullet->addComponent(new Renderer("bullet", RenderType::VECTOR));
     auto bullet_c = bullet->addComponent(new Bullet(m_BulletSpeed, m_BulletDamage));
     auto shooterVel = std::ceil(gameObject->getComponent<Motion>()->getVelocity().length());
+    if (shooterVel < 2) {
+        shooterVel = 2;
+    }
     bullet_c->setSpeed(m_BulletSpeed + shooterVel);
     bullet->addComponent(new BulletCollider({s, s}, {0, 0}, "Bullet", ColliderType::CIRCLE));
     return bullet;

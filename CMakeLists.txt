@@ -39,6 +39,10 @@ add_executable(Asteroids
         ./SceneManager.cpp
         ./TextureManager.cpp
         ./Vector.cpp
+        UIManager.cpp
+        UIManager.h
+        Scene.cpp
+        Scene.h
 )
 file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
 
@@ -62,9 +66,6 @@ target_link_libraries(Asteroids PRIVATE $<IF:$<TARGET_EXISTS:SDL2_image::SDL2_im
 find_package(sdl2-gfx CONFIG REQUIRED)
 target_link_libraries(Asteroids PRIVATE SDL2::SDL2_gfx)
 
-#[[
-find_package(OpenGL REQUIRED)
-target_link_libraries(Asteroids PRIVATE OpenGL::GL)
 
 find_package(glfw3 CONFIG REQUIRED)
-target_link_libraries(Asteroids PRIVATE glfw)]]
+target_link_libraries(Asteroids PRIVATE glfw)

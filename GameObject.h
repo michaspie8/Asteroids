@@ -13,7 +13,7 @@
 
 class GameObject {
 public:
-    GameObject(LoaderParams *params);
+    GameObject(const LoaderParams &params);
 
 
     virtual void draw();

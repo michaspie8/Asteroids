@@ -5,8 +5,6 @@
 #ifndef ASTEROIDS_MOTION_H
 #define ASTEROIDS_MOTION_H
 
-#include <utility>
-
 #include "Component.h"
 #include "../LoaderParams.h"
 #include "../Vector.h"

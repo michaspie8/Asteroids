@@ -14,20 +14,20 @@
 #include "Components/Shooter.h"
 
 
-Player::Player(LoaderParams *params, float angleDampTime, float rotationSpeed) : GameObject(params) {
+Player::Player(const LoaderParams &params, float angleDampTime, float rotationSpeed) : GameObject(params) {
     this->angleDampTime = angleDampTime;
     this->rotationSpeed = rotationSpeed;
     addComponent(new Motion());
     addComponent(new Renderer("player", RenderType::VECTOR));
     addComponent(new Shooter());
-    addComponent(new PlayerCollider(Vector2(params->m_Width, params->m_Height), Vector2(0, 0), "Player",
-                              ColliderType::CIRCLE));
+    addComponent(new PlayerCollider(Vector2(params.m_Width, params.m_Height), Vector2(0, 0), "Player",
+                                    ColliderType::CIRCLE));
     TextureManager::getInstance()->loadVector("assets/bullet.svg", "bullet", true);
     TextureManager::getInstance()->loadVector("assets/player.svg", "player", true);
 }
 
 Player::Player() : Player(
-        new LoaderParams(Vector2(Game::getInstance()->getWindowWidth() / 2, Game::getInstance()->getWindowHeight() / 2),
+        LoaderParams(Vector2(Game::getInstance()->getWindowWidth() / 2, Game::getInstance()->getWindowHeight() / 2),
                          48, 48, 0, "player", "Player"),
         0.15f, 5) {
 
@@ -38,7 +38,7 @@ Player::Player() : Player(
     Vector2 jetflamePos = {(getTransform()->getWidth() / 2 + jetflamesize.x / 2),
                            (getTransform()->getHeight() / 2 - jetflamesize.y / 6)};
     m_JetFlame = new GameObject(
-            new LoaderParams(jetflamePos, jetflamesize.x, jetflamesize.y,
+            LoaderParams(jetflamePos, jetflamesize.x, jetflamesize.y,
                              180, "jet-flame"));
     //beacuse he has a parent position is relative to parent, the pos above is just a shift to a right position
     m_JetFlame->setParent(this);
@@ -58,8 +58,8 @@ void Player::draw() {
 void Player::update() {
     if (!m_Enabled) return;
 
-    auto *motion = getComponent<Motion>("Motion");
-    auto *jetRenderer = m_JetFlame->getComponent<Component>("Renderer");
+    auto motion = getComponent<Motion>("Motion");
+    auto jetRenderer = m_JetFlame->getComponent<Component>("Renderer");
 
     auto angle = getTransform()->getAngle();
     auto acceleration = motion->getAcceleration();
@@ -123,7 +123,7 @@ void Player::clean() {
 void Player::OnCollisionEnter(GameObject *other) {
     if (other->getName() == "Asteroid") {
         //todo player death
-        std::cout<< "Player death" << std::endl;
+        std::cout << "Player death" << std::endl;
     }
 }
 

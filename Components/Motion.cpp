@@ -20,7 +20,7 @@ void Motion::update() {
     if (angle < 0) {
         angle += 360;
     }
-    if(m_StayInScreen){
+    if (m_StayInScreen) {
         auto transform = gameObject->getTransform();
         auto position = transform->getPosition();
         if (position.x > (float) Game::getInstance()->getWindowWidth()) {

@@ -12,9 +12,9 @@
 class Transform : public Component {
 
 public:
-    Transform(GameObject *gameObject, LoaderParams *params);
+    Transform(GameObject *gameObject, const LoaderParams &params);
 
-    Transform(LoaderParams *params);
+    Transform(const LoaderParams &params);
 
     ~Transform() override = default;
 
