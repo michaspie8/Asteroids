@@ -23,15 +23,15 @@ void Motion::update() {
     if(m_StayInScreen){
         auto transform = gameObject->getTransform();
         auto position = transform->getPosition();
-        if (position.x > Game::getInstance()->getWindowWidth()) {
+        if (position.x > (float) Game::getInstance()->getWindowWidth()) {
             position.x = 0;
         } else if (position.x < 0) {
-            position.x = Game::getInstance()->getWindowWidth();
+            position.x = (float) Game::getInstance()->getWindowWidth();
         }
-        if (position.y > Game::getInstance()->getWindowHeight()) {
+        if (position.y > (float) Game::getInstance()->getWindowHeight()) {
             position.y = 0;
         } else if (position.y < 0) {
-            position.y = Game::getInstance()->getWindowHeight();
+            position.y = (float) Game::getInstance()->getWindowHeight();
         }
         transform->setPosition(position);
     }
@@ -55,7 +55,7 @@ void Motion::setAcceleration(Vector2 acceleration) {
     m_Acceleration = acceleration;
 }
 
-float Motion::getSpeed() {
+float Motion::getSpeed() const {
     return m_Speed;
 }
 

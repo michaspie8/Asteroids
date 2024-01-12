@@ -5,6 +5,8 @@
 #ifndef ASTEROIDS_MOTION_H
 #define ASTEROIDS_MOTION_H
 
+#include <utility>
+
 #include "Component.h"
 #include "../LoaderParams.h"
 #include "../Vector.h"
@@ -12,7 +14,7 @@
 class Motion : public Component {
 public:
     Motion(float speed = 0, Vector2 velocity = Vector2::Zero(),
-           Vector2 acceleration = Vector2::Zero(), std::string name = "Motion", bool stayInScreen = true) : Component(name) {
+           Vector2 acceleration = Vector2::Zero(), std::string name = "Motion", bool stayInScreen = true) : Component(std::move(name)) {
         m_Velocity = velocity;
         m_Acceleration = acceleration;
         m_Speed = speed;
@@ -33,7 +35,7 @@ public:
 
     void setAcceleration(Vector2 acceleration);
 
-    float getSpeed();
+    float getSpeed() const;
 
     Vector2 getVelocity();
 

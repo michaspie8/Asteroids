@@ -3,10 +3,12 @@
 //
 
 #include "Collider.h"
+
+#include <utility>
 #include "../Game.h"
 
 //if circle, size.x is radius, and size.y can be 0
-Collider::Collider(Vector2 size, Vector2 pos, std::string name, ColliderType type) : Component(name) {
+Collider::Collider(Vector2 size, Vector2 pos, std::string name, ColliderType type) : Component(std::move(name)) {
     m_Size = size;
     m_Pos = pos;
     m_Type = type;
@@ -23,8 +25,7 @@ void Collider::update() {
     auto pos = getPosition();
     //foreach collider
     auto colliders = Game::getInstance()->getColliders();
-    for (int i = 0; i < colliders.size(); i++) {
-        Collider *collider = colliders[i];
+    for (auto collider : colliders) {
         if (collider == this) continue;
 
         auto otherPos = collider->getPosition();

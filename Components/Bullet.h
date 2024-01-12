@@ -5,6 +5,8 @@
 #ifndef ASTEROIDS_BULLET_H
 #define ASTEROIDS_BULLET_H
 
+#include <utility>
+
 #include "Component.h"
 #include "../LoaderParams.h"
 #include "../Vector.h"
@@ -15,7 +17,7 @@
 class Bullet : public Component {
 
 public:
-    Bullet(float speed, int damage, int lifeTime = 700, std::string name = "Bullet") : Component(name) {
+    Bullet(float speed, int damage, int lifeTime = 700, std::string name = "Bullet") : Component(std::move(name)) {
         m_Speed = speed;
         m_Damage = damage;
         m_LifeTime = lifeTime;
@@ -36,9 +38,9 @@ public:
 
     void setDamage(int damage);
 
-    float getSpeed();
+    float getSpeed() const;
 
-    int getDamage();
+    int getDamage() const;
 
 protected:
     float m_Speed;

@@ -3,6 +3,8 @@
 //
 
 #include "Renderer.h"
+
+#include <utility>
 #include "../Game.h"
 
 
@@ -14,10 +16,10 @@ void Renderer::draw() {
     if (m_RenderType == RenderType::SPRITE) {
         //TODO decide how large the frame should be, and maybe use draw() when angle is 0
         TextureManager::getInstance()->drawFrameEx(m_TextureID, 0, 0, 512, 512,
-                                                   pos.x,
-                                                   pos.y,
-                                                   gameObject->getTransform()->getWidth(),
-                                                   gameObject->getTransform()->getHeight(),
+                                                   (int)pos.x,
+                                                   (int)pos.y,
+                                                   (int)gameObject->getTransform()->getWidth(),
+                                                   (int)gameObject->getTransform()->getHeight(),
                                                    angle);
     } else {
         TextureManager::getInstance()->drawVectorTexture(m_TextureID, getRenderPositionVector(), angle,
@@ -35,7 +37,7 @@ void Renderer::clean() {
 }
 
 void Renderer::setTextureId(std::string textureId) {
-    m_TextureID = textureId;
+    m_TextureID = std::move(textureId);
 }
 
 void Renderer::setRenderType(RenderType renderType) {

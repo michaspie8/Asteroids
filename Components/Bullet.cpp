@@ -45,11 +45,11 @@ void Bullet::setDamage(int damage) {
     m_Damage = damage;
 }
 
-float Bullet::getSpeed() {
+float Bullet::getSpeed() const {
     return m_Speed;
 }
 
-int Bullet::getDamage() {
+int Bullet::getDamage() const {
     return m_Damage;
 }
 

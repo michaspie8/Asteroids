@@ -3,6 +3,7 @@
 
 
 #include <string>
+#include <utility>
 
 //Forward declaration
 class GameObject;
@@ -10,7 +11,7 @@ class GameObject;
 class Component {
 public:
     //Add component and remove component adds or removes gameobject from component
-    explicit Component(std::string name) : name(name) {};
+    explicit Component(std::string name) : name(std::move(name)) {};
 
     //these method will be invoked by GameObject
     virtual void update() = 0;
@@ -22,7 +23,7 @@ public:
     //Game object that this component is attached to
     GameObject *gameObject = nullptr;
 
-    std::string name = "";
+    std::string name;
 
     virtual ~Component() = default;
 

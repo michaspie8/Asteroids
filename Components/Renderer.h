@@ -5,6 +5,8 @@
 #ifndef ASTEROIDS_RENDERER_H
 #define ASTEROIDS_RENDERER_H
 
+#include <utility>
+
 #include "Component.h"
 #include "../TextureManager.h"
 
@@ -48,8 +50,8 @@ class Renderer : public Component {
 public:
     Renderer(std::string textureId, RenderType renderType = RenderType::VECTOR,
              std::string name = "Renderer", RenderRotation renderRotation = RenderRotation::PARENT,
-             RenderPosition renderPosition = RenderPosition::CENTER) : Component(name) {
-        m_TextureID = textureId;
+             RenderPosition renderPosition = RenderPosition::CENTER) : Component(std::move(name)) {
+        m_TextureID = std::move(textureId);
         m_RenderType = renderType;
         m_RenderRotation = renderRotation;
         m_RenderPosition = renderPosition;
