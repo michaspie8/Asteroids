@@ -66,18 +66,18 @@ Vector2 Renderer::getRenderPositionVector() {
     auto height = gameObject->getTransform()->getHeight();
     switch (m_RenderPosition) {
         case RenderPosition::CENTER:
-            return Vector2(pos.x - width / 2, pos.y - height / 2);
+            return {pos.x - width / 2, pos.y - height / 2};
         case RenderPosition::TOP_LEFT:
-            return Vector2(pos.x, pos.y);
+            return {pos.x, pos.y};
         case RenderPosition::TOP_RIGHT:
-            return Vector2(pos.x - width, pos.y);
+            return {pos.x - width, pos.y};
         case RenderPosition::BOTTOM_LEFT:
-            return Vector2(pos.x, pos.y - height);
+            return {pos.x, pos.y - height};
         case RenderPosition::BOTTOM_RIGHT:
-            return Vector2(pos.x - width, pos.y - height);
+            return {pos.x - width, pos.y - height};
         default:
             //circle is default
-            return Vector2(pos.x - width / 2, pos.y - height / 2);
+            return {pos.x - width / 2, pos.y - height / 2};
     }
 }
 

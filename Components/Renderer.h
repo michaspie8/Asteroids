@@ -48,7 +48,7 @@ enum RenderRotation {
 class Renderer : public Component {
 
 public:
-    Renderer(std::string textureId, RenderType renderType = RenderType::VECTOR,
+    explicit Renderer(std::string textureId, RenderType renderType = RenderType::VECTOR,
              std::string name = "Renderer", RenderRotation renderRotation = RenderRotation::PARENT,
              RenderPosition renderPosition = RenderPosition::CENTER) : Component(std::move(name)) {
         m_TextureID = std::move(textureId);

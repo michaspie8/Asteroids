@@ -9,6 +9,7 @@
 #include <cmath>
 
 #include <string>
+#include <utility>
 #include "Vector.h"
 #include "Mathf.h"
 
@@ -87,11 +88,6 @@ TextureManager::drawFrameEx(const std::string& id, int row, int column, int fram
                      SDL_FLIP_NONE);
 }
 
-void TextureManager::drawFrameEx(const std::string& id, int row, int column, int frameW, int frameH, Vector2 pos, int w,
-                                 int h, float angle) {
-    drawFrameEx(id, row, column, frameW, frameH, (int)pos.x, (int)pos.y, w, h, angle);
-}
-
 
 void TextureManager::draw(SDL_Texture *texture, int x, int y, int w, int h) {
     SDL_Rect srcRect, destRect;
@@ -121,7 +117,7 @@ void TextureManager::drawVectorTexture(const std::string& id, Vector2 position, 
             for (int i = 0; i < path->npts - 1; i += 3) {
                 float *p = &path->pts[i * 2];
                 // make copies of points
-                auto *d = new float[8];
+                float *d = new float[8];
                 for (int j = 0; j < 8; j++) {
                     d[j] = p[j];
                 }
@@ -143,7 +139,7 @@ void TextureManager::drawVectorTexture(const std::string& id, Vector2 position, 
                     d[j + 1] = point.y;
                 }
 
-                drawCubicBez(d[0], d[1], d[2], d[3], d[4], d[5], d[6], d[7], (int)shape->strokeWidth, shape->stroke.color);
+                drawCubicBez(d[0], d[1], d[2], d[3], d[4], d[5], d[6], d[7], shape->strokeWidth, shape->stroke.color);
                 //free memory
                 delete[] d;
             }
@@ -165,7 +161,7 @@ void TextureManager::drawVectorTexture(const std::string& id, Vector2 position, 
             for (int i = 0; i < path->npts - 1; i += 3) {
                 float *p = &path->pts[i * 2];
                 // make copies of points
-                auto *d = new float[8];
+                float *d = new float[8];
                 for (int j = 0; j < 8; j++) {
                     d[j] = p[j];
                 }

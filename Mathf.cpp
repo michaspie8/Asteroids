@@ -103,7 +103,7 @@ float Mathf::bezier(float p0, float p1, float p2, float p3, float t) {
 Uint32 *Mathf::GaussianBlur(Uint32 *pixels, int width, int height, int radius, float sigma) {
     //create kernel
     int kernelSize = radius * 2 + 1;
-    auto *kernel = new float[kernelSize];
+    auto kernel = new float[kernelSize];
     float sum = 0;
     for (int i = 0; i < kernelSize; i++) {
         kernel[i] = exp(-0.5f * (float)(i - radius) * (float)(i - radius) / (sigma * sigma));
@@ -114,7 +114,7 @@ Uint32 *Mathf::GaussianBlur(Uint32 *pixels, int width, int height, int radius, f
     }
 
     //create temp array
-    auto *temp = new Uint32[width * height];
+    auto temp = new Uint32[width * height];
     for (int i = 0; i < width * height; i++) {
         temp[i] = pixels[i];
     }

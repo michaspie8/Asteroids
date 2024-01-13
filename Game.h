@@ -21,7 +21,7 @@ public:
 
     bool init(const char *title, int xpos, int ypos, int width, int height, SDL_WindowFlags flags);
 
-    static  void handleEvents();
+    static void handleEvents();
 
     void update();
 

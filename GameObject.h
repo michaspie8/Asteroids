@@ -31,7 +31,7 @@ public:
 
     std::string getTag() { return m_Tag; };
 
-    [[nodiscard]] bool isEnabled() const { return m_Enabled; };
+    bool isEnabled() const { return m_Enabled; };
 
     Component *getComponent(const std::string& name);
 
@@ -68,7 +68,7 @@ public:
     //use casting to cast t to Component*
     template<typename T>
     T *addComponent(T *t) {
-        auto *c = dynamic_cast<Component *>(t);
+        auto c = dynamic_cast<Component *>(t);
         if (c == nullptr) throw std::invalid_argument("T must derive from Component");
         m_Components.push_back(c);
         c->gameObject = this;
@@ -81,6 +81,9 @@ public:
         return c;
     }
 
+
+    //You have to delete component by calling Component::clean() or GameObject::clean(),
+    //because this only deletes a pointer to component, it doesnt free memory from heap
     void removeComponent(Component *c) {
         for (int i = 0; i < m_Components.size(); i++) {
             if (m_Components[i] == c) {
@@ -92,7 +95,7 @@ public:
 
     template<class T>
     void removeComponent(T *component) {
-        auto *c = dynamic_cast<Component *>(component);
+        auto c = dynamic_cast<Component *>(component);
         if (c == nullptr) return throw std::invalid_argument("T must derive from Component");
         removeComponent(c);
     }
@@ -121,7 +124,7 @@ protected:
     //tag is used to identify game objects
     //for example, all asteroids have tag "asteroid"
     //or player has tag "player"
-    //it doaesn't have to be unique,
+    //it doen't have to be unique,
     // beacause of the getComponentS method
     std::string m_Tag;
 
