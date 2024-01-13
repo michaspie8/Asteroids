@@ -162,7 +162,7 @@ void Game::removeCollider(Collider *collider) {
     m_Colliders.erase(std::remove(m_Colliders.begin(), m_Colliders.end(), collider), m_Colliders.end());
 }
 
-GameObject *Game::findGameObjectByName(std::string name) {
+GameObject *Game::findGameObjectByName(const std::string& name) {
     for (auto &gameObject: m_GameObjects) {
         if (gameObject->getName() == name) {
             return gameObject;
@@ -172,7 +172,7 @@ GameObject *Game::findGameObjectByName(std::string name) {
 }
 
 
-std::vector<GameObject *> Game::findGameObjectsByName(std::string name) {
+std::vector<GameObject *> Game::findGameObjectsByName(const std::string& name) {
     std::vector<GameObject *> gameObjects;
     for (auto &gameObject: m_GameObjects) {
         if (gameObject->getName() == name) {
@@ -182,7 +182,7 @@ std::vector<GameObject *> Game::findGameObjectsByName(std::string name) {
     return gameObjects;
 }
 
-GameObject *Game::findGameObjectByTag(std::string tag) {
+GameObject *Game::findGameObjectByTag(const std::string& tag) {
     for (auto &gameObject: m_GameObjects) {
         if (gameObject->getTag() == tag) {
             return gameObject;
@@ -191,7 +191,7 @@ GameObject *Game::findGameObjectByTag(std::string tag) {
     return nullptr;
 }
 
-std::vector<GameObject *> Game::findGameObjectsByTag(std::string tag) {
+std::vector<GameObject *> Game::findGameObjectsByTag(const std::string& tag) {
     std::vector<GameObject *> gameObjects;
     for (auto &gameObject: m_GameObjects) {
         if (gameObject->getTag() == tag) {

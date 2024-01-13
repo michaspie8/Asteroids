@@ -21,7 +21,7 @@ public:
 
     void clean() override;
 
-    void OnCollisionEnter(GameObject *other);
+    static void OnCollisionEnter(GameObject *other);
 
 
 protected:

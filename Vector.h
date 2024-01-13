@@ -18,13 +18,13 @@ public:
 
     [[nodiscard]] float length() const;
 
-    float lengthSquared() const;
+    [[nodiscard]] float lengthSquared() const;
 
     void normalise();
 
-    float distance(Vector2 v2) const;
+    [[nodiscard]] float distance(Vector2 v2) const;
 
-    Vector2 normalised() const;
+    [[nodiscard]] Vector2 normalised() const;
 
     static Vector2 Zero() {
         return *new Vector2(0, 0);

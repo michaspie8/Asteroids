@@ -68,28 +68,28 @@ void Shooter::setMaxBullets(unsigned int maxBullets) {
     m_MaxBullets = maxBullets;
 }
 
-unsigned int Shooter::getReloadTime() {
+unsigned int Shooter::getReloadTime() const {
     return m_ReloadTime;
 }
 
-unsigned int Shooter::getMaxBullets() {
+unsigned int Shooter::getMaxBullets() const {
     return m_MaxBullets;
 }
 
-unsigned int Shooter::getBullets() {
+unsigned int Shooter::getBullets() const {
     return m_Bullets;
 }
 
 
-int Shooter::getFireRate() {
+unsigned int Shooter::getFireRate() const {
     return m_FireRate;
 }
 
-int Shooter::getBulletSpeed() {
+int Shooter::getBulletSpeed() const {
     return m_BulletSpeed;
 }
 
-int Shooter::getBulletDamage() {
+int Shooter::getBulletDamage() const {
     return m_BulletDamage;
 }
 
@@ -108,16 +108,16 @@ GameObject *Shooter::bullet() {
     pos += {gameObject->getTransform()->getWidth() / 2, 0};
     pos = Mathf::RotatePoint(pos, gameObject->getTransform()->getAbsolutePosition(), angle);
     float s = std::ceil(gameObject->getTransform()->getWidth() / 4);
-    auto bullet = new GameObject(LoaderParams(pos, s, s, 0, "bullet", "Bullet"));
+    auto bullet = new GameObject(LoaderParams(pos, (int)s, (int)s, 0, "bullet", "Bullet"));
     bullet->getTransform()->setAngle(angle);
     bullet->addComponent(new Motion());
     bullet->addComponent(new Renderer("bullet", RenderType::VECTOR));
-    auto bullet_c = bullet->addComponent(new Bullet(m_BulletSpeed, m_BulletDamage));
+    auto bullet_c = bullet->addComponent(new Bullet((float)m_BulletSpeed, m_BulletDamage));
     auto shooterVel = std::ceil(gameObject->getComponent<Motion>()->getVelocity().length());
     if (shooterVel < 2) {
         shooterVel = 2;
     }
-    bullet_c->setSpeed(m_BulletSpeed + shooterVel);
+    bullet_c->setSpeed((float)m_BulletSpeed + shooterVel);
     bullet->addComponent(new BulletCollider({s, s}, {0, 0}, "Bullet", ColliderType::CIRCLE));
     return bullet;
 }

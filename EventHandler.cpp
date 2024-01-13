@@ -19,7 +19,7 @@ void EventHandler::update() {
     //TODO Jostick support
     /*m_joystickAxes = Vector2(SDL_JoystickGetAxis(SDL_GameControllerGetJoystick(), 0),
                              SDL_JoystickGetAxis(Game::getInstance()->getJoystick(), 1));*/
-    m_KeyboardState = SDL_GetKeyboardState(0);
+    m_KeyboardState = SDL_GetKeyboardState(nullptr);
     switch (event.type) {
         case SDL_MOUSEBUTTONDOWN:
             if (event.button.button == SDL_BUTTON_LEFT) m_MouseButtonState[LEFT] = true;

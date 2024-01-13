@@ -3,19 +3,20 @@
 
 #include "Vector.h"
 #include <string>
+#include <utility>
 
 // SDLGameObject
 class LoaderParams {
 public:
     LoaderParams(Vector2 pos, int w, int h, float angle, std::string id, std::string name = "GameObject",
                  std::string tag = "", bool enabled = true, bool marked = false)
-            : m_Name(name),
-              m_Tag(tag),
+            : m_Name(std::move(name)),
+              m_Tag(std::move(tag)),
               m_Position(pos),
               m_Width(w),
               m_Height(h),
               m_Angle(angle),
-              m_TextureId(id),
+              m_TextureId(std::move(id)),
               m_Enabled(enabled),
               m_MarkedForDeletion(marked) {};
 

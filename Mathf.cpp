@@ -103,10 +103,10 @@ float Mathf::bezier(float p0, float p1, float p2, float p3, float t) {
 Uint32 *Mathf::GaussianBlur(Uint32 *pixels, int width, int height, int radius, float sigma) {
     //create kernel
     int kernelSize = radius * 2 + 1;
-    float *kernel = new float[kernelSize];
+    auto *kernel = new float[kernelSize];
     float sum = 0;
     for (int i = 0; i < kernelSize; i++) {
-        kernel[i] = exp(-0.5f * (i - radius) * (i - radius) / (sigma * sigma));
+        kernel[i] = exp(-0.5f * (float)(i - radius) * (float)(i - radius) / (sigma * sigma));
         sum += kernel[i];
     }
     for (int i = 0; i < kernelSize; i++) {
@@ -114,7 +114,7 @@ Uint32 *Mathf::GaussianBlur(Uint32 *pixels, int width, int height, int radius, f
     }
 
     //create temp array
-    Uint32 *temp = new Uint32[width * height];
+    auto *temp = new Uint32[width * height];
     for (int i = 0; i < width * height; i++) {
         temp[i] = pixels[i];
     }
@@ -125,9 +125,9 @@ Uint32 *Mathf::GaussianBlur(Uint32 *pixels, int width, int height, int radius, f
             float r = 0, g = 0, b = 0;
             for (int i = -radius; i <= radius; i++) {
                 Uint32 pixel = temp[y * width + x + i];
-                r += ((pixel >> 16) & 0xFF) * kernel[i + radius];
-                g += ((pixel >> 8) & 0xFF) * kernel[i + radius];
-                b += (pixel & 0xFF) * kernel[i + radius];
+                r += (float)((pixel >> 16) & 0xFF) * kernel[i + radius];
+                g += (float)((pixel >> 8) & 0xFF) * kernel[i + radius];
+                b += (float)(pixel & 0xFF) * kernel[i + radius];
             }
             pixels[y * width + x] = ((int) r << 16) | ((int) g << 8) | (int) b;
         }
@@ -139,9 +139,9 @@ Uint32 *Mathf::GaussianBlur(Uint32 *pixels, int width, int height, int radius, f
             float r = 0, g = 0, b = 0;
             for (int i = -radius; i <= radius; i++) {
                 Uint32 pixel = pixels[(y + i) * width + x];
-                r += ((pixel >> 16) & 0xFF) * kernel[i + radius];
-                g += ((pixel >> 8) & 0xFF) * kernel[i + radius];
-                b += (pixel & 0xFF) * kernel[i + radius];
+                r += (float)((pixel >> 16) & 0xFF) * kernel[i + radius];
+                g += (float)((pixel >> 8) & 0xFF) * kernel[i + radius];
+                b += (float)(pixel & 0xFF) * kernel[i + radius];
             }
             pixels[y * width + x] = ((int) r << 16) | ((int) g << 8) | (int) b;
         }

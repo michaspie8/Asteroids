@@ -28,7 +28,7 @@ TextureManager *TextureManager::getInstance() {
     return s_pInstance;
 }
 
-void TextureManager::load(std::string path, std::string id, bool loadAnyway) {
+void TextureManager::load(const std::string& path, const std::string& id, bool loadAnyway) {
     if (m_TextureMap[id] != nullptr && !loadAnyway) return;
     SDL_RWops *rw = SDL_RWFromFile(path.c_str(), "r");
     SDL_Surface *surface = IMG_LoadSVG_RW(rw);
@@ -39,7 +39,7 @@ void TextureManager::load(std::string path, std::string id, bool loadAnyway) {
     m_TextureMap[id] = texture;
 }
 
-void TextureManager::loadVector(std::string path, std::string id, bool loadAnyway) {
+void TextureManager::loadVector(const std::string& path, const std::string& id, bool loadAnyway) {
     if (m_VectorTextureMap[id] != nullptr && !loadAnyway) return;
     NSVGimage *image = nsvgParseFromFile(path.c_str(), "px", 96);
     image->width = 64;
@@ -48,11 +48,11 @@ void TextureManager::loadVector(std::string path, std::string id, bool loadAnywa
     m_VectorTextureMap[id] = image;
 }
 
-void TextureManager::draw(std::string id, int x, int y, int w, int h) {
+void TextureManager::draw(const std::string& id, int x, int y, int w, int h) {
     SDL_Rect srcRect, destRect;
 
     srcRect.x = srcRect.y = 0;
-    SDL_QueryTexture(m_TextureMap[id], NULL, NULL, &srcRect.w, &srcRect.h);
+    SDL_QueryTexture(m_TextureMap[id], nullptr, nullptr, &srcRect.w, &srcRect.h);
 
     destRect.x = x;
     destRect.y = y;
@@ -66,7 +66,7 @@ void TextureManager::draw(std::string id, int x, int y, int w, int h) {
 }
 
 void
-TextureManager::drawFrameEx(std::string id, int row, int column, int frameW, int frameH, int x, int y, int w, int h,
+TextureManager::drawFrameEx(const std::string& id, int row, int column, int frameW, int frameH, int x, int y, int w, int h,
                             float angle) {
     SDL_Rect srcRect, destRect;
 
@@ -83,13 +83,13 @@ TextureManager::drawFrameEx(std::string id, int row, int column, int frameW, int
 
 
 //    SDL_RenderCopy(Game::getInstance()->getRenderer(), m_TextureMap[id], &srcRect, &destRect);
-    SDL_RenderCopyEx(Game::getInstance()->getRenderer(), m_TextureMap[id], &srcRect, &destRect, angle, 0,
+    SDL_RenderCopyEx(Game::getInstance()->getRenderer(), m_TextureMap[id], &srcRect, &destRect, angle, nullptr,
                      SDL_FLIP_NONE);
 }
 
-void TextureManager::drawFrameEx(std::string id, int row, int column, int frameW, int frameH, Vector2 pos, int w,
+void TextureManager::drawFrameEx(const std::string& id, int row, int column, int frameW, int frameH, Vector2 pos, int w,
                                  int h, float angle) {
-    drawFrameEx(id, row, column, frameW, frameH, pos.x, pos.y, w, h, angle);
+    drawFrameEx(id, row, column, frameW, frameH, (int)pos.x, (int)pos.y, w, h, angle);
 }
 
 
@@ -97,7 +97,7 @@ void TextureManager::draw(SDL_Texture *texture, int x, int y, int w, int h) {
     SDL_Rect srcRect, destRect;
 
     srcRect.x = srcRect.y = 0;
-    SDL_QueryTexture(texture, NULL, NULL, &srcRect.w, &srcRect.h);
+    SDL_QueryTexture(texture, nullptr, nullptr, &srcRect.w, &srcRect.h);
 
     destRect.x = x;
     destRect.y = y;
@@ -111,7 +111,7 @@ void TextureManager::draw(SDL_Texture *texture, int x, int y, int w, int h) {
 }
 
 
-void TextureManager::drawVectorTexture(std::string id, Vector2 position, float w, float h, float angle) {
+void TextureManager::drawVectorTexture(const std::string& id, Vector2 position, float w, float h, float angle) {
     //get texture
     NSVGimage *image = m_VectorTextureMap[id];
 
@@ -121,7 +121,7 @@ void TextureManager::drawVectorTexture(std::string id, Vector2 position, float w
             for (int i = 0; i < path->npts - 1; i += 3) {
                 float *p = &path->pts[i * 2];
                 // make copies of points
-                float *d = new float[8];
+                auto *d = new float[8];
                 for (int j = 0; j < 8; j++) {
                     d[j] = p[j];
                 }
@@ -143,7 +143,7 @@ void TextureManager::drawVectorTexture(std::string id, Vector2 position, float w
                     d[j + 1] = point.y;
                 }
 
-                drawCubicBez(d[0], d[1], d[2], d[3], d[4], d[5], d[6], d[7], shape->strokeWidth, shape->stroke.color);
+                drawCubicBez(d[0], d[1], d[2], d[3], d[4], d[5], d[6], d[7], (int)shape->strokeWidth, shape->stroke.color);
                 //free memory
                 delete[] d;
             }
@@ -155,7 +155,7 @@ void TextureManager::drawVectorTexture(std::string id, Vector2 position, float w
 }
 
 //Same as above bot with pivot point, and position needs to be calculeted pls edit the other one, after testing that one, update this
-void TextureManager::drawVectorTexture(std::string id, Vector2 position, float angle, float w, float h, Vector2 pivot) {
+void TextureManager::drawVectorTexture(const std::string& id, Vector2 position, float angle, float w, float h, Vector2 pivot) {
     //get texture
     NSVGimage *image = m_VectorTextureMap[id];
 
@@ -165,7 +165,7 @@ void TextureManager::drawVectorTexture(std::string id, Vector2 position, float a
             for (int i = 0; i < path->npts - 1; i += 3) {
                 float *p = &path->pts[i * 2];
                 // make copies of points
-                float *d = new float[8];
+                auto *d = new float[8];
                 for (int j = 0; j < 8; j++) {
                     d[j] = p[j];
                 }
@@ -246,7 +246,7 @@ void TextureManager::CubicBezGlow(float x1, float y1, float x2, float y2, float 
         t += step;
     }
     auto pixels = new Uint32[Game::getInstance()->getWindowWidth() * Game::getInstance()->getWindowHeight()];
-    SDL_RenderReadPixels(ren, NULL, SDL_PIXELFORMAT_RGBA8888, pixels,
+    SDL_RenderReadPixels(ren, nullptr, SDL_PIXELFORMAT_RGBA8888, pixels,
                          Game::getInstance()->getWindowWidth() * sizeof(Uint32));
     Game::getInstance()->bloom(pixels, Game::getInstance()->getWindowWidth(), Game::getInstance()->getWindowHeight(), 0,
                                0, 0.5f, 2, 0.5f);

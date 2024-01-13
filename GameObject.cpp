@@ -37,7 +37,7 @@ void GameObject::clean() {
 
 }
 
-Component *GameObject::getComponent(std::string name) {
+Component *GameObject::getComponent(const std::string& name) {
     for (int i = 0; i < m_Components.size(); i++) {
         auto &component = m_Components[i];
         if (component->name == name) {

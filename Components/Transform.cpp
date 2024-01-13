@@ -13,8 +13,8 @@ Transform::Transform(GameObject *gameObject, const LoaderParams &params) : Trans
 
 Transform::Transform(const LoaderParams &params) : Component(params.m_Name) {
     m_Position = params.m_Position;
-    m_Width = params.m_Width;
-    m_Height = params.m_Height;
+    m_Width = (float)params.m_Width;
+    m_Height = (float)params.m_Height;
     m_Angle = params.m_Angle;
 }
 
@@ -50,7 +50,7 @@ Vector2 Transform::getPosition() {
     return m_Position;
 }
 
-float Transform::getWidth() {
+float Transform::getWidth() const {
     return m_Width;
 }
 
@@ -61,11 +61,11 @@ Vector2 Transform::getAbsolutePosition() {
     return m_Position;
 }
 
-float Transform::getHeight() {
+float Transform::getHeight() const {
     return m_Height;
 }
 
-float Transform::getAngle() {
+float Transform::getAngle() const {
     return m_Angle;
 }
 

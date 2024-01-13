@@ -20,14 +20,14 @@ Player::Player(const LoaderParams &params, float angleDampTime, float rotationSp
     addComponent(new Motion());
     addComponent(new Renderer("player", RenderType::VECTOR));
     addComponent(new Shooter());
-    addComponent(new PlayerCollider(Vector2(params.m_Width, params.m_Height), Vector2(0, 0), "Player",
+    addComponent(new PlayerCollider(Vector2((float)params.m_Width, (float)params.m_Height), Vector2(0, 0), "Player",
                                     ColliderType::CIRCLE));
     TextureManager::getInstance()->loadVector("assets/bullet.svg", "bullet", true);
     TextureManager::getInstance()->loadVector("assets/player.svg", "player", true);
 }
 
 Player::Player() : Player(
-        LoaderParams(Vector2(Game::getInstance()->getWindowWidth() / 2, Game::getInstance()->getWindowHeight() / 2),
+        LoaderParams(Vector2((float)Game::getInstance()->getWindowWidth() / 2, (float)Game::getInstance()->getWindowHeight() / 2),
                          48, 48, 0, "player", "Player"),
         0.15f, 5) {
 
@@ -38,7 +38,7 @@ Player::Player() : Player(
     Vector2 jetflamePos = {(getTransform()->getWidth() / 2 + jetflamesize.x / 2),
                            (getTransform()->getHeight() / 2 - jetflamesize.y / 6)};
     m_JetFlame = new GameObject(
-            LoaderParams(jetflamePos, jetflamesize.x, jetflamesize.y,
+            LoaderParams(jetflamePos, (int)jetflamesize.x, (int)jetflamesize.y,
                              180, "jet-flame"));
     //beacuse he has a parent position is relative to parent, the pos above is just a shift to a right position
     m_JetFlame->setParent(this);
@@ -75,8 +75,8 @@ void Player::update() {
     }
 
     //angle damping
-    angle = Mathf::smoothDampAngle(angle, angle - delta * rotationSpeed, angleDampVelocity, angleDampTime, 1000,
-                                   Game::getInstance()->getDeltaTime());
+    angle = Mathf::smoothDampAngle(angle, angle - (float)delta * rotationSpeed, angleDampVelocity, angleDampTime, 1000,
+                                   (float)Game::getInstance()->getDeltaTime());
 
     //acceleration
     if (EventHandler::getInstance()->isKeyboardKeyDown(SDL_SCANCODE_UP)) {

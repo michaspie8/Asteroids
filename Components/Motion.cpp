@@ -16,7 +16,7 @@ void Motion::update() {
     //Edit angle
     auto angle = gameObject->getTransform()->getAngle();
     //trying to keep angle between 0 and 360
-    angle = (int) angle % 360 + (angle - (int) angle);
+    angle = (int)angle % 360 + (angle -  angle);
     if (angle < 0) {
         angle += 360;
     }

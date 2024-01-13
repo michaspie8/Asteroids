@@ -26,7 +26,7 @@ public:
 
     void setSize(int size);
 
-    int getSize() const;
+    [[nodiscard]] int getSize() const;
 
 
 protected:

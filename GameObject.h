@@ -4,6 +4,7 @@
 #include "LoaderParams.h"
 #include "Vector.h"
 #include <string>
+#include <utility>
 #include <vector>
 #include <stdexcept>
 #include <iostream>
@@ -22,17 +23,17 @@ public:
 
     virtual void clean();
 
-    [[nodiscard]] bool isMarkedForDeletion() { return m_MarkedForDeletion; };
+    [[nodiscard]] bool isMarkedForDeletion() const { return m_MarkedForDeletion; };
 
-    virtual ~GameObject() {};
+    virtual ~GameObject() = default;
 
     std::string getName() { return m_Name; };
 
     std::string getTag() { return m_Tag; };
 
-    bool isEnabled() { return m_Enabled; };
+    [[nodiscard]] bool isEnabled() const { return m_Enabled; };
 
-    Component *getComponent(std::string name);
+    Component *getComponent(const std::string& name);
 
     Transform *getTransform() { return m_pTransform; };
 
@@ -67,7 +68,7 @@ public:
     //use casting to cast t to Component*
     template<typename T>
     T *addComponent(T *t) {
-        Component *c = dynamic_cast<Component *>(t);
+        auto *c = dynamic_cast<Component *>(t);
         if (c == nullptr) throw std::invalid_argument("T must derive from Component");
         m_Components.push_back(c);
         c->gameObject = this;
@@ -91,7 +92,7 @@ public:
 
     template<class T>
     void removeComponent(T *component) {
-        Component *c = dynamic_cast<Component *>(component);
+        auto *c = dynamic_cast<Component *>(component);
         if (c == nullptr) return throw std::invalid_argument("T must derive from Component");
         removeComponent(c);
     }
@@ -100,9 +101,9 @@ public:
     void setMarkedForDeletion(bool marked) { m_MarkedForDeletion = marked; };
 
 
-    void setName(std::string name) { m_Name = name; };
+    void setName(std::string name) { m_Name = std::move(name); };
 
-    void setTag(std::string tag) { m_Tag = tag; };
+    void setTag(std::string tag) { m_Tag = std::move(tag); };
 
     void setEnabled(bool enabled) { m_Enabled = enabled; };
 
@@ -120,7 +121,7 @@ protected:
     //tag is used to identify game objects
     //for example, all asteroids have tag "asteroid"
     //or player has tag "player"
-    //it doen't have to be unique,
+    //it doaesn't have to be unique,
     // beacause of the getComponentS method
     std::string m_Tag;
 

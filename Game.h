@@ -21,7 +21,7 @@ public:
 
     bool init(const char *title, int xpos, int ypos, int width, int height, SDL_WindowFlags flags);
 
-    void handleEvents();
+    static  void handleEvents();
 
     void update();
 
@@ -53,13 +53,13 @@ public:
 
     [[nodiscard]] int getWindowHeight() const { return m_WindowHeight; }
 
-    [[nodiscard]] GameObject *findGameObjectByName(std::string name);
+    [[nodiscard]] GameObject *findGameObjectByName(const std::string& name);
 
-    [[nodiscard]] std::vector<GameObject *> findGameObjectsByName(std::string name);
+    [[nodiscard]] std::vector<GameObject *> findGameObjectsByName(const std::string& name);
 
-    [[nodiscard]] GameObject *findGameObjectByTag(std::string tag);
+    [[nodiscard]] GameObject *findGameObjectByTag(const std::string& tag);
 
-    [[nodiscard]] std::vector<GameObject *> findGameObjectsByTag(std::string tag);
+    [[nodiscard]] std::vector<GameObject *> findGameObjectsByTag(const std::string& tag);
 
     [[nodiscard]] std::vector<GameObject *> getGameObjects() const { return m_GameObjects; }
 

@@ -46,9 +46,13 @@ add_executable(Asteroids
 )
 file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
 
-set(NanoSVG_DIR "C:/Users/Bartek/.vcpkg-clion/vcpkg/installed/x64-windows/share/NanoSVG")
-set(SDL2_DIR "C:/Users/Bartek/.vcpkg-clion/vcpkg/installed/x64-windows/share/sdl2")
-set(SDL2_image_DIR "C:/Users/Bartek/.vcpkg-clion/vcpkg/installed/x64-windows/share/SDL2_image")
+#using vcpkg u'll propably need some of these. If it's not working try changing the User name in the path
+#                           |
+#                           v    here it is :)
+set(NanoSVG_DIR "C:/Users/Admin/.vcpkg-clion/vcpkg/installed/x64-windows/share/NanoSVG")
+set(SDL2_DIR "C:/Users/Admin/.vcpkg-clion/vcpkg/installed/x64-windows/share/sdl2")
+set(SDL2_image_DIR "C:/Users/Admin/.vcpkg-clion/vcpkg/installed/x64-windows/share/SDL2_image")
+set(glfw3_DIR "C:/Users/Admin/.vcpkg-clion/vcpkg/installed/x64-windows/share/glfw3")
 
 find_package(NanoSVG CONFIG REQUIRED)
 target_link_libraries(Asteroids PRIVATE NanoSVG::nanosvg NanoSVG::nanosvgrast)

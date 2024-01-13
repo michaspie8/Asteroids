@@ -5,6 +5,8 @@
 #ifndef ASTEROIDS_SHOOTER_H
 #define ASTEROIDS_SHOOTER_H
 
+#include <utility>
+
 #include "Component.h"
 #include "../LoaderParams.h"
 #include "../Vector.h"
@@ -15,7 +17,7 @@ class Shooter : public Component {
 
 public:
     Shooter(unsigned int fireRate = 150, int bulletSpeed = 5, int bulletDamage = 1, unsigned int reloadTime = 700,
-            unsigned int maxBullets = 3, std::string name = "Shooter") : Component(name) {
+            unsigned int maxBullets = 3, std::string name = "Shooter") : Component(std::move(name)) {
         m_FireRate = fireRate;
         m_BulletSpeed = bulletSpeed;
         m_BulletDamage = bulletDamage;
@@ -42,17 +44,17 @@ public:
 
     void setMaxBullets(unsigned int maxBullets);
 
-    unsigned int getReloadTime();
+    [[nodiscard]] unsigned int getReloadTime() const;
 
-    unsigned int getMaxBullets();
+    [[nodiscard]] unsigned int getMaxBullets() const;
 
-    unsigned int getBullets();
+    [[nodiscard]] unsigned int getBullets() const;
 
-    int getFireRate();
+    [[nodiscard]] unsigned int getFireRate() const;
 
-    int getBulletSpeed();
+    [[nodiscard]] int getBulletSpeed() const;
 
-    int getBulletDamage();
+    [[nodiscard]] int getBulletDamage() const;
 
     void shoot();
 

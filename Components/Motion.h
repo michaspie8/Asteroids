@@ -33,7 +33,7 @@ public:
 
     void setAcceleration(Vector2 acceleration);
 
-    float getSpeed() const;
+    [[nodiscard]] float getSpeed() const;
 
     Vector2 getVelocity();
 

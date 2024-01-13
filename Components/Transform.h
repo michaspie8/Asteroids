@@ -37,11 +37,11 @@ public:
 
     Vector2 getAbsolutePosition();
 
-    float getWidth();
+    float getWidth() const;
 
-    float getHeight();
+    float getHeight() const;
 
-    float getAngle();
+    float getAngle() const;
 
     float getAbsoluteAngle();
 

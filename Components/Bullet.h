@@ -38,9 +38,9 @@ public:
 
     void setDamage(int damage);
 
-    float getSpeed() const;
+    [[nodiscard]] float getSpeed() const;
 
-    int getDamage() const;
+    [[nodiscard]] int getDamage() const;
 
 protected:
     float m_Speed;
