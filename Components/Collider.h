@@ -59,7 +59,9 @@ public:
 class BulletCollider : public Collider {
 public:
     BulletCollider(Vector2 size, Vector2 pos, std::string name = "BulletCollider", ColliderType type = BOX) : Collider(
-            size, pos, std::move(name), type) {};
+            size, pos, std::move(name), type) {
+        m_Enabled = true;
+    };
 
     void onCollisionEnter(GameObject *other) override {
         gameObject->getComponent<Bullet>()->OnCollisionEnter(other);
@@ -76,7 +78,9 @@ public:
 class PlayerCollider : public Collider {
 public:
     PlayerCollider(Vector2 size, Vector2 pos, std::string name = "PlayerCollider", ColliderType type = BOX) : Collider(
-            size, pos, std::move(name), type) {};
+            size, pos, std::move(name), type) {
+        m_Enabled = true;
+    };
 
     void onCollisionEnter(GameObject *other) override {
         if (other->getTag() == "Asteroid") {

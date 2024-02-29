@@ -43,6 +43,9 @@ add_executable(Asteroids
         UIManager.h
         Scene.cpp
         Scene.h
+        Components/UFO.cpp
+        Components/UFO.h
+        Components/UFO.h
 )
 file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
 
@@ -52,10 +55,11 @@ file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
 set(NanoSVG_DIR "C:/Users/Admin/.vcpkg-clion/vcpkg/installed/x64-windows/share/NanoSVG")
 set(SDL2_DIR "C:/Users/Admin/.vcpkg-clion/vcpkg/installed/x64-windows/share/sdl2")
 set(SDL2_image_DIR "C:/Users/Admin/.vcpkg-clion/vcpkg/installed/x64-windows/share/SDL2_image")
-set(glfw3_DIR "C:/Users/Admin/.vcpkg-clion/vcpkg/installed/x64-windows/share/glfw3")
+#set(glfw3_DIR "C:/Users/Admin/.vcpkg-clion/vcpkg/installed/x64-windows/share/glfw3")
 
 find_package(NanoSVG CONFIG REQUIRED)
 target_link_libraries(Asteroids PRIVATE NanoSVG::nanosvg NanoSVG::nanosvgrast)
+
 
 find_package(SDL2 CONFIG REQUIRED)
 target_link_libraries(Asteroids
@@ -71,5 +75,5 @@ find_package(sdl2-gfx CONFIG REQUIRED)
 target_link_libraries(Asteroids PRIVATE SDL2::SDL2_gfx)
 
 
-find_package(glfw3 CONFIG REQUIRED)
-target_link_libraries(Asteroids PRIVATE glfw)
+#find_package(glfw3 CONFIG REQUIRED)
+#target_link_libraries(Asteroids PRIVATE glfw)

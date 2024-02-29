@@ -16,7 +16,7 @@
 #include <memory>
 
 // gl window
-#include <GLFW/glfw3.h>
+//#include <GLFW/glfw3.h>
 
 Game *Game::s_pInstance = nullptr;
 

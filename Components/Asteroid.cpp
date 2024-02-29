@@ -60,8 +60,8 @@ GameObject *Asteroid::MakeNew(int size, Vector2 pos, float angle, float speed) {
     int w, h;
     switch (size) {
         case 1:
-            h = 6;
-            w = 6;
+            h = 8;
+            w = 8;
             break;
         case 2:
             w = 16;
@@ -79,7 +79,7 @@ GameObject *Asteroid::MakeNew(int size, Vector2 pos, float angle, float speed) {
     auto motion = asteroid->addComponent(new Motion(1));
     motion->setSpeed(speed);
     asteroid->addComponent(new Renderer("asteroid-" + std::to_string(size), RenderType::VECTOR));
-    asteroid->addComponent(new Collider(Vector2((float)w, h), Vector2(0, 0), "Asteroid", ColliderType::CIRCLE));
+    asteroid->addComponent(new Collider(Vector2((float)w*0.75, h*0.75), Vector2(0, 0), "Asteroid", ColliderType::CIRCLE));
     asteroid->addComponent(new Asteroid(size));
     return asteroid;
 }

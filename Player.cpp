@@ -123,7 +123,7 @@ void Player::clean() {
 void Player::OnCollisionEnter(GameObject *other) {
     if (other->getName() == "Asteroid") {
         //todo player death
-        std::cout << "Player death" << std::endl;
+        Game::getInstance()->clean();
     }
 }
 

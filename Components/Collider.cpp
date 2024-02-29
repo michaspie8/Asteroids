@@ -12,6 +12,7 @@ Collider::Collider(Vector2 size, Vector2 pos, std::string name, ColliderType typ
     m_Size = size;
     m_Pos = pos;
     m_Type = type;
+    m_Enabled = false;
     Game::getInstance()->addCollider(this);
 }
 
@@ -21,6 +22,7 @@ void Collider::clean() {
 }
 
 void Collider::update() {
+    if(!m_Enabled) return;
     //update position, beacaouse position var is relative to transform
     auto pos = getPosition();
     //foreach collider
@@ -53,13 +55,6 @@ void Collider::update() {
                 collider->m_Colliding = false;
             }
         }
-
-        /*else {
-            if (m_Colliding) {
-                m_Colliding = false;
-                onCollisionExit(collider->gameObject);
-            }
-        }*/
     }
 }
 
